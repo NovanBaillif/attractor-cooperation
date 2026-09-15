@@ -1,10 +1,10 @@
-# Attractor Cooperation Profile 0.2 — verifiable transmission between agents
+# Attractor Cooperation Profile 0.3 — verifiable transmission between agents
 
-**Working draft 0.2.1, 15 September 2026.** Profile identifier: `attractor-cooperation/0.2`. Changes since 0.2 are listed in section 11.1.
+**Working draft 0.3, 16 September 2026.** Profile identifier: `attractor-cooperation/0.3`. Changes since 0.2.1 are listed in section 11.2. Every 0.2 record is a 0.3 record: the new members are optional, and every 0.2.1 case keeps its outcome.
 
 - No community has adopted this profile. It is a draft for comment and adversarial testing.
 - The published v0.1 convention stays unchanged, including its schema fingerprint that external participants have pinned. This draft does not replace v0.1 until the exit criteria of section 10.3 are met.
-- **Lineage disclosure.** This draft and its reference checker were written by Claude (Anthropic lineage) for the human-led Attractor project. v0.1 and its trial checker were written by Codex (OpenAI lineage). The four adversarial inputs come from terminator2-agent and Clara (bonyohana), who state that they act individually. Section 9 explains why this matters.
+- **Lineage disclosure.** This draft and its reference checker were written by Claude (Anthropic lineage) for the human-led Attractor project. v0.1 and its trial checker were written by Codex (OpenAI lineage). The four adversarial inputs come from terminator2-agent and Clara (bonyohana), who state that they act individually. The 0.3 additions turn proposals by terminator2-agent (AI Village) and by prismdeadlines and heychat (Moltbook) into rules; the rules, cases and checker are Claude's. Section 9 explains why this matters.
 
 ## 1. Purpose and scope
 
@@ -15,7 +15,7 @@ It does not inspect any model's internal reasoning. It governs the **interface b
 Every transmitted object keeps three things apart, and implementations MUST NOT merge them:
 
 1. **Content**: the value of each field.
-2. **Provenance**: how that value was obtained, declared per field.
+2. **Provenance**: where that value comes from, declared per field, and since 0.3 how the value itself was obtained (section 4.2.1).
 3. **Disposition**: what the receiver did with it (accepted, verified, re-derived, contested, modified, dropped).
 
 A receiver's disposition never rewrites the sender's provenance.
@@ -44,7 +44,7 @@ This profile invents no primitive. Its contribution is a combination and an adve
 | Need | Reused standard | Use here |
 |---|---|---|
 | Envelope, identity of an event | CloudEvents 1.0.2 | Unchanged from v0.1; `source` + `id` identify an event. |
-| Derivation and attribution | W3C PROV-O | `sources` ≈ `prov:wasDerivedFrom`; `channel` cached/mirrored/republished with `upstream` ≈ `prov:wasQuotedFrom` / `prov:hadPrimarySource`; `author` ≈ `prov:wasAttributedTo`. No RDF export is claimed. |
+| Derivation and attribution | W3C PROV-O | `sources` ≈ `prov:wasDerivedFrom`; `channel` cached/mirrored/republished with `upstream` ≈ `prov:wasQuotedFrom` / `prov:hadPrimarySource`; `author` ≈ `prov:wasAttributedTo`; `derivation` ≈ the activity that generated a value (`prov:wasGeneratedBy`, `prov:used`). No RDF export is claimed. |
 | Separating assertion, provenance and publication | Nanopublication model | Value, provenance and disposition are kept apart in the same way. |
 | Canonical JSON | RFC 8785 (JCS) | Equality, commitments and receipt digests. |
 | Hash | SHA-256 (FIPS 180-4) | Commitments and digests, lowercase hexadecimal. |
@@ -84,8 +84,29 @@ A record is what one agent transmits.
 | `uncertainty` | OPTIONAL object, per field. A record-level confidence MUST NOT replace it: an average hides the one field that is wrong. |
 | `expect` | What the sender asks of the receiver: `accept` (default), `verify` or `re_derive`. |
 | `sealed` | `{alg: "sha256-jcs", commitment}` for a field to be re-derived blind (section 5, S4). |
+| `derivation` | OPTIONAL (0.3). How the value itself was obtained: section 4.2.1. |
+| `observedAt` | OPTIONAL (0.3). When the upstream was read, RFC 3339. Not checked. |
+| `resolvesAt` | OPTIONAL (0.3). When the proposition the value is about comes due, RFC 3339. Not checked: it lets a later coherence check compare like with like (section 12.1). |
 
 `observed` is a relation between an agent and a channel, not between an agent and the world. A cache, a mirror, a state file written by the agent's previous cycle and a peer's re-publication are channels that forget their parent. This is why `channel` and `upstream` exist.
+
+#### 4.2.1 Derivation of a value (0.3)
+
+`sources` say what a field depends on. They do not say which of them produced the value: a field can cite a genuine source its author fetched and still hold a value adjusted to agree with a sibling. `derivation` declares the activity that produced the value: `{operation, inputs, available?, sufficient?, quote?, locator?}`.
+
+| Operation | Meaning | Kind and channel |
+|---|---|---|
+| `measured` | Read first-hand. | `observed`, `channel` `direct`, no inputs. |
+| `quoted` | Copied verbatim from a text: `quote` holds the exact text and `locator` where it sits in the upstream. | `observed`, no inputs. |
+| `copied` | Carried unchanged from a copy: a cache, a mirror, a re-publication, the author's own earlier state, or one field of the record. | `observed` with channel `cached`, `mirrored` or `republished` and no inputs; or `derived` with exactly one input. |
+| `computed` | Computed from `inputs`. | `derived` or `reconstructed`, at least one input. |
+| `reconciled` | Adjusted so as to agree with other values, which `inputs` name. | `derived` or `reconstructed`, at least one input. |
+
+- `inputs`: the fields that produced the value, distinct. Each MUST also be in `sources`, so that a check reading only `sources` still sees the dependency.
+- `available`: fields the author could see when producing the value and declares not to have used. None may be an input or the field itself.
+- `sufficient`: inputs each declared to yield the value on its own, a declaration any third party can test (section 7.6).
+
+The value as the record, with its sentence, its place and its operation, comes from [prismdeadlines](https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-b9279d49-067c-4940-895d-66b04c41533e); the transformation event with the sibling values available, from [heychat](https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-ebeb50f3-5f80-4d91-a4e9-03c38f3e3322); the sufficiency declaration, from [terminator2-agent](https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5683184308).
 
 ### 4.3 Objection
 
@@ -107,7 +128,11 @@ The dispute check (7.2) reads `{claim, objection, policy, sources}` as in the v0
 
 ### 4.7 Transport
 
-Records, receipts and reveals travel in the v0.1 CloudEvents envelope with types `org.attractor.cooperation.record.v0.2`, `org.attractor.cooperation.receipt.v0.2` and `org.attractor.cooperation.reveal.v0.2`. `data` carries `profile: "attractor-cooperation/0.2"`, the v0.1 members `community`, `actor`, `question`, `reason`, `limitations`, and one of `record`, `receipt` or `reveal`. v0.1 actions keep their meaning under `.v0.2` type names. v0.1 rule 11 (duplicates, conflicts, relays keep the original envelope) applies unchanged.
+Records, receipts and reveals travel in the v0.1 CloudEvents envelope with types `org.attractor.cooperation.record.v0.2`, `org.attractor.cooperation.receipt.v0.2` and `org.attractor.cooperation.reveal.v0.2`. `data` carries `profile: "attractor-cooperation/0.2"`, the v0.1 members `community`, `actor`, `question`, `reason`, `limitations`, and one of `record`, `receipt` or `reveal`. v0.1 actions keep their meaning under `.v0.2` type names. v0.1 rule 11 (duplicates, conflicts, relays keep the original envelope) applies unchanged. In 0.3, `profile` is `attractor-cooperation/0.3`, the types end in `.v0.3`, and a replay (4.8) travels as `org.attractor.cooperation.replay.v0.3`. A 0.3 receiver accepts 0.2 objects unchanged.
+
+### 4.8 Replay (0.3)
+
+What a third party publishes after testing a declaration: `{field, method, input?, value?, sourceText?, by?}`. With `method` `sufficiency`, the replayer computed `field` from `input` alone and obtained `value`. With `method` `quote`, `sourceText` is the upstream text the replayer fetched. A replay is only as independent as its replayer (section 9).
 
 ## 5. Sender requirements (agent A)
 
@@ -118,6 +143,10 @@ Records, receipts and reveals travel in the v0.1 CloudEvents envelope with types
 - **S5.** No field that carries a value may have a sealed field among its transitive sources. The sender MUST NOT disclose a sealed value in any other way before the reveal. Free-text leaks cannot be checked (section 12).
 - **S6.** `author.lineage` SHOULD be declared.
 - **S7.** The sender MUST reveal only after the receipt is published, and MUST bind the receipt's digest in the reveal.
+- **S8.** A value adjusted to agree with other values MUST declare `derivation.operation` `reconciled`, and list those values in `derivation.inputs` and in `sources`.
+- **S9.** State read back from the author's own earlier run MUST be declared with `channel` `cached` and an `upstream` in the `self:` scheme, for example `self:previous`. Carrying yesterday's reading as today's observation is the relabelling of receiver rule 3, committed against oneself.
+- **S10.** A field whose value will be compared, verified or relied upon SHOULD declare `derivation`, and SHOULD list in `available` the values its author could see.
+- **S11.** A `quoted` value MUST carry `quote` and `locator`.
 
 ## 6. Receiver protocol (agent B)
 
@@ -137,6 +166,7 @@ Records, receipts and reveals travel in the v0.1 CloudEvents envelope with types
 4. B's record MUST name A's record as `parent`, MUST carry every objection of A unchanged, basis included, and MUST keep its provenance complete.
 5. B publishes the receipt before any reveal. A sealed field can only be re-derived or dropped.
 6. On reveal, B or anyone checks it (7.5).
+7. **A reconciled value is never evidence (0.3).** B MUST NOT use as the `basis` of `verify` or `modify` a field that is reconciled or has a reconciled field among its transitive sources. B may carry it: it stays a derived claim naming its inputs.
 
 `verify` and `re_derive` answer different questions. A receiver that has never disagreed on a field it could see has not demonstrated re-derivation, because obeying and re-deriving correctly leave identical logs. Only a sealed field makes re-derivation observable.
 
@@ -166,6 +196,7 @@ Question answered: do two fields of one record share a declared input? A shared 
 5. `sharedSources` is the sorted intersection of the two key sets. `independentRoots.left` is the sorted list of keys of the left side that are verifiable and absent from the right side; `independentRoots.right` likewise.
 6. If `sharedSources` is empty: status `independent` when every key of both sides is verifiable; otherwise status `unknown`, with `independentRoots` lists empty.
 7. Otherwise: status `dependent-partial` when either `independentRoots` list is non-empty, else `dependent`.
+8. **What the author could see (0.3).** The path of a side is its compared field, if indexed, and that field's transitive sources. If a field on one path lists in `derivation.available` a field of the other path: warning `comparand-visible`, and a status that step 6 would make `independent` is `unknown` instead, with both `independentRoots` lists empty. A value produced in sight of its comparand may have been pulled toward it; only a sealed re-derivation (section 5, S4) or a declared reconciliation settles it.
 
 Result: `{status, sharedSources, independentRoots: {left, right}, problems, warnings, interpretation}`. `problems` and `warnings` are sorted codes without reference; `interpretation` is free text.
 
@@ -215,6 +246,10 @@ Sender-side conformance before transmission. Violations:
 | `missing-or-duplicate-objection-id` | An objection id is not a non-empty string or repeats. |
 | `objection-target-missing:O` | `target` names no field. |
 | `objection-basis-missing:O` | `basis` is not an object, `citation` is not one of the three values, or `sourceId` is not a non-empty string while `citation` is not `none`. |
+| `invalid-derivation:F` | `derivation` present, and not an object whose `operation` is one of the five of 4.2.1, whose `inputs` is an array of distinct non-empty strings, whose `available` and `sufficient`, when present, are such arrays, and whose `quote` and `locator`, when present, are non-empty strings. (0.3) |
+| `derivation-inconsistent:F` | With a valid `derivation`: the operation does not match the kind and channel of 4.2.1; an input is not in `sources`; a `sufficient` entry is not an input; or an `available` entry is the field itself, names no indexed field, or is an input. (0.3) |
+| `quote-missing:F` | Operation `quoted` without a non-empty `quote` and a non-empty `locator`. (0.3) |
+| `self-state-not-cached:F` | `upstream` is a non-empty string beginning with `self:` and `channel` is not `cached`. (0.3) |
 
 Warnings: `observed-channel-undeclared:F`; `upstream-undeclared:F` (an `observed` field with a valid non-direct channel and no non-empty `upstream`); `lineage-undeclared` (`author.lineage` not a non-empty string).
 
@@ -235,10 +270,10 @@ Receiver-side conformance of one hop. Let R be `receipt.record` (an empty object
    - F sealed and action neither `re_derive` nor `drop`: `sealed-field-not-re-derived:F`, next field;
    - **kept** means R has a field F that is JSON-equal to the sent F once `expect` is removed from both;
    - `accept`: not kept, `altered-on-accept:F`;
-   - `verify`: not kept, `altered-on-verify:F`. If `basis` is not a non-empty string naming a field of R: `verify-without-basis:F`. Else if `basis` equals F, or F is a transitive source of `basis` in R: `circular-verification:F`. Else run 7.1 on R's fields with `left` F and `right` `basis`, and warn `verification-dependent:F`, `verification-partially-dependent:F` or `verification-unverifiable:F` when its status is `dependent`, `dependent-partial` or `unknown`;
+   - `verify`: not kept, `altered-on-verify:F`. If `basis` is not a non-empty string naming a field of R: `verify-without-basis:F`. Else if `basis` equals F, or F is a transitive source of `basis` in R: `circular-verification:F`. Else: if `basis`, or a transitive source of `basis` in R, declares `derivation.operation` `reconciled`, `reconciled-basis:F` (0.3); then run 7.1 on R's fields with `left` F and `right` `basis`, and warn `verification-dependent:F`, `verification-partially-dependent:F` or `verification-unverifiable:F` when its status is `dependent`, `dependent-partial` or `unknown`;
    - `re_derive`: F not sealed, warning `re-derivation-unprovable:F`. If R has no field F, or R's F has no member `value`, or has a member `sealed`: `re-derivation-missing:F`. Else, if F is sealed, F is pending reveal;
    - `contest`: not kept, `original-overwritten:F`. If R has no objection with id `disposition.objection`, or its `target` is not F, or that id is an objection id of `sent`: `contest-objection-missing:F`. Else if its basis fails the rule of `objection-basis-missing` (7.3): `contest-without-basis:F`;
-   - `modify`: F is marked modified. R has no field F: `modified-field-missing:F`. `basis` not a non-empty string naming a field of R: `modify-without-basis:F`; else, if R has F and its `sources` do not contain `basis`: `modification-provenance-omits-basis:F`. If R has F and F is kept: warning `modify-without-change:F`;
+   - `modify`: F is marked modified. R has no field F: `modified-field-missing:F`. `basis` not a non-empty string naming a field of R: `modify-without-basis:F`; else, if `basis` or a transitive source of it in R is reconciled, `reconciled-basis:F` (0.3), and if R has F and its `sources` do not contain `basis`, `modification-provenance-omits-basis:F`. If R has F and F is kept: warning `modify-without-change:F`;
    - `drop`: `reason` not a non-empty string, `drop-without-reason:F`; R has F, `dropped-field-present:F`.
 4. Every field G of R whose `sources` is an array naming a field absent from R: `provenance-truncated:G`.
 5. Every objection O of `sent`: absent from R, `objection-lost:O`. Otherwise, if the two `basis` members are not JSON-equal (a missing basis counts as `null`): `objection-basis-lost:O`; if the objections without `basis` are not JSON-equal: `objection-altered:O`.
@@ -257,6 +292,17 @@ Result: `{status, violations, warnings, counts, pendingReveal}`. `counts` has th
 Result: `{status, results, missing, violations}` with `results` entries `{field, commitment: "match" | "mismatch", outcome}`. `status` is `invalid` if there is any violation, else `incomplete` if any field is missing, else `verified`.
 
 What this proves: the sender cannot change its answer after seeing the receiver's, and the receiver cannot edit its receipt after the reveal. It does not prove that the receiver never saw the value through another channel.
+
+### 7.6 Replay — `inspectReplay({record, replay})` (0.3)
+
+Question answered: does a declared derivation survive a third party's test? Fields of `record` are indexed by `id`; an empty or repeated id adds problem `record-invalid`.
+
+1. The replayed field is the indexed field named by `replay.field`. None: problem `replay-field-missing`, status `invalid`. Its `derivation` must be an object; otherwise problem `derivation-undeclared`, status `invalid`.
+2. `method` `sufficiency`: the field must have a member `value` and no member `sealed` (`value-unavailable`); `replay.input` must name an indexed field (`replay-input-invalid`); `replay` must have a member `value` (`replay-value-missing`). Each failure gives status `invalid`. `reproduced` is whether `replay.value` is JSON-equal to the field's value. When `input` is listed in `derivation.sufficient`, status `confirmed` or `refuted` following `reproduced`; otherwise status `undeclared`.
+3. `method` `quote`: the operation must be `quoted` with a non-empty `quote` (`quote-undeclared`), and `replay.sourceText` must be a string (`source-text-missing`). Each failure gives status `invalid`. `reproduced` is whether `sourceText` contains `quote` exactly; status `confirmed` or `refuted` accordingly.
+4. Any other `method`: problem `replay-method-invalid`, status `invalid`.
+
+Result: `{status, reproduced, independence, problems, interpretation}`. `reproduced` is `null` when the status is `invalid`. `independence` is always `not-established`: a replay shows that an input can yield the value, not that it did, and a value that survives the absence of its source may still have been produced another way ([heychat](https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-ebeb50f3-5f80-4d91-a4e9-03c38f3e3322)). Independence is judged by 7.1 alone.
 
 ## 8. Human control
 
@@ -300,15 +346,16 @@ A checker implementation claims conformance to this draft by passing every case 
 
 | Kind | Cases | Of which |
 |---|---|---|
-| Lineage (7.1) | 19 | 8 migrated from v0.1, 4 from terminator2-agent's counterexamples (verbatim and declared), 1 from the first blind trial |
+| Lineage (7.1) | 24 | 8 migrated from v0.1, 4 from terminator2-agent's counterexamples (verbatim and declared), 1 from the first blind trial, 5 new in 0.3 (terminator2-agent, heychat) |
 | Dispute (7.2) | 16 | 8 migrated from v0.1, 2 from Clara (bonyohana)'s counterexamples (verbatim), 1 from her 0.2.1 request |
-| Record (7.3) | 11 | 1 from the first blind trial |
-| Hop (7.4) | 22 | 3 from the first blind trial |
+| Record (7.3) | 18 | 1 from the first blind trial, 7 new in 0.3 (prismdeadlines, terminator2-agent, heychat) |
+| Hop (7.4) | 25 | 3 from the first blind trial, 3 new in 0.3 (prismdeadlines) |
 | Reveal (7.5) | 8 | 1 from the first blind trial |
 | Drift report (8.2) | 5 | |
-| **Total** | **81** | |
+| Replay (7.6) | 7 | all new in 0.3 (terminator2-agent, prismdeadlines, heychat) |
+| **Total** | **103** | |
 
-`run.mjs` also checks that inputs are not mutated, that arrival order does not change results, and that a dispute never applies a revision nor loses the original claim or objection. `cross-check.py` recomputes every commitment and receipt digest in Python. `schema-check.mjs` validates the shape of every input expected to be conformant.
+`run.mjs` also checks that inputs are not mutated, that arrival order does not change results, and that a dispute never applies a revision nor loses the original claim or objection. `cross-check.py` recomputes every commitment and receipt digest in Python. `schema-check.mjs` validates the shape of every input expected to be conformant, and of every replay.
 
 ### 10.3 Exit criteria
 
@@ -319,6 +366,8 @@ This profile leaves draft status only when:
 3. at least one real transmission between two independently operated agents, with receipt and reveal, is checked by both implementations;
 4. the Attractor operator records the decision.
 
+For 0.3, criterion 1 covers the seven checks.
+
 ### 10.4 Trials so far
 
 | Date | Implementer | Lineage | Result | Record |
@@ -326,7 +375,7 @@ This profile leaves draft status only when:
 | 2026-09-15 | Claude Sonnet subagent, from the text alone | same as the author | 74/74 on the suite of that moment; 12 ambiguities; 6 cases and 11 clarifications added; 76/80 on the revised suite, failing exactly the 4 cases that pin rewritten rules | `trials/2026-09-15-blind-same-lineage/` |
 | 2026-09-15 | Codex, from the text alone | different (OpenAI) | Not run: the Codex service did not start the job | operator's local records |
 
-Neither trial satisfies criterion 1: the first shares the author's lineage, the second did not run. On the 0.2.1 suite the same-lineage implementation passes 73 of 81 cases, since it predates the 0.2.1 warning.
+Neither trial satisfies criterion 1: the first shares the author's lineage, the second did not run. On the 0.2.1 suite the same-lineage implementation passes 73 of 81 cases, since it predates the 0.2.1 warning. No implementation other than the reference has run the 0.3 suite.
 
 ## 11. Changes from the v0.1 trial checker
 
@@ -357,6 +406,20 @@ The other 15 v0.1 cases keep their v0.1 status. terminator2-agent's verbatim cas
 
 The narrow supersession rule of 0.2 is kept: Clara (bonyohana) confirmed that the broad form would let preserved dissent block confirmations in her own register.
 
+### 11.2 Changes in 0.3
+
+| Change | Origin |
+|---|---|
+| `derivation` on fields: operation, inputs, available, sufficient, quote and locator (4.2.1). | [prismdeadlines](https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-b9279d49-067c-4940-895d-66b04c41533e), [heychat](https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-327cd9f8-cc10-4faa-a2b9-2d0394c7947e) and [again](https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-ebeb50f3-5f80-4d91-a4e9-03c38f3e3322) |
+| Lineage step 8 and `comparand-visible`: no independence for a value produced in sight of its comparand. | [heychat](https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-ebeb50f3-5f80-4d91-a4e9-03c38f3e3322) |
+| S8: a reconciled value names what it was reconciled against, which becomes a dependency. | [terminator2-agent](https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5683184308), [prismdeadlines](https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-b9279d49-067c-4940-895d-66b04c41533e) |
+| S9 and `self-state-not-cached`: state read back from a previous run is a cached copy of its author. | [terminator2-agent](https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5683184308) |
+| Receiver rule 7 and `reconciled-basis`: a reconciled value is never the basis of a verification or a modification. | [prismdeadlines](https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-b9279d49-067c-4940-895d-66b04c41533e) |
+| Check 7.6: a third party replays a sufficiency declaration or a quotation; a replay never establishes independence. | [terminator2-agent](https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5683184308) (sufficiency), [prismdeadlines](https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-b9279d49-067c-4940-895d-66b04c41533e) (quotation), [heychat](https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-ebeb50f3-5f80-4d91-a4e9-03c38f3e3322) (limit of the counterfactual test) |
+| `observedAt` and `resolvesAt`: carried, not checked. | [terminator2-agent](https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5683184308) (coherence is a schema question first) |
+
+Every 0.2.1 case keeps its outcome. Twenty-two cases are added. Fifteen deliberately broken checkers, one per new rule, are all detected by them.
+
 ## 12. Known limits
 
 - Declared provenance can lie. A hidden copy declared `direct` is undetectable from the record alone.
@@ -365,20 +428,23 @@ The narrow supersession rule of 0.2 is kept: Clara (bonyohana) confirmed that th
 - A controlling source fits scoped documents such as agreements. It is not a universal authority for scientific or factual questions.
 - `dependent-partial` can be gamed by adding a decorative independent source. It is weaker evidence and never independence.
 - Lineage strings and verified flags are declarations or local policy, never authentication.
-- Provenance is declared per field, not per value. A field can carry a genuine, independently fetched source and still hold a value that was not derived from it, for example a value adjusted to agree with a sibling record. Root sets record which sources a side has, not which source is load-bearing for the value. Reported with a real incident by [terminator2-agent, 15 September](https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5683184308).
-- Coherence across records is not checked. Three records that are each clean on every audited field can jointly describe no possible world (a later deadline given a lower probability than an earlier one it contains). This is a separate axis from provenance within a record (same source).
-- Except for the four external inputs and the sixteen v0.1 cases, the suite's expected outcomes were written by the same author as the reference checker. Mutation testing (14 deliberately broken checkers, all detected) reduces but does not remove this bias. Section 9 states the remedy.
+- A reconciliation is visible only when declared. terminator2-agent's incident, left undeclared, still reads as independent (case `v03-lineage-reconciled-value-undeclared`). A sufficiency replay (7.6) can expose it; the record alone cannot. Reported with a real incident by [terminator2-agent, 15 September](https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5683184308).
+- Coherence across records is not checked. Three records that are each clean on every audited field can jointly describe no possible world (a later deadline given a lower probability than an earlier one it contains). This is a separate axis from provenance within a record (same source). 0.3 only carries `resolvesAt` and `observedAt` for a later check.
+- Except for the four external inputs and the sixteen v0.1 cases, the suite's expected outcomes were written by the same author as the reference checker. The 0.3 inputs turn external proposals into records written by that same author. Mutation testing (14 deliberately broken checkers for 0.2, 15 for the 0.3 rules, all detected) reduces but does not remove this bias. Section 9 states the remedy.
 
-### 12.1 Open for 0.3
+### 12.1 Open for 0.4
 
-- **Which source is load-bearing for a value.** A per-source sufficiency declaration ("this root alone yields this value") is falsifiable: give the root to a third party and see whether the value comes back. 0.2 traded it away for root sets; terminator2-agent's incident argues for bringing it back. His announced test case will be replayed as submitted.
-- **An agent's own carried state.** State an agent reads back from its previous run is `channel: "cached"` with `upstream: previous-self`; terminator2-agent proposes making this mandatory. Not yet normative.
-- **A schema for coherence across records.** His own guard found five violations in 488 records, all false positives, because the schema did not distinguish when a market closes from when its proposition comes due: a schema finding, not a checker finding.
+- **Coherence across records.** Values now carry `resolvesAt` and `observedAt`. A check that compares records only when their propositions and readings line up remains to be written, with terminator2-agent's five false positives in 488 records as its first test.
+- **Who replays.** A replay's weight depends on its replayer's independence. 0.3 records `by` but does not weigh it.
+- **terminator2-agent's announced case**, to be replayed as submitted, not rewritten.
 
 ## 13. Contributors and sources
 
 - **terminator2-agent** (display name Claudius Maximus): per-field provenance with observed / derived / reconstructed; circular controls that share an input; carried objections needing their basis; re-derivation rather than acceptance; the honest cache that launders the comparand; sole versus partial determination; the load-bearing source of a value, coherence across records and an agent's own state as a cache of its previous self ([reply of 15 September](https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5683184308)). He declares Claude (Anthropic) lineage. [First contribution](https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5656528807), [counterexamples](https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5657026385).
 - **Clara** (bonyohana): the controlling instrument; an objection from a stronger but non-controlling source must not delete a true claim; claim status separate from citation discipline; supersession between instruments; the undeclared-contradiction warning of 0.2.1. [First contribution](https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5656534610), [counterexamples](https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5659817602), [gist revision 1fcf282a](https://gist.github.com/bonyohana/6ca7b510c3c78bff90347f7cd82611cb).
+- **prismdeadlines** (Moltbook): the value itself as the record, with the sentence it came from, where it sits and the operation that produced it (quoted, computed, reconciled); a reconciled value never citable as primary evidence; the quotation as a cheap consistency check. [Reply of 15 September](https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-b9279d49-067c-4940-895d-66b04c41533e).
+- **heychat** (Moltbook): citation provenance versus dependency provenance; the comparison set; the counterfactual test and its limit; the immutable transformation event. [First reply](https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-327cd9f8-cc10-4faa-a2b9-2d0394c7947e), [second reply](https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-ebeb50f3-5f80-4d91-a4e9-03c38f3e3322).
+- **eliezerdedun** (Moltbook): provenance of reads is not provenance of authorship. [Reply](https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-35cd3991-a2d5-46b3-aaaf-7df79be7f141).
 - v0.1 convention: [cooperation guide](https://attractor-observatory-demo.vercel.app/cooperation-guide.md) and [schema](https://attractor-observatory-demo.vercel.app/convention-schema.json) (SHA-256 `cc013ef87ac7275b…`); v0.1 trial checker: [feedback guide](https://attractor-observatory-demo.vercel.app/feedback-guide.md).
 
 Their participation is individual. It is not an endorsement of this draft by them or by any community.

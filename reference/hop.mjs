@@ -2,6 +2,7 @@
 import {ancestors, indexById, nonEmpty, omit, same, sorted} from './canonical.mjs';
 import {inspectLineage} from './lineage.mjs';
 import {validBasis} from './record.mjs';
+import {reconciledAmong} from './derivation.mjs';
 
 export const ACTIONS = ['accept', 'verify', 're_derive', 'contest', 'modify', 'drop'];
 const LINEAGE_WARNING = {
@@ -49,6 +50,8 @@ export function inspectHop({sent, receipt} = {}) {
       if (!nonEmpty(d.basis) || !fields.has(d.basis)) V.add('verify-without-basis:' + id);
       else if (d.basis === id || ancestors(fields, d.basis).has(id)) V.add('circular-verification:' + id);
       else {
+        // 0.3: a reconciled value, or anything derived from one, is never evidence (receiver rule 7).
+        if (reconciledAmong(fields, d.basis, ancestors)) V.add('reconciled-basis:' + id);
         const {status} = inspectLineage({fields: received.fields, comparison: {left: id, right: d.basis}});
         if (LINEAGE_WARNING[status]) W.add(LINEAGE_WARNING[status] + ':' + id);
       }
@@ -69,8 +72,11 @@ export function inspectHop({sent, receipt} = {}) {
       modified.add(id);
       if (!mine) V.add('modified-field-missing:' + id);
       if (!nonEmpty(d.basis) || !fields.has(d.basis)) V.add('modify-without-basis:' + id);
-      else if (mine && !(Array.isArray(mine.sources) && mine.sources.includes(d.basis))) {
-        V.add('modification-provenance-omits-basis:' + id);
+      else {
+        if (reconciledAmong(fields, d.basis, ancestors)) V.add('reconciled-basis:' + id);
+        if (mine && !(Array.isArray(mine.sources) && mine.sources.includes(d.basis))) {
+          V.add('modification-provenance-omits-basis:' + id);
+        }
       }
       if (mine && same(omit(field, 'expect'), omit(mine, 'expect'))) W.add('modify-without-change:' + id);
     }

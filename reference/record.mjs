@@ -1,6 +1,7 @@
 // SPEC section 7.3 — sender-side conformance of a record before it is transmitted.
 import {ancestors, indexById, nonEmpty, sorted} from './canonical.mjs';
 import {CHANNELS} from './lineage.mjs';
+import {derivationProblems} from './derivation.mjs';
 
 export const KINDS = new Set(['observed', 'derived', 'reconstructed', 'unknown']);
 export const EXPECTS = new Set(['accept', 'verify', 're_derive']);
@@ -46,6 +47,11 @@ export function inspectRecord(record) {
       if (!Object.hasOwn(field, 'channel')) warnings.add('observed-channel-undeclared:' + id);
       else if (!CHANNELS.has(field.channel)) violations.add('invalid-channel:' + id);
       else if (field.channel !== 'direct' && !nonEmpty(field.upstream)) warnings.add('upstream-undeclared:' + id);
+    }
+    // 0.3: how the value was obtained, and state carried from the author's own earlier run.
+    for (const code of derivationProblems(id, field, fields)) violations.add(code + ':' + id);
+    if (nonEmpty(field.upstream) && field.upstream.startsWith('self:') && field.channel !== 'cached') {
+      violations.add('self-state-not-cached:' + id);
     }
     const up = ancestors(fields, id);
     if (up.has(id)) violations.add('source-cycle');

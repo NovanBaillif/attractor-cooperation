@@ -1,132 +1,467 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:attractor:cooperation:0.2:transmission",
-  "title": "attractor-cooperation/0.2 transmission objects (draft)",
+  "$id": "urn:attractor:cooperation:0.3:transmission",
+  "title": "attractor-cooperation/0.3 transmission objects (draft)",
   "description": "Shape of Record, Receipt and Reveal (SPEC section 4). Shape validity establishes nothing about truth, authority or conformance of behaviour; see the checks in SPEC section 7.",
   "$defs": {
-    "id": {"type": "string", "minLength": 1},
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
     "author": {
       "type": "object",
-      "required": ["actor", "lineage"],
+      "required": [
+        "actor",
+        "lineage"
+      ],
       "additionalProperties": false,
       "properties": {
-        "actor": {"type": "string", "minLength": 1},
-        "lineage": {"type": "string", "minLength": 1}
+        "actor": {
+          "type": "string",
+          "minLength": 1
+        },
+        "lineage": {
+          "type": "string",
+          "minLength": 1
+        }
       }
     },
     "seal": {
       "type": "object",
-      "required": ["alg", "commitment"],
+      "required": [
+        "alg",
+        "commitment"
+      ],
       "additionalProperties": false,
       "properties": {
-        "alg": {"const": "sha256-jcs"},
-        "commitment": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+        "alg": {
+          "const": "sha256-jcs"
+        },
+        "commitment": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
       }
     },
     "field": {
       "type": "object",
-      "required": ["id", "kind", "sources"],
+      "required": [
+        "id",
+        "kind",
+        "sources"
+      ],
       "additionalProperties": false,
       "properties": {
-        "id": {"$ref": "#/$defs/id"},
+        "id": {
+          "$ref": "#/$defs/id"
+        },
         "value": true,
-        "kind": {"enum": ["observed", "derived", "reconstructed", "unknown"]},
-        "sources": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/id"}},
-        "channel": {"enum": ["direct", "cached", "mirrored", "republished"]},
-        "upstream": {"type": "string", "minLength": 1},
-        "uncertainty": {"type": "object"},
-        "expect": {"enum": ["accept", "verify", "re_derive"]},
-        "sealed": {"$ref": "#/$defs/seal"}
+        "kind": {
+          "enum": [
+            "observed",
+            "derived",
+            "reconstructed",
+            "unknown"
+          ]
+        },
+        "sources": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "channel": {
+          "enum": [
+            "direct",
+            "cached",
+            "mirrored",
+            "republished"
+          ]
+        },
+        "upstream": {
+          "type": "string",
+          "minLength": 1
+        },
+        "uncertainty": {
+          "type": "object"
+        },
+        "expect": {
+          "enum": [
+            "accept",
+            "verify",
+            "re_derive"
+          ]
+        },
+        "sealed": {
+          "$ref": "#/$defs/seal"
+        },
+        "derivation": {
+          "$ref": "#/$defs/derivation"
+        },
+        "resolvesAt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "observedAt": {
+          "type": "string",
+          "minLength": 1
+        }
       },
       "oneOf": [
-        {"required": ["value"], "not": {"required": ["sealed"]}},
-        {"required": ["sealed"], "not": {"required": ["value"]}, "properties": {"expect": {"const": "re_derive"}}}
+        {
+          "required": [
+            "value"
+          ],
+          "not": {
+            "required": [
+              "sealed"
+            ]
+          }
+        },
+        {
+          "required": [
+            "sealed"
+          ],
+          "not": {
+            "required": [
+              "value"
+            ]
+          },
+          "properties": {
+            "expect": {
+              "const": "re_derive"
+            }
+          }
+        }
       ]
     },
     "basis": {
       "type": "object",
-      "required": ["citation"],
+      "required": [
+        "citation"
+      ],
       "additionalProperties": false,
       "properties": {
-        "citation": {"enum": ["controlling", "secondary", "none"]},
-        "sourceId": {"type": "string", "minLength": 1},
-        "note": {"type": "string"}
+        "citation": {
+          "enum": [
+            "controlling",
+            "secondary",
+            "none"
+          ]
+        },
+        "sourceId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "note": {
+          "type": "string"
+        }
       },
-      "if": {"properties": {"citation": {"enum": ["controlling", "secondary"]}}},
-      "then": {"required": ["sourceId"]}
+      "if": {
+        "properties": {
+          "citation": {
+            "enum": [
+              "controlling",
+              "secondary"
+            ]
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "sourceId"
+        ]
+      }
     },
     "objection": {
       "type": "object",
-      "required": ["id", "target", "basis"],
+      "required": [
+        "id",
+        "target",
+        "basis"
+      ],
       "additionalProperties": false,
       "properties": {
-        "id": {"$ref": "#/$defs/id"},
-        "target": {"$ref": "#/$defs/id"},
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "target": {
+          "$ref": "#/$defs/id"
+        },
         "proposedValue": true,
-        "by": {"type": "string", "minLength": 1},
-        "basis": {"$ref": "#/$defs/basis"},
-        "note": {"type": "string"}
+        "by": {
+          "type": "string",
+          "minLength": 1
+        },
+        "basis": {
+          "$ref": "#/$defs/basis"
+        },
+        "note": {
+          "type": "string"
+        }
       }
     },
     "record": {
       "type": "object",
-      "required": ["id", "parent", "author", "fields", "objections"],
+      "required": [
+        "id",
+        "parent",
+        "author",
+        "fields",
+        "objections"
+      ],
       "additionalProperties": false,
       "properties": {
-        "id": {"$ref": "#/$defs/id"},
-        "parent": {"type": ["string", "null"], "minLength": 1},
-        "author": {"$ref": "#/$defs/author"},
-        "fields": {"type": "array", "items": {"$ref": "#/$defs/field"}},
-        "objections": {"type": "array", "items": {"$ref": "#/$defs/objection"}}
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "parent": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "author": {
+          "$ref": "#/$defs/author"
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/field"
+          }
+        },
+        "objections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/objection"
+          }
+        }
       }
     },
     "disposition": {
       "type": "object",
-      "required": ["field", "action"],
+      "required": [
+        "field",
+        "action"
+      ],
       "additionalProperties": false,
       "properties": {
-        "field": {"$ref": "#/$defs/id"},
-        "action": {"enum": ["accept", "verify", "re_derive", "contest", "modify", "drop"]},
-        "basis": {"$ref": "#/$defs/id"},
-        "objection": {"$ref": "#/$defs/id"},
-        "reason": {"type": "string", "minLength": 1}
+        "field": {
+          "$ref": "#/$defs/id"
+        },
+        "action": {
+          "enum": [
+            "accept",
+            "verify",
+            "re_derive",
+            "contest",
+            "modify",
+            "drop"
+          ]
+        },
+        "basis": {
+          "$ref": "#/$defs/id"
+        },
+        "objection": {
+          "$ref": "#/$defs/id"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
       },
       "allOf": [
-        {"if": {"properties": {"action": {"enum": ["verify", "modify"]}}}, "then": {"required": ["basis"]}},
-        {"if": {"properties": {"action": {"const": "contest"}}}, "then": {"required": ["objection"]}},
-        {"if": {"properties": {"action": {"const": "drop"}}}, "then": {"required": ["reason"]}}
+        {
+          "if": {
+            "properties": {
+              "action": {
+                "enum": [
+                  "verify",
+                  "modify"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "basis"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action": {
+                "const": "contest"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "objection"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "action": {
+                "const": "drop"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "reason"
+            ]
+          }
+        }
       ]
     },
     "receipt": {
       "type": "object",
-      "required": ["id", "target", "dispositions", "record"],
+      "required": [
+        "id",
+        "target",
+        "dispositions",
+        "record"
+      ],
       "additionalProperties": false,
       "properties": {
-        "id": {"$ref": "#/$defs/id"},
-        "target": {"$ref": "#/$defs/id"},
-        "dispositions": {"type": "array", "items": {"$ref": "#/$defs/disposition"}},
-        "record": {"$ref": "#/$defs/record"}
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "target": {
+          "$ref": "#/$defs/id"
+        },
+        "dispositions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/disposition"
+          }
+        },
+        "record": {
+          "$ref": "#/$defs/record"
+        }
       }
     },
     "reveal": {
       "type": "object",
-      "required": ["target", "receiptDigest", "reveals"],
+      "required": [
+        "target",
+        "receiptDigest",
+        "reveals"
+      ],
       "additionalProperties": false,
       "properties": {
-        "target": {"$ref": "#/$defs/id"},
-        "receiptDigest": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+        "target": {
+          "$ref": "#/$defs/id"
+        },
+        "receiptDigest": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
         "reveals": {
           "type": "array",
           "items": {
             "type": "object",
-            "required": ["field", "salt", "value"],
+            "required": [
+              "field",
+              "salt",
+              "value"
+            ],
             "additionalProperties": false,
             "properties": {
-              "field": {"$ref": "#/$defs/id"},
-              "salt": {"type": "string", "minLength": 1},
+              "field": {
+                "$ref": "#/$defs/id"
+              },
+              "salt": {
+                "type": "string",
+                "minLength": 1
+              },
               "value": true
             }
           }
+        }
+      }
+    },
+    "derivation": {
+      "type": "object",
+      "required": [
+        "operation",
+        "inputs"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "operation": {
+          "enum": [
+            "measured",
+            "quoted",
+            "copied",
+            "computed",
+            "reconciled"
+          ]
+        },
+        "inputs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "available": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "sufficient": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/id"
+          }
+        },
+        "quote": {
+          "type": "string",
+          "minLength": 1
+        },
+        "locator": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "replay": {
+      "type": "object",
+      "required": [
+        "field",
+        "method"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "$ref": "#/$defs/id"
+        },
+        "method": {
+          "enum": [
+            "sufficiency",
+            "quote"
+          ]
+        },
+        "input": {
+          "$ref": "#/$defs/id"
+        },
+        "value": true,
+        "sourceText": {
+          "type": "string"
+        },
+        "by": {
+          "type": "string",
+          "minLength": 1
         }
       }
     }

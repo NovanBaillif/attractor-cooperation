@@ -1,5 +1,5 @@
 // SPEC section 7.1 — lineage check between two fields of one record.
-import {indexById, nonEmpty, sorted} from './canonical.mjs';
+import {ancestors, indexById, nonEmpty, sorted} from './canonical.mjs';
 
 const DERIVED = new Set(['derived', 'reconstructed']);
 export const CHANNELS = new Set(['direct', 'cached', 'mirrored', 'republished']);
@@ -47,6 +47,18 @@ export function inspectLineage(input) {
 
   const left = side(input?.comparison?.left);
   const right = side(input?.comparison?.right);
+
+  // 0.3 (step 8): a value produced while its author could see the other side, or anything on the other side's path,
+  // may have been adjusted toward it. Only a sealed re-derivation or a declared reconciliation settles that.
+  const path = id => graph.has(id) ? new Set([id, ...ancestors(graph, id)]) : new Set();
+  const seen = ids => new Set([...ids].flatMap(id => {
+    const available = graph.get(id)?.derivation?.available;
+    return Array.isArray(available) ? available : [];
+  }));
+  const leftPath = path(input?.comparison?.left), rightPath = path(input?.comparison?.right);
+  const comparandVisible = [...seen(leftPath)].some(id => rightPath.has(id)) || [...seen(rightPath)].some(id => leftPath.has(id));
+  if (comparandVisible) warnings.add('comparand-visible');
+
   const result = (status, sharedSources = [], independentRoots = {left: [], right: []}) => ({
     status, sharedSources, independentRoots, problems: sorted(problems), warnings: sorted(warnings),
     interpretation: 'Declared source paths only; provenance is not authenticated.'
@@ -58,7 +70,7 @@ export function inspectLineage(input) {
   const independentRoots = {left: own(left, right), right: own(right, left)};
   if (shared.length === 0) {
     const allVerifiable = [...left.values(), ...right.values()].every(Boolean);
-    return allVerifiable ? result('independent', [], independentRoots) : result('unknown');
+    return allVerifiable && !comparandVisible ? result('independent', [], independentRoots) : result('unknown');
   }
   const partial = independentRoots.left.length > 0 || independentRoots.right.length > 0;
   return result(partial ? 'dependent-partial' : 'dependent', shared, independentRoots);

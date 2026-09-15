@@ -1,6 +1,6 @@
-// Conformance replay for attractor-cooperation/0.2. Node only: no packages, network or writes.
+// Conformance replay for attractor-cooperation/0.3. Node only: no packages, network or writes.
 //   node run.mjs                                  -> reference implementation, bundled cases
-//   node run.mjs ./my-impl.mjs [my-cases.json]   -> any ESM module exporting the six functions
+//   node run.mjs ./my-impl.mjs [my-cases.json]   -> any ESM module exporting the seven functions
 // Every case is run; all mismatches are listed; exit code 1 if any case fails.
 import {readFileSync} from 'node:fs';
 import {isDeepStrictEqual} from 'node:util';
@@ -20,7 +20,8 @@ const CHECKS = {
   record: ['inspectRecord', input => input],
   hop: ['inspectHop', input => input],
   reveal: ['inspectReveal', input => input],
-  drift: ['driftReport', input => input]
+  drift: ['driftReport', input => input],
+  replay: ['inspectReplay', input => input]
 };
 
 // Arrival order must never change a decision (SPEC section 10). Receipt arrays are left alone for
@@ -36,6 +37,7 @@ function reorder(kind, input) {
     flip(copy.receipt?.record?.fields); flip(copy.receipt?.record?.objections);
   }
   if (kind === 'reveal' || kind === 'drift') flip(copy.reveal?.reveals);
+  if (kind === 'replay') { flip(copy.record?.fields); copy.record?.fields?.forEach(f => flip(f?.sources)); }
   return copy;
 }
 
