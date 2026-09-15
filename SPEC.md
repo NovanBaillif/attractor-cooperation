@@ -4,7 +4,7 @@
 
 - No community has adopted this profile. It is a draft for comment and adversarial testing.
 - The published v0.1 convention stays unchanged, including its schema fingerprint that external participants have pinned. This draft does not replace v0.1 until the exit criteria of section 10.3 are met.
-- **Lineage disclosure.** This draft and its reference checker were written by Claude (Anthropic lineage) for the human-led Attractor project. v0.1 and its trial checker were written by Codex (OpenAI lineage). The four adversarial inputs come from terminator2-agent and Clara Bon (bonyohana), who state that they act individually. Section 9 explains why this matters.
+- **Lineage disclosure.** This draft and its reference checker were written by Claude (Anthropic lineage) for the human-led Attractor project. v0.1 and its trial checker were written by Codex (OpenAI lineage). The four adversarial inputs come from terminator2-agent and Clara (bonyohana), who state that they act individually. Section 9 explains why this matters.
 
 ## 1. Purpose and scope
 
@@ -301,7 +301,7 @@ A checker implementation claims conformance to this draft by passing every case 
 | Kind | Cases | Of which |
 |---|---|---|
 | Lineage (7.1) | 19 | 8 migrated from v0.1, 4 from terminator2-agent's counterexamples (verbatim and declared), 1 from the first blind trial |
-| Dispute (7.2) | 16 | 8 migrated from v0.1, 2 from Clara Bon's counterexamples (verbatim), 1 from her 0.2.1 request |
+| Dispute (7.2) | 16 | 8 migrated from v0.1, 2 from Clara (bonyohana)'s counterexamples (verbatim), 1 from her 0.2.1 request |
 | Record (7.3) | 11 | 1 from the first blind trial |
 | Hop (7.4) | 22 | 3 from the first blind trial |
 | Reveal (7.5) | 8 | 1 from the first blind trial |
@@ -335,15 +335,15 @@ Neither trial satisfies criterion 1: the first shares the author's lineage, the 
 | terminator2-agent case 1, verbatim | independent | unknown | Undeclared channels no longer prove independence. |
 | terminator2-agent case 1, declared | independent | dependent | The cache names its upstream; keys match. |
 | terminator2-agent case 2, declared | dependent | dependent-partial | The analyst note is an independent root. |
-| Clara Bon case 1 | unresolved | correction_supported | Claim status follows the controlling source; citation reported apart. |
-| Clara Bon case 2 | confirmed | unresolved | A verified same-scope instrument claims precedence. |
-| v0.1 `dispute-value-match-does-not-transfer-source-authority` | unresolved | correction_supported | Same principle as Clara Bon case 1; the citation stays `secondary`. |
+| Clara (bonyohana) case 1 | unresolved | correction_supported | Claim status follows the controlling source; citation reported apart. |
+| Clara (bonyohana) case 2 | confirmed | unresolved | A verified same-scope instrument claims precedence. |
+| v0.1 `dispute-value-match-does-not-transfer-source-authority` | unresolved | correction_supported | Same principle as Clara (bonyohana) case 1; the citation stays `secondary`. |
 | Equal observations without channel | independent | unknown | Channel now required to conclude independence. |
 | New: controlling source contradicts both | unresolved | contradicted | "We cannot tell" and "the original is refuted" are different states. |
 | New: cached root without upstream | independent | unknown | A copy that does not name what it copies may hide the comparand. |
 | New: two direct reads of one instrument | independent | dependent | Both share the instrument. |
 | New: channel outside the four values | independent | unknown | Unusable declaration, not silently direct. |
-| New: `supersedes` given as a list | confirmed | unresolved | Same rule as Clara Bon case 2. |
+| New: `supersedes` given as a list | confirmed | unresolved | Same rule as Clara (bonyohana) case 2. |
 | New: objection without source | unresolved | correction_supported | A declared hunch; the claim status still follows the controlling source. |
 
 The other 15 v0.1 cases keep their v0.1 status. terminator2-agent's verbatim case 2 stays `dependent`: its inputs lack the declarations that would show the partial dependence. For verbatim case 1, the contributor expected `dependent`; no checker can derive it from that record, which does not say the cache copies the venue. v0.2 returns `unknown` rather than a false `independent`, and `dependent` once the channel is declared. This difference is recorded, not hidden.
@@ -352,10 +352,10 @@ The other 15 v0.1 cases keep their v0.1 status. terminator2-agent's verbatim cas
 
 | Change | Origin |
 |---|---|
-| The dispute check reports `contradicted-undeclared:<sourceId>` for a verified same-scope source that contradicts the controlling one without claiming precedence. Status unchanged. | [Clara Bon, 15 September](https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5682799621) |
+| The dispute check reports `contradicted-undeclared:<sourceId>` for a verified same-scope source that contradicts the controlling one without claiming precedence. Status unchanged. | [Clara (bonyohana), 15 September](https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5682799621) |
 | One new case (her variant of case 2 without `supersedes`: `confirmed` plus the warning); three dispute cases gain a `warnings` expectation. | Same |
 
-The narrow supersession rule of 0.2 is kept: Clara Bon confirmed that the broad form would let preserved dissent block confirmations in her own register.
+The narrow supersession rule of 0.2 is kept: Clara (bonyohana) confirmed that the broad form would let preserved dissent block confirmations in her own register.
 
 ## 12. Known limits
 
@@ -370,7 +370,7 @@ The narrow supersession rule of 0.2 is kept: Clara Bon confirmed that the broad 
 ## 13. Contributors and sources
 
 - **terminator2-agent** (display name Claudius Maximus): per-field provenance with observed / derived / reconstructed; circular controls that share an input; carried objections needing their basis; re-derivation rather than acceptance; the honest cache that launders the comparand; sole versus partial determination. [First contribution](https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5656528807), [counterexamples](https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5657026385).
-- **Clara Bon** (bonyohana): the controlling instrument; an objection from a stronger but non-controlling source must not delete a true claim; claim status separate from citation discipline; supersession between instruments; the undeclared-contradiction warning of 0.2.1. [First contribution](https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5656534610), [counterexamples](https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5659817602), [gist revision 1fcf282a](https://gist.github.com/bonyohana/6ca7b510c3c78bff90347f7cd82611cb).
+- **Clara** (bonyohana): the controlling instrument; an objection from a stronger but non-controlling source must not delete a true claim; claim status separate from citation discipline; supersession between instruments; the undeclared-contradiction warning of 0.2.1. [First contribution](https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5656534610), [counterexamples](https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5659817602), [gist revision 1fcf282a](https://gist.github.com/bonyohana/6ca7b510c3c78bff90347f7cd82611cb).
 - v0.1 convention: [cooperation guide](https://attractor-observatory-demo.vercel.app/cooperation-guide.md) and [schema](https://attractor-observatory-demo.vercel.app/convention-schema.json) (SHA-256 `cc013ef87ac7275b…`); v0.1 trial checker: [feedback guide](https://attractor-observatory-demo.vercel.app/feedback-guide.md).
 
 Their participation is individual. It is not an endorsement of this draft by them or by any community.

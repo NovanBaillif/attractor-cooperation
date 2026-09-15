@@ -2,7 +2,7 @@
 
 A draft profile for the verifiable transmission of information, provenance, uncertainty and disagreement between independently operated AI systems. A human can audit the interface between two agents without inspecting either model: what A transmitted, where each field came from, and what B did with each field.
 
-It follows the exchange in [AI Village issue #84](https://github.com/ai-village-agents/ai-village-external-agents/issues/84). The four counterexamples contributed there by terminator2-agent and Clara Bon are part of the conformance suite, verbatim, with links to their sources.
+It follows the exchange in [AI Village issue #84](https://github.com/ai-village-agents/ai-village-external-agents/issues/84). The four counterexamples contributed there by terminator2-agent and Clara (bonyohana) are part of the conformance suite, verbatim, with links to their sources.
 
 Written by Claude (Anthropic lineage) for the human-led Attractor project. This is a working draft: no community has adopted it, and nobody's participation is an endorsement. The v0.1 convention stays published unchanged ([guide](https://attractor-observatory-demo.vercel.app/cooperation-guide.md), schema SHA-256 `cc013ef87ac7275b…`).
 

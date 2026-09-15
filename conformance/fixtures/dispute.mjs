@@ -20,7 +20,7 @@ export function migrateDispute(v01) {
     const changed = status !== c.expected.status;
     return {id: 'v01-' + c.id, kind: 'dispute', origin: 'v0.1-migrated', input: c.input,
       why: changed
-        ? 'Behaviour change from v0.1 (was unresolved), adopting Clara Bon\'s first counterexample: the claim status follows the receiver\'s own controlling source; the objection\'s weak citation is reported separately as "secondary" and never promoted to controlling.'
+        ? 'Behaviour change from v0.1 (was unresolved), adopting Clara (bonyohana)\'s first counterexample: the claim status follows the receiver\'s own controlling source; the objection\'s weak citation is reported separately as "secondary" and never promoted to controlling.'
         : c.why,
       expected: {status, value: c.input.claim.value, objectionAssessment}};
   });
@@ -35,7 +35,7 @@ const objection = (sourceId, proposedValue = '21 days') =>
 export const disputeCases = [
   {id: 'ce3-verbatim-controller-contradicts-original-but-objection-cites-secondary', kind: 'dispute',
     origin: 'external-counterexample', source: CLARA_CASES + ' ; ' + CLARA_GIST,
-    why: 'Clara Bon case 1, verbatim. The receiver\'s own verified controlling source contradicts the original and equals the proposed value. That is the state of the claim. The poor citation is a fact about the objection, reported in objectionAssessment.',
+    why: 'Clara (bonyohana) case 1, verbatim. The receiver\'s own verified controlling source contradicts the original and equals the proposed value. That is the state of the claim. The poor citation is a fact about the objection, reported in objectionAssessment.',
     input: {
       claim: {id: 'payout-schedule', value: 'twice monthly', domain: 'publisher-agreement', version: '2026-08'},
       objection: {id: 'objection-from-blog', claimId: 'payout-schedule', proposedValue: '1st and 16th of each month', sourceId: 'vendor-blog'},
@@ -46,7 +46,7 @@ export const disputeCases = [
     expected: {status: 'correction_supported', value: 'twice monthly', objectionAssessment: assess('secondary', true)}},
   {id: 'ce4-verbatim-designated-source-superseded-by-verified-amendment-same-version', kind: 'dispute',
     origin: 'external-counterexample', source: CLARA_CASES + ' ; ' + CLARA_GIST,
-    why: 'Clara Bon case 2, verbatim. A verified same-scope amendment that claims to supersede the designated source and disagrees with it disputes applicability. v0.1 returned confirmed.',
+    why: 'Clara (bonyohana) case 2, verbatim. A verified same-scope amendment that claims to supersede the designated source and disagrees with it disputes applicability. v0.1 returned confirmed.',
     input: {claim: retention,
       objection: {id: 'objection-amendment', claimId: 'retention', proposedValue: '21 days', sourceId: 'signed-amendment'},
       policy, sources: [src('signed-agreement', '14 days'), src('signed-amendment', '21 days', {supersedes: 'signed-agreement'})]},
@@ -78,7 +78,7 @@ export const disputeCases = [
     input: {claim: retention, objection: objection(null), policy, sources: [src('signed-agreement', '21 days')]},
     expected: {status: 'correction_supported', value: '14 days', objectionAssessment: assess('none', true)}},
   {id: 'v021-dispute-silent-contradiction-is-reported', kind: 'dispute', origin: 'external-counterexample', source: CLARA_WARNING,
-    why: 'Clara Bon, 15/09: the variant of case 2 without supersedes. A verified same-scope source contradicts the designated one and declares nothing. The status stays confirmed, and the contradiction is reported apart instead of staying invisible.',
+    why: 'Clara (bonyohana), 15/09: the variant of case 2 without supersedes. A verified same-scope source contradicts the designated one and declares nothing. The status stays confirmed, and the contradiction is reported apart instead of staying invisible.',
     input: {claim: retention,
       objection: {id: 'objection-amendment', claimId: 'retention', proposedValue: '21 days', sourceId: 'signed-amendment'},
       policy, sources: [src('signed-agreement', '14 days'), src('signed-amendment', '21 days')]},

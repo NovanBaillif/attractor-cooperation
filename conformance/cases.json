@@ -1211,7 +1211,7 @@
           }
         ]
       },
-      "why": "Behaviour change from v0.1 (was unresolved), adopting Clara Bon's first counterexample: the claim status follows the receiver's own controlling source; the objection's weak citation is reported separately as \"secondary\" and never promoted to controlling.",
+      "why": "Behaviour change from v0.1 (was unresolved), adopting Clara (bonyohana)'s first counterexample: the claim status follows the receiver's own controlling source; the objection's weak citation is reported separately as \"secondary\" and never promoted to controlling.",
       "expected": {
         "status": "correction_supported",
         "value": "14 days",
@@ -1226,7 +1226,7 @@
       "kind": "dispute",
       "origin": "external-counterexample",
       "source": "https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5659817602 ; https://gist.github.com/bonyohana/6ca7b510c3c78bff90347f7cd82611cb (revision 1fcf282ab415a960acbde64c68959b2c9395591d)",
-      "why": "Clara Bon case 1, verbatim. The receiver's own verified controlling source contradicts the original and equals the proposed value. That is the state of the claim. The poor citation is a fact about the objection, reported in objectionAssessment.",
+      "why": "Clara (bonyohana) case 1, verbatim. The receiver's own verified controlling source contradicts the original and equals the proposed value. That is the state of the claim. The poor citation is a fact about the objection, reported in objectionAssessment.",
       "input": {
         "claim": {
           "id": "payout-schedule",
@@ -1278,7 +1278,7 @@
       "kind": "dispute",
       "origin": "external-counterexample",
       "source": "https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5659817602 ; https://gist.github.com/bonyohana/6ca7b510c3c78bff90347f7cd82611cb (revision 1fcf282ab415a960acbde64c68959b2c9395591d)",
-      "why": "Clara Bon case 2, verbatim. A verified same-scope amendment that claims to supersede the designated source and disagrees with it disputes applicability. v0.1 returned confirmed.",
+      "why": "Clara (bonyohana) case 2, verbatim. A verified same-scope amendment that claims to supersede the designated source and disagrees with it disputes applicability. v0.1 returned confirmed.",
       "input": {
         "claim": {
           "id": "retention",
@@ -1596,7 +1596,7 @@
       "kind": "dispute",
       "origin": "external-counterexample",
       "source": "https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5682799621",
-      "why": "Clara Bon, 15/09: the variant of case 2 without supersedes. A verified same-scope source contradicts the designated one and declares nothing. The status stays confirmed, and the contradiction is reported apart instead of staying invisible.",
+      "why": "Clara (bonyohana), 15/09: the variant of case 2 without supersedes. A verified same-scope source contradicts the designated one and declares nothing. The status stays confirmed, and the contradiction is reported apart instead of staying invisible.",
       "input": {
         "claim": {
           "id": "retention",

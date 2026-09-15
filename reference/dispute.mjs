@@ -43,7 +43,7 @@ export function inspectDispute(input) {
     return result('unresolved', 'Applicable source missing, unverified or out of scope.');
   }
   controlling = candidate;
-  // 0.2.1 (Clara Bon, issue #84): a verified same-scope source that contradicts the controlling one
+  // 0.2.1 (Clara, bonyohana, issue #84): a verified same-scope source that contradicts the controlling one
   // without claiming precedence is reported, never allowed to change the status.
   const contradicting = sources.filter(source => source !== candidate && source.status === 'verified' &&
     source.domain === claim.domain && source.version === claim.version && Object.hasOwn(source, 'value') &&
