@@ -1,0 +1,63 @@
+// SPEC section 7.3 — sender-side conformance of a record before it is transmitted.
+import {ancestors, indexById, nonEmpty, sorted} from './canonical.mjs';
+import {CHANNELS} from './lineage.mjs';
+
+export const KINDS = new Set(['observed', 'derived', 'reconstructed', 'unknown']);
+export const EXPECTS = new Set(['accept', 'verify', 're_derive']);
+export const CITATIONS = new Set(['controlling', 'secondary', 'none']);
+const HEX64 = /^[0-9a-f]{64}$/;
+
+// An objection basis says where the objection comes from; "none" declares a hunch explicitly.
+export function validBasis(basis) {
+  return basis !== null && typeof basis === 'object' && CITATIONS.has(basis.citation) &&
+    (basis.citation === 'none' || nonEmpty(basis.sourceId));
+}
+
+export function inspectRecord(record) {
+  const violations = new Set(), warnings = new Set();
+  if (!nonEmpty(record?.id)) violations.add('missing-record-id');
+  const fields = indexById(record?.fields, () => violations.add('missing-or-duplicate-field-id'));
+  const sealed = new Set([...fields].filter(([, f]) => Object.hasOwn(f, 'sealed')).map(([id]) => id));
+
+  for (const [id, field] of fields) {
+    const expect = field.expect ?? 'accept';
+    if (!EXPECTS.has(expect)) violations.add('invalid-expect:' + id);
+    if (!KINDS.has(field.kind)) violations.add('invalid-kind:' + id);
+    const validSources = Array.isArray(field.sources) && field.sources.every(nonEmpty);
+    if (!validSources) violations.add('missing-or-invalid-sources:' + id);
+    else {
+      if (field.sources.some(source => !fields.has(source))) violations.add('provenance-truncated:' + id);
+      const needsSources = field.kind === 'derived' || field.kind === 'reconstructed';
+      if (KINDS.has(field.kind) && needsSources !== field.sources.length > 0) {
+        violations.add('inconsistent-provenance:' + id);
+      }
+    }
+    if (sealed.has(id)) {
+      if (field.sealed?.alg !== 'sha256-jcs' || !HEX64.test(field.sealed?.commitment ?? '')) {
+        violations.add('invalid-seal:' + id);
+      }
+      if (Object.hasOwn(field, 'value')) violations.add('sealed-value-present:' + id);
+      if (expect !== 're_derive') violations.add('sealed-without-re-derive:' + id);
+    } else {
+      if (expect === 're_derive') violations.add('re-derive-unsealed:' + id);
+      if (!Object.hasOwn(field, 'value')) violations.add('missing-value:' + id);
+    }
+    if (field.kind === 'observed') {
+      if (!Object.hasOwn(field, 'channel')) warnings.add('observed-channel-undeclared:' + id);
+      else if (!CHANNELS.has(field.channel)) violations.add('invalid-channel:' + id);
+      else if (field.channel !== 'direct' && !nonEmpty(field.upstream)) warnings.add('upstream-undeclared:' + id);
+    }
+    const up = ancestors(fields, id);
+    if (up.has(id)) violations.add('source-cycle');
+    if (!sealed.has(id) && [...up].some(source => sealed.has(source))) violations.add('sealed-value-leak:' + id);
+  }
+
+  const objections = indexById(record?.objections, () => violations.add('missing-or-duplicate-objection-id'));
+  for (const [id, objection] of objections) {
+    if (!fields.has(objection.target)) violations.add('objection-target-missing:' + id);
+    if (!validBasis(objection.basis)) violations.add('objection-basis-missing:' + id);
+  }
+  if (!nonEmpty(record?.author?.lineage)) warnings.add('lineage-undeclared');
+  return {status: violations.size ? 'non-conformant' : 'conformant',
+    violations: sorted(violations), warnings: sorted(warnings)};
+}

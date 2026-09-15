@@ -1,0 +1,225 @@
+[
+  {
+    "id": "lineage-direct-backfill-from-comparand",
+    "kind": "lineage",
+    "input": {
+      "fields": [
+        {"id": "estimate", "value": 72, "kind": "reconstructed", "sources": ["current"]},
+        {"id": "current", "value": 72, "kind": "observed", "sources": []}
+      ],
+      "comparison": {"left": "estimate", "right": "current"}
+    },
+    "expected": {"status": "dependent", "sharedSources": ["current"]},
+    "why": "Synthetic example, not the contributor's private incident: a repaired estimate was copied from the value against which it is checked. Agreement provides no independent check."
+  },
+  {
+    "id": "lineage-transitive-common-origin",
+    "kind": "lineage",
+    "input": {
+      "fields": [
+        {"id": "check-left", "value": 6, "kind": "derived", "sources": ["intermediate-left"]},
+        {"id": "intermediate-left", "value": 3, "kind": "derived", "sources": ["sensor-root"]},
+        {"id": "check-right", "value": 6, "kind": "reconstructed", "sources": ["intermediate-right"]},
+        {"id": "intermediate-right", "value": 3, "kind": "derived", "sources": ["sensor-root"]},
+        {"id": "sensor-root", "value": 3, "kind": "observed", "sources": []}
+      ],
+      "comparison": {"left": "check-left", "right": "check-right"}
+    },
+    "expected": {"status": "dependent", "sharedSources": ["sensor-root"]},
+    "why": "Synthetic example: distinct immediate parents conceal the same observed root two hops away. Checking only immediate source IDs would miss this dependency."
+  },
+  {
+    "id": "lineage-equal-independent-observations-zero-disagreement",
+    "kind": "lineage",
+    "input": {
+      "fields": [
+        {"id": "observer-a", "value": 18, "kind": "observed", "sources": []},
+        {"id": "observer-b", "value": 18, "kind": "observed", "sources": []}
+      ],
+      "comparison": {"left": "observer-a", "right": "observer-b"}
+    },
+    "expected": {"status": "independent", "sharedSources": []},
+    "why": "Synthetic counterexample to 'zero disagreement implies obedience': two independent declared observations can agree. Independence is only within the declared graph. The record alone cannot detect lying provenance or distinct IDs that secretly alias one observation: independent and dependent private histories can produce this identical input."
+  },
+  {
+    "id": "lineage-disagreement-despite-common-origin",
+    "kind": "lineage",
+    "input": {
+      "fields": [
+        {"id": "left-transform", "value": 40, "kind": "derived", "sources": ["same-origin"]},
+        {"id": "right-transform", "value": 44, "kind": "derived", "sources": ["same-origin"]},
+        {"id": "same-origin", "value": 4, "kind": "observed", "sources": []}
+      ],
+      "comparison": {"left": "left-transform", "right": "right-transform"}
+    },
+    "expected": {"status": "dependent", "sharedSources": ["same-origin"]},
+    "why": "Synthetic example: different transformations of one observation disagree. Disagreement does not establish independence any more than agreement disproves it."
+  },
+  {
+    "id": "lineage-unknown-provenance",
+    "kind": "lineage",
+    "input": {
+      "fields": [
+        {"id": "legacy-estimate", "value": 12, "kind": "unknown", "sources": []},
+        {"id": "fresh-observation", "value": 12, "kind": "observed", "sources": []}
+      ],
+      "comparison": {"left": "legacy-estimate", "right": "fresh-observation"}
+    },
+    "expected": {"status": "unknown"},
+    "why": "Synthetic example: an unknown origin is not an independently observed root. Equal values do not fill in missing provenance."
+  },
+  {
+    "id": "lineage-source-reference-not-supplied",
+    "kind": "lineage",
+    "input": {
+      "fields": [
+        {"id": "derived-estimate", "value": 12, "kind": "derived", "sources": ["missing-input"]},
+        {"id": "fresh-observation", "value": 13, "kind": "observed", "sources": []}
+      ],
+      "comparison": {"left": "derived-estimate", "right": "fresh-observation"}
+    },
+    "expected": {"status": "unknown"},
+    "why": "Synthetic example: a named source is absent, so the promised complete graph is incomplete. A receiver must not infer a disjoint root from the missing reference."
+  },
+  {
+    "id": "lineage-cyclic-provenance",
+    "kind": "lineage",
+    "input": {
+      "fields": [
+        {"id": "loop-a", "value": 9, "kind": "derived", "sources": ["loop-b"]},
+        {"id": "loop-b", "value": 9, "kind": "reconstructed", "sources": ["loop-a"]},
+        {"id": "outside-observation", "value": 9, "kind": "observed", "sources": []}
+      ],
+      "comparison": {"left": "loop-a", "right": "outside-observation"}
+    },
+    "expected": {"status": "unknown"},
+    "why": "Synthetic example: a provenance cycle supplies no observed foundation. The checker must terminate without treating the empty root set as evidence of independence."
+  },
+  {
+    "id": "lineage-comparison-operand-absent",
+    "kind": "lineage",
+    "input": {
+      "fields": [
+        {"id": "present", "value": 1, "kind": "observed", "sources": []}
+      ],
+      "comparison": {"left": "absent", "right": "present"}
+    },
+    "expected": {"status": "unknown"},
+    "why": "Synthetic example: no comparison of provenance can be completed when one operand is missing."
+  },
+  {
+    "id": "dispute-stronger-secondary-source-controller-missing",
+    "kind": "dispute",
+    "input": {
+      "claim": {"id": "retention", "value": "14 days", "domain": "example-agreement", "version": "v2"},
+      "objection": {"id": "objection-secondary", "claimId": "retention", "proposedValue": "21 days", "sourceId": "well-researched-blog"},
+      "policy": {"claimId": "retention", "sourceId": "signed-agreement", "domain": "example-agreement", "version": "v2", "verified": true},
+      "sources": [
+        {"id": "well-researched-blog", "value": "21 days", "domain": "example-agreement", "version": "v2", "status": "verified"}
+      ]
+    },
+    "expected": {"status": "unresolved", "value": "14 days"},
+    "why": "Synthetic contractual example: an authenticated secondary source contradicts the claim, but the locally designated agreement is missing. Neither apparent source quality nor objection presence authorizes replacing the claim."
+  },
+  {
+    "id": "dispute-controller-confirms-original-over-objection",
+    "kind": "dispute",
+    "input": {
+      "claim": {"id": "retention", "value": "14 days", "domain": "example-agreement", "version": "v2"},
+      "objection": {"id": "objection-secondary", "claimId": "retention", "proposedValue": "21 days", "sourceId": "well-researched-blog"},
+      "policy": {"claimId": "retention", "sourceId": "signed-agreement", "domain": "example-agreement", "version": "v2", "verified": true},
+      "sources": [
+        {"id": "signed-agreement", "value": "14 days", "domain": "example-agreement", "version": "v2", "status": "verified"},
+        {"id": "well-researched-blog", "value": "21 days", "domain": "example-agreement", "version": "v2", "status": "verified"}
+      ]
+    },
+    "expected": {"status": "confirmed", "value": "14 days"},
+    "why": "Synthetic contractual example: the verified, correctly scoped controlling agreement confirms the original. Its confirmation must not erase the contrary objection or rewrite history."
+  },
+  {
+    "id": "dispute-unverified-self-designated-policy",
+    "kind": "dispute",
+    "input": {
+      "claim": {"id": "retention", "value": "14 days", "domain": "example-agreement", "version": "v2"},
+      "objection": {"id": "objection-fake-mandate", "claimId": "retention", "proposedValue": "21 days", "sourceId": "alleged-controller"},
+      "policy": {"claimId": "retention", "sourceId": "alleged-controller", "domain": "example-agreement", "version": "v2", "verified": false},
+      "sources": [
+        {"id": "alleged-controller", "value": "21 days", "domain": "example-agreement", "version": "v2", "status": "verified"}
+      ]
+    },
+    "expected": {"status": "unresolved", "value": "14 days"},
+    "why": "Synthetic example: verifying a document is not verifying its authority to govern this claim. An unverified local-policy binding cannot become authoritative because the objection names the same document."
+  },
+  {
+    "id": "dispute-obsolete-controlling-version",
+    "kind": "dispute",
+    "input": {
+      "claim": {"id": "retention", "value": "14 days", "domain": "example-agreement", "version": "v2"},
+      "objection": {"id": "objection-old-copy", "claimId": "retention", "proposedValue": "21 days", "sourceId": "signed-agreement"},
+      "policy": {"claimId": "retention", "sourceId": "signed-agreement", "domain": "example-agreement", "version": "v2", "verified": true},
+      "sources": [
+        {"id": "signed-agreement", "value": "21 days", "domain": "example-agreement", "version": "v1", "status": "verified"}
+      ]
+    },
+    "expected": {"status": "unresolved", "value": "14 days"},
+    "why": "Synthetic example: a genuine document from another version cannot settle the current claim even when the source ID and proposed value match."
+  },
+  {
+    "id": "dispute-policy-for-wrong-domain",
+    "kind": "dispute",
+    "input": {
+      "claim": {"id": "retention", "value": "14 days", "domain": "example-agreement", "version": "v2"},
+      "objection": {"id": "objection-other-domain", "claimId": "retention", "proposedValue": "21 days", "sourceId": "signed-agreement"},
+      "policy": {"claimId": "retention", "sourceId": "signed-agreement", "domain": "other-agreement", "version": "v2", "verified": true},
+      "sources": [
+        {"id": "signed-agreement", "value": "21 days", "domain": "other-agreement", "version": "v2", "status": "verified"}
+      ]
+    },
+    "expected": {"status": "unresolved", "value": "14 days"},
+    "why": "Synthetic example: a verified policy and document for another agreement do not acquire authority over this claim merely through matching field and source IDs."
+  },
+  {
+    "id": "dispute-correction-supported-without-overwrite",
+    "kind": "dispute",
+    "input": {
+      "claim": {"id": "retention", "value": "14 days", "domain": "example-agreement", "version": "v2"},
+      "objection": {"id": "objection-correct", "claimId": "retention", "proposedValue": "21 days", "sourceId": "signed-agreement"},
+      "policy": {"claimId": "retention", "sourceId": "signed-agreement", "domain": "example-agreement", "version": "v2", "verified": true},
+      "sources": [
+        {"id": "signed-agreement", "value": "21 days", "domain": "example-agreement", "version": "v2", "status": "verified"}
+      ]
+    },
+    "expected": {"status": "correction_supported", "value": "14 days"},
+    "why": "Synthetic example: the exact controlling source supports the correction. This justifies a new decision or version; it does not mutate the original claim or remove the objection."
+  },
+  {
+    "id": "dispute-duplicate-controlling-source-identifiers",
+    "kind": "dispute",
+    "input": {
+      "claim": {"id": "retention", "value": "14 days", "domain": "example-agreement", "version": "v2"},
+      "objection": {"id": "objection-collision", "claimId": "retention", "proposedValue": "21 days", "sourceId": "signed-agreement"},
+      "policy": {"claimId": "retention", "sourceId": "signed-agreement", "domain": "example-agreement", "version": "v2", "verified": true},
+      "sources": [
+        {"id": "signed-agreement", "value": "14 days", "domain": "example-agreement", "version": "v2", "status": "verified"},
+        {"id": "signed-agreement", "value": "21 days", "domain": "example-agreement", "version": "v2", "status": "verified"}
+      ]
+    },
+    "expected": {"status": "unresolved", "value": "14 days"},
+    "why": "Synthetic example: two incompatible documents claim the same source identity. Array order or last-write-wins must not decide whether the original is confirmed or corrected."
+  },
+  {
+    "id": "dispute-value-match-does-not-transfer-source-authority",
+    "kind": "dispute",
+    "input": {
+      "claim": {"id": "retention", "value": "14 days", "domain": "example-agreement", "version": "v2"},
+      "objection": {"id": "objection-right-value-wrong-source", "claimId": "retention", "proposedValue": "21 days", "sourceId": "secondary-summary"},
+      "policy": {"claimId": "retention", "sourceId": "signed-agreement", "domain": "example-agreement", "version": "v2", "verified": true},
+      "sources": [
+        {"id": "signed-agreement", "value": "21 days", "domain": "example-agreement", "version": "v2", "status": "verified"},
+        {"id": "secondary-summary", "value": "21 days", "domain": "example-agreement", "version": "v2", "status": "verified"}
+      ]
+    },
+    "expected": {"status": "unresolved", "value": "14 days"},
+    "why": "Synthetic example of the deliberately strict fixture policy: matching the controlling value does not make a secondary source controlling. A supported correction must cite the exact designated source, while the original remains preserved."
+  }
+]

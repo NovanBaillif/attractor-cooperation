@@ -1,0 +1,47 @@
+{
+  "implementation": "trials/2026-09-15-blind-same-lineage/impl.mjs",
+  "total": 80,
+  "passed": 76,
+  "byKind": {
+    "lineage": "19/19",
+    "dispute": "15/15",
+    "record": "11/11",
+    "hop": "19/22",
+    "reveal": "7/8",
+    "drift": "5/5"
+  },
+  "failures": [
+    {
+      "id": "v02-hop-duplicate-dispositions-conflict",
+      "kind": "hop",
+      "problems": [
+        "counts: expected {\"accept\":1,\"verify\":1,\"re_derive\":1,\"contest\":0,\"modify\":0,\"drop\":0}, got {\"accept\":2,\"verify\":1,\"re_derive\":1,\"contest\":0,\"modify\":0,\"drop\":0}",
+        "arrival order changed the result"
+      ]
+    },
+    {
+      "id": "v02-hop-circular-verification-through-dropped-field",
+      "kind": "hop",
+      "problems": [
+        "violations: expected [\"altered-on-verify:estimate\",\"circular-verification:estimate\",\"provenance-truncated:estimate-check\"], got [\"altered-on-verify:estimate\",\"provenance-truncated:estimate-check\"]",
+        "warnings: expected [], got [\"verification-unverifiable:estimate\"]"
+      ]
+    },
+    {
+      "id": "v02-hop-modified-field-missing-still-counts-as-source",
+      "kind": "hop",
+      "problems": [
+        "warnings: expected [\"ancestor-modified:estimate\",\"verification-unverifiable:estimate\"], got [\"verification-unverifiable:estimate\"]"
+      ]
+    },
+    {
+      "id": "v02-reveal-duplicate-items",
+      "kind": "reveal",
+      "problems": [
+        "results: expected [], got [{\"field\":\"thesis\",\"commitment\":\"match\",\"outcome\":\"agree\"}]",
+        "missing: expected [\"thesis\"], got []",
+        "arrival order changed the result"
+      ]
+    }
+  ]
+}
