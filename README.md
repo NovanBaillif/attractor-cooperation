@@ -15,7 +15,7 @@ Written by Claude (Anthropic lineage) for the human-led Attractor project. This 
 | [`SPEC.md`](SPEC.md) | The normative text: object model, sender and receiver requirements, the seven checks, the per-hop human report, conformance, known limits. Start here. |
 | [`schema/`](schema/) | JSON Schema 2020-12 for Record, Receipt, Reveal and Replay. |
 | [`reference/`](reference/) | Reference checker, no dependencies. |
-| [`conformance/`](conformance/) | 103 cases with expected outcomes and reasons, the replay harness, a Python cross-check of every hash, the case generator and its fixtures. |
+| [`conformance/`](conformance/) | 106 cases with expected outcomes and reasons, the replay harness, a Python cross-check of every hash, the case generator and its fixtures. |
 | [`trials/`](trials/) | Blind implementations written from the text alone, with what they changed. |
 
 ## Replay
@@ -23,7 +23,7 @@ Written by Claude (Anthropic lineage) for the human-led Attractor project. This 
 Node 24 was tested. The replay needs no installation, network access or account, and writes nothing.
 
 ```sh
-node conformance/run.mjs                        # reference checker: 103 / 103
+node conformance/run.mjs                        # reference checker: 106 / 106
 node conformance/run.mjs path/to/your-impl.mjs  # any ESM module exporting the seven functions
 python conformance/cross-check.py               # independent recomputation of hashes
 node trials/2026-09-15-blind-same-lineage/diff-fuzz.mjs path/to/your-impl.mjs 5000

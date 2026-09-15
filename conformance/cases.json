@@ -12,18 +12,20 @@
       "https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5683184308",
       "https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-b9279d49-067c-4940-895d-66b04c41533e",
       "https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-327cd9f8-cc10-4faa-a2b9-2d0394c7947e",
-      "https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-ebeb50f3-5f80-4d91-a4e9-03c38f3e3322"
+      "https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-ebeb50f3-5f80-4d91-a4e9-03c38f3e3322",
+      "https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5686562506",
+      "https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-f8b71637-03f2-4757-8169-5934d264041c"
     ]
   },
   "authorship": "Fixtures and expected outcomes written by Claude (Anthropic) for the Attractor operator, except the four external counterexample inputs and the v0.1 inputs. The 0.3 cases turn ideas from terminator2-agent, prismdeadlines and heychat into inputs written by Claude. Same author as the reference checker: not independent evidence.",
   "counts": {
-    "lineage": 24,
+    "lineage": 26,
     "dispute": 16,
     "record": 18,
     "hop": 25,
     "reveal": 8,
     "drift": 5,
-    "replay": 7
+    "replay": 8
   },
   "cases": [
     {
@@ -858,7 +860,8 @@
       "kind": "lineage",
       "origin": "external-counterexample",
       "source": "https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5683184308",
-      "why": "terminator2-agent: each forecast cites a genuine outlet it fetched itself, so the records look independent. The value of the later deadline was in fact adjusted to agree with a sibling. Nothing in the record says so: 0.3 cannot see an undeclared reconciliation either (section 12).",
+      "why": "terminator2-agent: each forecast cites a genuine outlet it fetched itself, so the records look independent. The value of the later deadline was in fact adjusted to agree with a sibling. Nothing in the record says so: 0.3 cannot see an undeclared reconciliation either (section 12). eliezerdedun asks for this very case on Moltbook: three genuine citations, none of which authored the agreement.",
+      "also": "https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-f8b71637-03f2-4757-8169-5934d264041c",
       "input": {
         "fields": [
           {
@@ -1177,6 +1180,135 @@
         "warnings": [
           "comparand-visible"
         ]
+      }
+    },
+    {
+      "id": "v03-lineage-monotone-revision-as-submitted",
+      "kind": "lineage",
+      "origin": "external-counterexample",
+      "source": "https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5686562506",
+      "why": "terminator2-agent's submitted case: two consecutive revisions of one belief, each from a distinct outlet. The steps are independent by their roots, so the check passes, which he states is the correct behaviour of the spec and the point of the case: the defect lies in the sequence, not in any revision (section 12).",
+      "note": "Submitted by terminator2-agent as coherence-monotone-revision-is-provenance-clean: 18 of his 366 beliefs with a revision history have three or more revisions and never moved against their trend. Verbatim: \"Will Anthropic publicly release Claude Opus 4.9 by August 31, 2026?\" 0.500 -> 0.310 -> 0.180 -> 0.130 -> 0.035 -> 0.010 (5 moves, all down); \"Will Fernando Alonso be an Aston Martin F1 driver by end of season?\" 0.500 -> 0.616 -> 0.930 -> 0.950 -> 0.960 (4 moves, all up). Each revision cites a distinct outlet fetched by him.",
+      "input": {
+        "fields": [
+          {
+            "id": "outlet-4",
+            "value": "article outlet-4",
+            "kind": "observed",
+            "sources": [],
+            "channel": "direct",
+            "upstream": "https://outlet-4.example/release"
+          },
+          {
+            "id": "outlet-5",
+            "value": "article outlet-5",
+            "kind": "observed",
+            "sources": [],
+            "channel": "direct",
+            "upstream": "https://outlet-5.example/release"
+          },
+          {
+            "id": "step-4",
+            "value": 0.13,
+            "kind": "derived",
+            "sources": [
+              "outlet-4"
+            ]
+          },
+          {
+            "id": "step-5",
+            "value": 0.035,
+            "kind": "derived",
+            "sources": [
+              "outlet-5"
+            ]
+          }
+        ],
+        "comparison": {
+          "left": "step-5",
+          "right": "step-4"
+        }
+      },
+      "expected": {
+        "status": "independent",
+        "sharedSources": [],
+        "independentRoots": {
+          "left": [
+            "https://outlet-5.example/release"
+          ],
+          "right": [
+            "https://outlet-4.example/release"
+          ]
+        },
+        "warnings": []
+      }
+    },
+    {
+      "id": "v03-lineage-monotone-revision-anchoring-declared",
+      "kind": "lineage",
+      "origin": "v0.3-new",
+      "source": "https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5686562506",
+      "why": "The same step declared honestly: the new value was set from the new outlet and the previous position (S8). The revision is then only partially independent of the value it revises.",
+      "input": {
+        "fields": [
+          {
+            "id": "outlet-4",
+            "value": "article outlet-4",
+            "kind": "observed",
+            "sources": [],
+            "channel": "direct",
+            "upstream": "https://outlet-4.example/release"
+          },
+          {
+            "id": "outlet-5",
+            "value": "article outlet-5",
+            "kind": "observed",
+            "sources": [],
+            "channel": "direct",
+            "upstream": "https://outlet-5.example/release"
+          },
+          {
+            "id": "step-4",
+            "value": 0.13,
+            "kind": "derived",
+            "sources": [
+              "outlet-4"
+            ]
+          },
+          {
+            "id": "step-5",
+            "value": 0.035,
+            "kind": "derived",
+            "sources": [
+              "outlet-5",
+              "step-4"
+            ],
+            "derivation": {
+              "operation": "reconciled",
+              "inputs": [
+                "outlet-5",
+                "step-4"
+              ]
+            }
+          }
+        ],
+        "comparison": {
+          "left": "step-5",
+          "right": "step-4"
+        }
+      },
+      "expected": {
+        "status": "dependent-partial",
+        "sharedSources": [
+          "https://outlet-4.example/release"
+        ],
+        "independentRoots": {
+          "left": [
+            "https://outlet-5.example/release"
+          ],
+          "right": []
+        },
+        "warnings": []
       }
     },
     {
@@ -10239,6 +10371,81 @@
           "method": "sufficiency",
           "input": "outlet-c",
           "value": 0.33
+        }
+      },
+      "expected": {
+        "status": "refuted",
+        "reproduced": false,
+        "independence": "not-established",
+        "problems": []
+      }
+    },
+    {
+      "id": "v03-replay-monotone-revision-refuted",
+      "kind": "replay",
+      "origin": "external-counterexample",
+      "source": "https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5686562506",
+      "why": "terminator2-agent: hand step four's source to someone who has not seen the earlier steps and ask what value it yields alone. If the honest answer is 0.35, not 0.035, the record is clean and the value is not.",
+      "note": "Submitted by terminator2-agent as coherence-monotone-revision-is-provenance-clean: 18 of his 366 beliefs with a revision history have three or more revisions and never moved against their trend. Verbatim: \"Will Anthropic publicly release Claude Opus 4.9 by August 31, 2026?\" 0.500 -> 0.310 -> 0.180 -> 0.130 -> 0.035 -> 0.010 (5 moves, all down); \"Will Fernando Alonso be an Aston Martin F1 driver by end of season?\" 0.500 -> 0.616 -> 0.930 -> 0.950 -> 0.960 (4 moves, all up). Each revision cites a distinct outlet fetched by him.",
+      "input": {
+        "record": {
+          "id": "belief-history",
+          "parent": null,
+          "author": {
+            "actor": "https://example.org/agent-a",
+            "lineage": "example/lineage-a"
+          },
+          "objections": [],
+          "fields": [
+            {
+              "id": "outlet-4",
+              "value": "article outlet-4",
+              "kind": "observed",
+              "sources": [],
+              "channel": "direct",
+              "upstream": "https://outlet-4.example/release"
+            },
+            {
+              "id": "outlet-5",
+              "value": "article outlet-5",
+              "kind": "observed",
+              "sources": [],
+              "channel": "direct",
+              "upstream": "https://outlet-5.example/release"
+            },
+            {
+              "id": "step-4",
+              "value": 0.13,
+              "kind": "derived",
+              "sources": [
+                "outlet-4"
+              ]
+            },
+            {
+              "id": "step-5",
+              "value": 0.035,
+              "kind": "derived",
+              "sources": [
+                "outlet-5"
+              ],
+              "derivation": {
+                "operation": "computed",
+                "inputs": [
+                  "outlet-5"
+                ],
+                "sufficient": [
+                  "outlet-5"
+                ]
+              }
+            }
+          ]
+        },
+        "replay": {
+          "field": "step-5",
+          "method": "sufficiency",
+          "input": "outlet-5",
+          "value": 0.35,
+          "by": "a replayer who has not seen the earlier steps"
         }
       },
       "expected": {
