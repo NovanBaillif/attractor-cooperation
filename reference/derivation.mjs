@@ -11,7 +11,8 @@ export function derivationProblems(id, field, fields) {
   const d = field.derivation;
   if (d === null || typeof d !== 'object' || Array.isArray(d) || !OPERATIONS.has(d.operation) || !idList(d.inputs) ||
       (Object.hasOwn(d, 'available') && !idList(d.available)) || (Object.hasOwn(d, 'sufficient') && !idList(d.sufficient)) ||
-      (Object.hasOwn(d, 'quote') && !nonEmpty(d.quote)) || (Object.hasOwn(d, 'locator') && !nonEmpty(d.locator))) {
+      (Object.hasOwn(d, 'quote') && !nonEmpty(d.quote)) || (Object.hasOwn(d, 'locator') && !nonEmpty(d.locator)) ||
+      (Object.hasOwn(d, 'approvedBy') && !nonEmpty(d.approvedBy))) {
     return ['invalid-derivation'];
   }
   const codes = [];

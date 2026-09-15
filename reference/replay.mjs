@@ -4,10 +4,13 @@
 import {indexById, nonEmpty, same, sorted} from './canonical.mjs';
 
 export function inspectReplay({record, replay} = {}) {
-  const problems = new Set();
+  const problems = new Set(), warnings = new Set();
   const fields = indexById(record?.fields, () => problems.add('record-invalid'));
+  // 0.3.1: a replay is only a second sample if its seat differs from the author's (terminator2-agent).
+  if (!nonEmpty(replay?.lineage)) warnings.add('replayer-lineage-undeclared');
+  else if (replay.lineage === record?.author?.lineage && replay.lineage !== 'human') warnings.add('same-lineage-replay');
   const result = (status, reproduced = null) => ({status, reproduced, independence: 'not-established',
-    problems: sorted(problems),
+    problems: sorted(problems), warnings: sorted(warnings),
     interpretation: 'A replay tests a declaration. It does not show how the value was produced, nor its independence.'});
 
   const field = nonEmpty(replay?.field) ? fields.get(replay.field) : undefined;

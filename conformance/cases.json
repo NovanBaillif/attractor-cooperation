@@ -1,5 +1,5 @@
 {
-  "suite": "attractor-cooperation/0.3 conformance cases (draft)",
+  "suite": "attractor-cooperation/0.3.1 conformance cases (draft)",
   "built_from": {
     "v01_cases": {
       "path": "civilisation/convention/feedback-trial/cases.json",
@@ -14,18 +14,21 @@
       "https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-327cd9f8-cc10-4faa-a2b9-2d0394c7947e",
       "https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-ebeb50f3-5f80-4d91-a4e9-03c38f3e3322",
       "https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5686562506",
-      "https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-f8b71637-03f2-4757-8169-5934d264041c"
+      "https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-f8b71637-03f2-4757-8169-5934d264041c",
+      "https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5689063381",
+      "https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-1f91a4f6-5834-4f44-a58e-59ae75186818",
+      "https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-a8f0de0d-c8a2-4984-a209-210f00d66eb9"
     ]
   },
   "authorship": "Fixtures and expected outcomes written by Claude (Anthropic) for the Attractor operator, except the four external counterexample inputs and the v0.1 inputs. The 0.3 cases turn ideas from terminator2-agent, prismdeadlines and heychat into inputs written by Claude. Same author as the reference checker: not independent evidence.",
   "counts": {
-    "lineage": 26,
+    "lineage": 27,
     "dispute": 16,
-    "record": 18,
+    "record": 20,
     "hop": 25,
     "reveal": 8,
     "drift": 5,
-    "replay": 8
+    "replay": 11
   },
   "cases": [
     {
@@ -860,7 +863,7 @@
       "kind": "lineage",
       "origin": "external-counterexample",
       "source": "https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5683184308",
-      "why": "terminator2-agent: each forecast cites a genuine outlet it fetched itself, so the records look independent. The value of the later deadline was in fact adjusted to agree with a sibling. Nothing in the record says so: 0.3 cannot see an undeclared reconciliation either (section 12). eliezerdedun asks for this very case on Moltbook: three genuine citations, none of which authored the agreement.",
+      "why": "terminator2-agent: each forecast cites a genuine outlet it fetched itself, so the records look independent. The value of the later deadline was in fact adjusted to agree with a sibling. Nothing in the record says so: 0.3 cannot see an undeclared reconciliation either (section 12). eliezerdedun asks for this very case on Moltbook: three genuine citations, none of which authored the agreement. Since 0.3.1 the result says it rests on a known limit.",
       "also": "https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-f8b71637-03f2-4757-8169-5934d264041c",
       "input": {
         "fields": [
@@ -929,7 +932,10 @@
             "https://outlet-a.example/ipo"
           ]
         },
-        "warnings": []
+        "warnings": [],
+        "limits": [
+          "derivation-undeclared"
+        ]
       }
     },
     {
@@ -1013,7 +1019,10 @@
           ],
           "right": []
         },
-        "warnings": []
+        "warnings": [],
+        "limits": [
+          "derivation-undeclared"
+        ]
       }
     },
     {
@@ -1096,7 +1105,8 @@
         },
         "warnings": [
           "comparand-visible"
-        ]
+        ],
+        "limits": []
       }
     },
     {
@@ -1179,7 +1189,8 @@
         },
         "warnings": [
           "comparand-visible"
-        ]
+        ],
+        "limits": []
       }
     },
     {
@@ -1240,7 +1251,10 @@
             "https://outlet-4.example/release"
           ]
         },
-        "warnings": []
+        "warnings": [],
+        "limits": [
+          "derivation-undeclared"
+        ]
       }
     },
     {
@@ -1308,7 +1322,10 @@
           ],
           "right": []
         },
-        "warnings": []
+        "warnings": [],
+        "limits": [
+          "derivation-undeclared"
+        ]
       }
     },
     {
@@ -1358,7 +1375,97 @@
           "left": [],
           "right": []
         },
-        "warnings": []
+        "warnings": [],
+        "limits": []
+      }
+    },
+    {
+      "id": "v031-lineage-every-value-declared",
+      "kind": "lineage",
+      "origin": "external-proposal",
+      "source": "https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-1f91a4f6-5834-4f44-a58e-59ae75186818",
+      "why": "eliezerdedun: a harness pointed at a stub that only cites and never declares the adjustment should take the known-limit path, not a green check. The green path is the one where every derived value on both sides says how it was produced.",
+      "input": {
+        "fields": [
+          {
+            "id": "outlet-a",
+            "value": "article outlet-a",
+            "kind": "observed",
+            "sources": [],
+            "channel": "direct",
+            "upstream": "https://outlet-a.example/ipo"
+          },
+          {
+            "id": "outlet-b",
+            "value": "article outlet-b",
+            "kind": "observed",
+            "sources": [],
+            "channel": "direct",
+            "upstream": "https://outlet-b.example/ipo"
+          },
+          {
+            "id": "outlet-c",
+            "value": "article outlet-c",
+            "kind": "observed",
+            "sources": [],
+            "channel": "direct",
+            "upstream": "https://outlet-c.example/ipo"
+          },
+          {
+            "id": "p-oct31",
+            "value": 0.53,
+            "kind": "derived",
+            "sources": [
+              "outlet-a"
+            ],
+            "derivation": {
+              "operation": "computed",
+              "inputs": [
+                "outlet-a"
+              ]
+            }
+          },
+          {
+            "id": "p-during-oct",
+            "value": 0.27,
+            "kind": "derived",
+            "sources": [
+              "outlet-b"
+            ]
+          },
+          {
+            "id": "p-early-nov",
+            "value": 0.33,
+            "kind": "derived",
+            "sources": [
+              "outlet-c"
+            ],
+            "derivation": {
+              "operation": "computed",
+              "inputs": [
+                "outlet-c"
+              ]
+            }
+          }
+        ],
+        "comparison": {
+          "left": "p-early-nov",
+          "right": "p-oct31"
+        }
+      },
+      "expected": {
+        "status": "independent",
+        "sharedSources": [],
+        "independentRoots": {
+          "left": [
+            "https://outlet-c.example/ipo"
+          ],
+          "right": [
+            "https://outlet-a.example/ipo"
+          ]
+        },
+        "warnings": [],
+        "limits": []
       }
     },
     {
@@ -2990,6 +3097,202 @@
           "missing-or-duplicate-field-id",
           "provenance-truncated:estimate",
           "provenance-truncated:thesis"
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "v031-record-adjustment-approval-declared",
+      "kind": "record",
+      "origin": "external-proposal",
+      "source": "https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-a8f0de0d-c8a2-4984-a209-210f00d66eb9",
+      "why": "cwahq: bind every field to the transformation that produced it, the sibling values it was adjusted against, and the authority that approved the adjustment.",
+      "input": {
+        "id": "rec-v03",
+        "parent": null,
+        "author": {
+          "actor": "https://example.org/agent-a",
+          "lineage": "example/lineage-a"
+        },
+        "objections": [],
+        "fields": [
+          {
+            "id": "outlet-a",
+            "value": "article outlet-a",
+            "kind": "observed",
+            "sources": [],
+            "channel": "direct",
+            "upstream": "https://outlet-a.example/ipo",
+            "derivation": {
+              "operation": "quoted",
+              "inputs": [],
+              "quote": "Bankers expect the listing before 31 October.",
+              "locator": "https://outlet-a.example/ipo#p2"
+            },
+            "observedAt": "2026-09-15T08:00:00Z"
+          },
+          {
+            "id": "outlet-c",
+            "value": "article outlet-c",
+            "kind": "observed",
+            "sources": [],
+            "channel": "direct",
+            "upstream": "https://outlet-c.example/ipo",
+            "derivation": {
+              "operation": "measured",
+              "inputs": []
+            }
+          },
+          {
+            "id": "prior",
+            "value": 0.27,
+            "kind": "observed",
+            "sources": [],
+            "channel": "cached",
+            "upstream": "self:previous",
+            "derivation": {
+              "operation": "copied",
+              "inputs": []
+            }
+          },
+          {
+            "id": "p-oct31",
+            "value": 0.53,
+            "kind": "derived",
+            "sources": [
+              "outlet-a"
+            ],
+            "resolvesAt": "2026-10-31T23:59:59Z",
+            "derivation": {
+              "operation": "computed",
+              "inputs": [
+                "outlet-a"
+              ],
+              "sufficient": [
+                "outlet-a"
+              ]
+            }
+          },
+          {
+            "id": "p-early-nov",
+            "value": 0.55,
+            "kind": "derived",
+            "sources": [
+              "outlet-c",
+              "p-oct31"
+            ],
+            "derivation": {
+              "operation": "reconciled",
+              "inputs": [
+                "outlet-c",
+                "p-oct31"
+              ],
+              "approvedBy": "https://example.org/desk-lead"
+            }
+          }
+        ]
+      },
+      "expected": {
+        "status": "conformant",
+        "violations": [],
+        "warnings": []
+      }
+    },
+    {
+      "id": "v031-record-adjustment-approval-empty",
+      "kind": "record",
+      "origin": "v0.3.1-new",
+      "source": "https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-a8f0de0d-c8a2-4984-a209-210f00d66eb9",
+      "why": "An approval that names nobody is not a declaration.",
+      "input": {
+        "id": "rec-v03",
+        "parent": null,
+        "author": {
+          "actor": "https://example.org/agent-a",
+          "lineage": "example/lineage-a"
+        },
+        "objections": [],
+        "fields": [
+          {
+            "id": "outlet-a",
+            "value": "article outlet-a",
+            "kind": "observed",
+            "sources": [],
+            "channel": "direct",
+            "upstream": "https://outlet-a.example/ipo",
+            "derivation": {
+              "operation": "quoted",
+              "inputs": [],
+              "quote": "Bankers expect the listing before 31 October.",
+              "locator": "https://outlet-a.example/ipo#p2"
+            },
+            "observedAt": "2026-09-15T08:00:00Z"
+          },
+          {
+            "id": "outlet-c",
+            "value": "article outlet-c",
+            "kind": "observed",
+            "sources": [],
+            "channel": "direct",
+            "upstream": "https://outlet-c.example/ipo",
+            "derivation": {
+              "operation": "measured",
+              "inputs": []
+            }
+          },
+          {
+            "id": "prior",
+            "value": 0.27,
+            "kind": "observed",
+            "sources": [],
+            "channel": "cached",
+            "upstream": "self:previous",
+            "derivation": {
+              "operation": "copied",
+              "inputs": []
+            }
+          },
+          {
+            "id": "p-oct31",
+            "value": 0.53,
+            "kind": "derived",
+            "sources": [
+              "outlet-a"
+            ],
+            "resolvesAt": "2026-10-31T23:59:59Z",
+            "derivation": {
+              "operation": "computed",
+              "inputs": [
+                "outlet-a"
+              ],
+              "sufficient": [
+                "outlet-a"
+              ]
+            }
+          },
+          {
+            "id": "p-early-nov",
+            "value": 0.55,
+            "kind": "derived",
+            "sources": [
+              "outlet-c",
+              "p-oct31"
+            ],
+            "derivation": {
+              "operation": "reconciled",
+              "inputs": [
+                "outlet-c",
+                "p-oct31"
+              ],
+              "approvedBy": ""
+            }
+          }
+        ]
+      },
+      "expected": {
+        "status": "non-conformant",
+        "violations": [
+          "invalid-derivation:p-early-nov"
         ],
         "warnings": []
       }
@@ -10161,6 +10464,272 @@
         "level": "orange",
         "warnings": [
           "receiver/same-lineage"
+        ]
+      }
+    },
+    {
+      "id": "v031-replay-same-lineage-seat",
+      "kind": "replay",
+      "origin": "external-counterexample",
+      "source": "https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5689063381",
+      "why": "terminator2-agent: if the replayer is another instance of the same model, its derivation is the author's own with the prior deleted from context but not from the machine. It returns 0.035, the replay is confirmed, and the belief stays undetected. The result must say so.",
+      "input": {
+        "record": {
+          "id": "belief-history",
+          "parent": null,
+          "author": {
+            "actor": "https://example.org/forecaster",
+            "lineage": "anthropic/claude"
+          },
+          "objections": [],
+          "fields": [
+            {
+              "id": "outlet-4",
+              "value": "article outlet-4",
+              "kind": "observed",
+              "sources": [],
+              "channel": "direct",
+              "upstream": "https://outlet-4.example/release"
+            },
+            {
+              "id": "outlet-5",
+              "value": "article outlet-5",
+              "kind": "observed",
+              "sources": [],
+              "channel": "direct",
+              "upstream": "https://outlet-5.example/release"
+            },
+            {
+              "id": "step-4",
+              "value": 0.13,
+              "kind": "derived",
+              "sources": [
+                "outlet-4"
+              ]
+            },
+            {
+              "id": "step-5",
+              "value": 0.035,
+              "kind": "derived",
+              "sources": [
+                "outlet-5"
+              ],
+              "derivation": {
+                "operation": "computed",
+                "inputs": [
+                  "outlet-5"
+                ],
+                "sufficient": [
+                  "outlet-5"
+                ]
+              }
+            }
+          ]
+        },
+        "replay": {
+          "field": "step-5",
+          "method": "sufficiency",
+          "input": "outlet-5",
+          "value": 0.035,
+          "by": "another instance of the author's model",
+          "lineage": "anthropic/claude"
+        }
+      },
+      "expected": {
+        "status": "confirmed",
+        "reproduced": true,
+        "independence": "not-established",
+        "problems": [],
+        "warnings": [
+          "same-lineage-replay"
+        ]
+      }
+    },
+    {
+      "id": "v031-replay-other-lineage-seat",
+      "kind": "replay",
+      "origin": "external-proposal",
+      "source": "https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5689063381",
+      "why": "The experiment he proposes: hand the source of step four to a model of another lineage with no prior. If it returns 0.35, the value did not come from its source.",
+      "input": {
+        "record": {
+          "id": "belief-history",
+          "parent": null,
+          "author": {
+            "actor": "https://example.org/forecaster",
+            "lineage": "anthropic/claude"
+          },
+          "objections": [],
+          "fields": [
+            {
+              "id": "outlet-4",
+              "value": "article outlet-4",
+              "kind": "observed",
+              "sources": [],
+              "channel": "direct",
+              "upstream": "https://outlet-4.example/release"
+            },
+            {
+              "id": "outlet-5",
+              "value": "article outlet-5",
+              "kind": "observed",
+              "sources": [],
+              "channel": "direct",
+              "upstream": "https://outlet-5.example/release"
+            },
+            {
+              "id": "step-4",
+              "value": 0.13,
+              "kind": "derived",
+              "sources": [
+                "outlet-4"
+              ]
+            },
+            {
+              "id": "step-5",
+              "value": 0.035,
+              "kind": "derived",
+              "sources": [
+                "outlet-5"
+              ],
+              "derivation": {
+                "operation": "computed",
+                "inputs": [
+                  "outlet-5"
+                ],
+                "sufficient": [
+                  "outlet-5"
+                ]
+              }
+            }
+          ]
+        },
+        "replay": {
+          "field": "step-5",
+          "method": "sufficiency",
+          "input": "outlet-5",
+          "value": 0.35,
+          "by": "a replayer of another lineage, without the earlier steps",
+          "lineage": "openai/gpt"
+        }
+      },
+      "expected": {
+        "status": "refuted",
+        "reproduced": false,
+        "independence": "not-established",
+        "problems": [],
+        "warnings": []
+      }
+    },
+    {
+      "id": "v031-replay-seat-undeclared",
+      "kind": "replay",
+      "origin": "v0.3.1-new",
+      "source": "https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5689063381",
+      "why": "A replay that does not say who ran it cannot be weighed: the schema cannot observe the replayer's priors, so it must require them to be declared.",
+      "input": {
+        "record": {
+          "id": "rec-v03",
+          "parent": null,
+          "author": {
+            "actor": "https://example.org/agent-a",
+            "lineage": "example/lineage-a"
+          },
+          "objections": [],
+          "fields": [
+            {
+              "id": "outlet-a",
+              "value": "article outlet-a",
+              "kind": "observed",
+              "sources": [],
+              "channel": "direct",
+              "upstream": "https://outlet-a.example/ipo",
+              "derivation": {
+                "operation": "quoted",
+                "inputs": [],
+                "quote": "Bankers expect the listing before 31 October.",
+                "locator": "https://outlet-a.example/ipo#p2"
+              },
+              "observedAt": "2026-09-15T08:00:00Z"
+            },
+            {
+              "id": "outlet-c",
+              "value": "article outlet-c",
+              "kind": "observed",
+              "sources": [],
+              "channel": "direct",
+              "upstream": "https://outlet-c.example/ipo",
+              "derivation": {
+                "operation": "measured",
+                "inputs": []
+              }
+            },
+            {
+              "id": "prior",
+              "value": 0.27,
+              "kind": "observed",
+              "sources": [],
+              "channel": "cached",
+              "upstream": "self:previous",
+              "derivation": {
+                "operation": "copied",
+                "inputs": []
+              }
+            },
+            {
+              "id": "p-oct31",
+              "value": 0.53,
+              "kind": "derived",
+              "sources": [
+                "outlet-a"
+              ],
+              "resolvesAt": "2026-10-31T23:59:59Z",
+              "derivation": {
+                "operation": "computed",
+                "inputs": [
+                  "outlet-a"
+                ],
+                "sufficient": [
+                  "outlet-a"
+                ]
+              }
+            },
+            {
+              "id": "p-early-nov",
+              "value": 0.55,
+              "kind": "derived",
+              "sources": [
+                "outlet-c",
+                "p-oct31"
+              ],
+              "resolvesAt": "2026-11-07T23:59:59Z",
+              "derivation": {
+                "operation": "reconciled",
+                "inputs": [
+                  "outlet-c",
+                  "p-oct31"
+                ],
+                "available": [
+                  "prior"
+                ]
+              }
+            }
+          ]
+        },
+        "replay": {
+          "field": "p-oct31",
+          "method": "sufficiency",
+          "input": "outlet-a",
+          "value": 0.53
+        }
+      },
+      "expected": {
+        "status": "confirmed",
+        "reproduced": true,
+        "independence": "not-established",
+        "problems": [],
+        "warnings": [
+          "replayer-lineage-undeclared"
         ]
       }
     },

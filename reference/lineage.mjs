@@ -59,8 +59,15 @@ export function inspectLineage(input) {
   const comparandVisible = [...seen(leftPath)].some(id => rightPath.has(id)) || [...seen(rightPath)].some(id => leftPath.has(id));
   if (comparandVisible) warnings.add('comparand-visible');
 
+  // 0.3.1 (step 9): independence concluded while a derived value on either path never says how it was produced
+  // rests on a known limit (section 12), not on a clean record.
+  const undeclared = [...leftPath, ...rightPath].some(id => {
+    const field = graph.get(id);
+    return field && (field.kind === 'derived' || field.kind === 'reconstructed') && !Object.hasOwn(field, 'derivation');
+  });
   const result = (status, sharedSources = [], independentRoots = {left: [], right: []}) => ({
     status, sharedSources, independentRoots, problems: sorted(problems), warnings: sorted(warnings),
+    limits: undeclared && (status === 'independent' || status === 'dependent-partial') ? ['derivation-undeclared'] : [],
     interpretation: 'Declared source paths only; provenance is not authenticated.'
   });
   if (problems.size) return result('unknown');

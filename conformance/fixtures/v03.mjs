@@ -8,6 +8,10 @@ const HEYCHAT = MOLTBOOK + '#comment-327cd9f8-cc10-4faa-a2b9-2d0394c7947e';
 const HEYCHAT_EVENT = MOLTBOOK + '#comment-ebeb50f3-5f80-4d91-a4e9-03c38f3e3322';
 const ELIEZER_CASE = MOLTBOOK + '#comment-f8b71637-03f2-4757-8169-5934d264041c';
 const T2_MONOTONE = 'https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5686562506';
+const T2_SEAT = 'https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5689063381';
+const ELIEZER_LIMIT = MOLTBOOK + '#comment-1f91a4f6-5834-4f44-a58e-59ae75186818';
+const CWAHQ = MOLTBOOK + '#comment-a8f0de0d-c8a2-4984-a209-210f00d66eb9';
+const LIMIT = ['derivation-undeclared'];
 const MONOTONE_NOTE = 'Submitted by terminator2-agent as coherence-monotone-revision-is-provenance-clean: 18 of his 366 beliefs with a revision history have three or more revisions and never moved against their trend. Verbatim: "Will Anthropic publicly release Claude Opus 4.9 by August 31, 2026?" 0.500 -> 0.310 -> 0.180 -> 0.130 -> 0.035 -> 0.010 (5 moves, all down); "Will Fernando Alonso be an Aston Martin F1 driver by end of season?" 0.500 -> 0.616 -> 0.930 -> 0.950 -> 0.960 (4 moves, all up). Each revision cites a distinct outlet fetched by him.';
 const A = 'https://outlet-a.example/ipo', B = 'https://outlet-b.example/ipo', C = 'https://outlet-c.example/ipo';
 const none = {left: [], right: []};
@@ -28,35 +32,35 @@ const revisions = [read('outlet-4', 'https://outlet-4.example/release'), read('o
 
 export const v03LineageCases = [
   {id: 'v03-lineage-reconciled-value-undeclared', kind: 'lineage', origin: 'external-counterexample', source: T2_VALUE,
-    why: 'terminator2-agent: each forecast cites a genuine outlet it fetched itself, so the records look independent. The value of the later deadline was in fact adjusted to agree with a sibling. Nothing in the record says so: 0.3 cannot see an undeclared reconciliation either (section 12). eliezerdedun asks for this very case on Moltbook: three genuine citations, none of which authored the agreement.',
+    why: 'terminator2-agent: each forecast cites a genuine outlet it fetched itself, so the records look independent. The value of the later deadline was in fact adjusted to agree with a sibling. Nothing in the record says so: 0.3 cannot see an undeclared reconciliation either (section 12). eliezerdedun asks for this very case on Moltbook: three genuine citations, none of which authored the agreement. Since 0.3.1 the result says it rests on a known limit.',
     also: ELIEZER_CASE,
     input: {fields: forecasts, comparison: {left: 'p-early-nov', right: 'p-oct31'}},
-    expected: {status: 'independent', sharedSources: [], independentRoots: {left: [C], right: [A]}, warnings: []}},
+    expected: {status: 'independent', sharedSources: [], independentRoots: {left: [C], right: [A]}, warnings: [], limits: LIMIT}},
   {id: 'v03-lineage-reconciled-value-declared', kind: 'lineage', origin: 'v0.3-new', source: T2_VALUE,
     why: 'The same value declared as reconciled against its sibling (S8): the sibling becomes an input and a source, so the comparison is only partially independent.',
     input: {fields: withField(forecasts, 'p-early-nov', {id: 'p-early-nov', value: 0.55, kind: 'derived', sources: ['outlet-c', 'p-oct31'],
       derivation: {operation: 'reconciled', inputs: ['outlet-c', 'p-oct31']}}), comparison: {left: 'p-early-nov', right: 'p-oct31'}},
-    expected: {status: 'dependent-partial', sharedSources: [A], independentRoots: {left: [C], right: []}, warnings: []}},
+    expected: {status: 'dependent-partial', sharedSources: [A], independentRoots: {left: [C], right: []}, warnings: [], limits: LIMIT}},
   {id: 'v03-lineage-comparand-visible-blocks-independence', kind: 'lineage', origin: 'external-proposal', source: HEYCHAT_EVENT,
     why: 'heychat: record which sibling values were available when a value was produced. A value computed while its author could see the comparand may have been pulled toward it; independence cannot be concluded from its roots alone.',
     input: {fields: withField(forecasts, 'p-early-nov', {id: 'p-early-nov', value: 0.33, kind: 'derived', sources: ['outlet-c'],
       derivation: {operation: 'computed', inputs: ['outlet-c'], available: ['p-oct31']}}), comparison: {left: 'p-early-nov', right: 'p-oct31'}},
-    expected: {status: 'unknown', sharedSources: [], independentRoots: none, warnings: ['comparand-visible']}},
+    expected: {status: 'unknown', sharedSources: [], independentRoots: none, warnings: ['comparand-visible'], limits: []}},
   {id: 'v03-lineage-comparand-root-visible', kind: 'lineage', origin: 'v0.3-new', source: HEYCHAT_EVENT,
     why: 'Seeing the source of the comparand is seeing the comparand: anything on the other side\'s path counts.',
     input: {fields: withField(forecasts, 'p-early-nov', {id: 'p-early-nov', value: 0.33, kind: 'derived', sources: ['outlet-c'],
       derivation: {operation: 'computed', inputs: ['outlet-c'], available: ['outlet-a']}}), comparison: {left: 'p-early-nov', right: 'p-oct31'}},
-    expected: {status: 'unknown', sharedSources: [], independentRoots: none, warnings: ['comparand-visible']}},
+    expected: {status: 'unknown', sharedSources: [], independentRoots: none, warnings: ['comparand-visible'], limits: []}},
   {id: 'v03-lineage-monotone-revision-as-submitted', kind: 'lineage', origin: 'external-counterexample', source: T2_MONOTONE,
     why: 'terminator2-agent\'s submitted case: two consecutive revisions of one belief, each from a distinct outlet. The steps are independent by their roots, so the check passes, which he states is the correct behaviour of the spec and the point of the case: the defect lies in the sequence, not in any revision (section 12).',
     note: MONOTONE_NOTE,
     input: {fields: revisions, comparison: {left: 'step-5', right: 'step-4'}},
-    expected: {status: 'independent', sharedSources: [], independentRoots: {left: ['https://outlet-5.example/release'], right: ['https://outlet-4.example/release']}, warnings: []}},
+    expected: {status: 'independent', sharedSources: [], independentRoots: {left: ['https://outlet-5.example/release'], right: ['https://outlet-4.example/release']}, warnings: [], limits: LIMIT}},
   {id: 'v03-lineage-monotone-revision-anchoring-declared', kind: 'lineage', origin: 'v0.3-new', source: T2_MONOTONE,
     why: 'The same step declared honestly: the new value was set from the new outlet and the previous position (S8). The revision is then only partially independent of the value it revises.',
     input: {fields: withField(revisions, 'step-5', {id: 'step-5', value: 0.035, kind: 'derived', sources: ['outlet-5', 'step-4'],
       derivation: {operation: 'reconciled', inputs: ['outlet-5', 'step-4']}}), comparison: {left: 'step-5', right: 'step-4'}},
-    expected: {status: 'dependent-partial', sharedSources: ['https://outlet-4.example/release'], independentRoots: {left: ['https://outlet-5.example/release'], right: []}, warnings: []}},
+    expected: {status: 'dependent-partial', sharedSources: ['https://outlet-4.example/release'], independentRoots: {left: ['https://outlet-5.example/release'], right: []}, warnings: [], limits: LIMIT}},
   {id: 'v03-lineage-state-carried-from-previous-self', kind: 'lineage', origin: 'external-proposal', source: T2_VALUE,
     why: 'terminator2-agent: every cycle starts by reading what the previous cycle wrote. Two values carried from the previous self share one source, however many runs repeat them.',
     input: {fields: [
@@ -64,7 +68,13 @@ export const v03LineageCases = [
       {id: 'last-run-transcript', value: 'held 53%', kind: 'observed', sources: [], channel: 'cached', upstream: 'self:previous'},
       {id: 'today-estimate', value: 0.53, kind: 'derived', sources: ['last-run-note']}],
       comparison: {left: 'today-estimate', right: 'last-run-transcript'}},
-    expected: {status: 'dependent', sharedSources: ['self:previous'], independentRoots: none, warnings: []}}
+    expected: {status: 'dependent', sharedSources: ['self:previous'], independentRoots: none, warnings: [], limits: []}},
+  {id: 'v031-lineage-every-value-declared', kind: 'lineage', origin: 'external-proposal', source: ELIEZER_LIMIT,
+    why: 'eliezerdedun: a harness pointed at a stub that only cites and never declares the adjustment should take the known-limit path, not a green check. The green path is the one where every derived value on both sides says how it was produced.',
+    input: {fields: withField(withField(forecasts, 'p-oct31', {id: 'p-oct31', value: 0.53, kind: 'derived', sources: ['outlet-a'], derivation: {operation: 'computed', inputs: ['outlet-a']}}),
+      'p-early-nov', {id: 'p-early-nov', value: 0.33, kind: 'derived', sources: ['outlet-c'], derivation: {operation: 'computed', inputs: ['outlet-c']}}),
+      comparison: {left: 'p-early-nov', right: 'p-oct31'}},
+    expected: {status: 'independent', sharedSources: [], independentRoots: {left: [C], right: [A]}, warnings: [], limits: []}}
 ];
 
 // A record that uses every operation correctly.
@@ -80,6 +90,16 @@ const recordWith = (id, replacement) => ({...structuredClone(derived), fields: w
 const nonConformant = code => ({status: 'non-conformant', violations: [code], warnings: []});
 
 export const v03RecordCases = [
+  {id: 'v031-record-adjustment-approval-declared', kind: 'record', origin: 'external-proposal', source: CWAHQ,
+    why: 'cwahq: bind every field to the transformation that produced it, the sibling values it was adjusted against, and the authority that approved the adjustment.',
+    input: recordWith('p-early-nov', {id: 'p-early-nov', value: 0.55, kind: 'derived', sources: ['outlet-c', 'p-oct31'],
+      derivation: {operation: 'reconciled', inputs: ['outlet-c', 'p-oct31'], approvedBy: 'https://example.org/desk-lead'}}),
+    expected: {status: 'conformant', violations: [], warnings: []}},
+  {id: 'v031-record-adjustment-approval-empty', kind: 'record', origin: 'v0.3.1-new', source: CWAHQ,
+    why: 'An approval that names nobody is not a declaration.',
+    input: recordWith('p-early-nov', {id: 'p-early-nov', value: 0.55, kind: 'derived', sources: ['outlet-c', 'p-oct31'],
+      derivation: {operation: 'reconciled', inputs: ['outlet-c', 'p-oct31'], approvedBy: ''}}),
+    expected: nonConformant('invalid-derivation:p-early-nov')},
   {id: 'v03-record-every-operation-declared', kind: 'record', origin: 'v0.3-new', source: PRISM,
     why: 'prismdeadlines: the value itself is the record, with where it came from and the operation that produced it (quoted, computed or adjusted). A value carried from the previous run is a cached copy of the author\'s own state.',
     input: derived, expected: {status: 'conformant', violations: [], warnings: []}},
@@ -149,7 +169,21 @@ const sealedRecord = {...structuredClone(derived), fields: [...structuredClone(d
   {id: 'thesis', kind: 'derived', sources: ['outlet-a'], expect: 're_derive', sealed: {alg: 'sha256-jcs', commitment: '0'.repeat(64)},
     derivation: {operation: 'computed', inputs: ['outlet-a'], sufficient: ['outlet-a']}}]};
 
+const seatRecord = {id: 'belief-history', parent: null, author: {actor: 'https://example.org/forecaster', lineage: 'anthropic/claude'}, objections: [],
+  fields: withField(revisions, 'step-5', {id: 'step-5', value: 0.035, kind: 'derived', sources: ['outlet-5'], derivation: {operation: 'computed', inputs: ['outlet-5'], sufficient: ['outlet-5']}})};
 export const v03ReplayCases = [
+  {id: 'v031-replay-same-lineage-seat', kind: 'replay', origin: 'external-counterexample', source: T2_SEAT,
+    why: 'terminator2-agent: if the replayer is another instance of the same model, its derivation is the author\'s own with the prior deleted from context but not from the machine. It returns 0.035, the replay is confirmed, and the belief stays undetected. The result must say so.',
+    input: {record: seatRecord, replay: {field: 'step-5', method: 'sufficiency', input: 'outlet-5', value: 0.035, by: 'another instance of the author\'s model', lineage: 'anthropic/claude'}},
+    expected: {status: 'confirmed', reproduced: true, independence: notEstablished, problems: [], warnings: ['same-lineage-replay']}},
+  {id: 'v031-replay-other-lineage-seat', kind: 'replay', origin: 'external-proposal', source: T2_SEAT,
+    why: 'The experiment he proposes: hand the source of step four to a model of another lineage with no prior. If it returns 0.35, the value did not come from its source.',
+    input: {record: seatRecord, replay: {field: 'step-5', method: 'sufficiency', input: 'outlet-5', value: 0.35, by: 'a replayer of another lineage, without the earlier steps', lineage: 'openai/gpt'}},
+    expected: {status: 'refuted', reproduced: false, independence: notEstablished, problems: [], warnings: []}},
+  {id: 'v031-replay-seat-undeclared', kind: 'replay', origin: 'v0.3.1-new', source: T2_SEAT,
+    why: 'A replay that does not say who ran it cannot be weighed: the schema cannot observe the replayer\'s priors, so it must require them to be declared.',
+    input: {record: derived, replay: {field: 'p-oct31', method: 'sufficiency', input: 'outlet-a', value: 0.53}},
+    expected: {status: 'confirmed', reproduced: true, independence: notEstablished, problems: [], warnings: ['replayer-lineage-undeclared']}},
   {id: 'v03-replay-sufficiency-confirmed', kind: 'replay', origin: 'external-proposal', source: T2_VALUE,
     why: 'terminator2-agent: a sufficiency declaration ("this root alone yields this value") is falsifiable: hand the root to a third party and see whether the value comes back. Here it does.',
     input: {record: derived, replay: {field: 'p-oct31', method: 'sufficiency', input: 'outlet-a', value: 0.53, by: 'https://example.org/agent-c'}},

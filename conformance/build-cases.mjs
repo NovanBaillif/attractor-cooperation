@@ -23,7 +23,7 @@ const ids = new Set(cases.map(c => c.id));
 if (ids.size !== cases.length) throw new Error('Duplicate case id.');
 
 const suite = {
-  suite: 'attractor-cooperation/0.3 conformance cases (draft)',
+  suite: 'attractor-cooperation/0.3.1 conformance cases (draft)',
   built_from: {
     v01_cases: {path: 'civilisation/convention/feedback-trial/cases.json', sha256: V01_SHA256},
     external_counterexamples: [
@@ -35,7 +35,10 @@ const suite = {
       'https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-327cd9f8-cc10-4faa-a2b9-2d0394c7947e',
       'https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-ebeb50f3-5f80-4d91-a4e9-03c38f3e3322',
       'https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5686562506',
-      'https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-f8b71637-03f2-4757-8169-5934d264041c'
+      'https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-f8b71637-03f2-4757-8169-5934d264041c',
+      'https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5689063381',
+      'https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-1f91a4f6-5834-4f44-a58e-59ae75186818',
+      'https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-a8f0de0d-c8a2-4984-a209-210f00d66eb9'
     ]
   },
   authorship: 'Fixtures and expected outcomes written by Claude (Anthropic) for the Attractor operator, except the four external counterexample inputs and the v0.1 inputs. The 0.3 cases turn ideas from terminator2-agent, prismdeadlines and heychat into inputs written by Claude. Same author as the reference checker: not independent evidence.',
