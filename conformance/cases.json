@@ -14,7 +14,7 @@
   "authorship": "Fixtures and expected outcomes written by Claude (Anthropic) for the Attractor operator, except the four external counterexample inputs and the v0.1 inputs. Same author as the reference checker: not independent evidence.",
   "counts": {
     "lineage": 19,
-    "dispute": 15,
+    "dispute": 16,
     "record": 11,
     "hop": 22,
     "reveal": 8,
@@ -1323,7 +1323,8 @@
         "objectionAssessment": {
           "citation": "secondary",
           "proposedValueSupported": null
-        }
+        },
+        "warnings": []
       }
     },
     {
@@ -1433,7 +1434,10 @@
         "objectionAssessment": {
           "citation": "secondary",
           "proposedValueSupported": false
-        }
+        },
+        "warnings": [
+          "contradicted-undeclared:well-researched-blog"
+        ]
       }
     },
     {
@@ -1485,7 +1489,8 @@
         "objectionAssessment": {
           "citation": "secondary",
           "proposedValueSupported": false
-        }
+        },
+        "warnings": []
       }
     },
     {
@@ -1584,6 +1589,61 @@
           "citation": "none",
           "proposedValueSupported": true
         }
+      }
+    },
+    {
+      "id": "v021-dispute-silent-contradiction-is-reported",
+      "kind": "dispute",
+      "origin": "external-counterexample",
+      "source": "https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5682799621",
+      "why": "Clara Bon, 15/09: the variant of case 2 without supersedes. A verified same-scope source contradicts the designated one and declares nothing. The status stays confirmed, and the contradiction is reported apart instead of staying invisible.",
+      "input": {
+        "claim": {
+          "id": "retention",
+          "value": "14 days",
+          "domain": "example-agreement",
+          "version": "v2"
+        },
+        "objection": {
+          "id": "objection-amendment",
+          "claimId": "retention",
+          "proposedValue": "21 days",
+          "sourceId": "signed-amendment"
+        },
+        "policy": {
+          "claimId": "retention",
+          "sourceId": "signed-agreement",
+          "domain": "example-agreement",
+          "version": "v2",
+          "verified": true
+        },
+        "sources": [
+          {
+            "id": "signed-agreement",
+            "value": "14 days",
+            "domain": "example-agreement",
+            "version": "v2",
+            "status": "verified"
+          },
+          {
+            "id": "signed-amendment",
+            "value": "21 days",
+            "domain": "example-agreement",
+            "version": "v2",
+            "status": "verified"
+          }
+        ]
+      },
+      "expected": {
+        "status": "confirmed",
+        "value": "14 days",
+        "objectionAssessment": {
+          "citation": "secondary",
+          "proposedValueSupported": false
+        },
+        "warnings": [
+          "contradicted-undeclared:signed-amendment"
+        ]
       }
     },
     {

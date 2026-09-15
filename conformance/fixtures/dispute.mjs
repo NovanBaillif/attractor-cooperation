@@ -1,6 +1,7 @@
 // Dispute fixtures. Expected outcomes are written by hand from SPEC section 7.2, never computed.
 const CLARA_CASES = 'https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5659817602';
 const CLARA_GIST = 'https://gist.github.com/bonyohana/6ca7b510c3c78bff90347f7cd82611cb (revision 1fcf282ab415a960acbde64c68959b2c9395591d)';
+const CLARA_WARNING = 'https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5682799621';
 const assess = (citation, proposedValueSupported) => ({citation, proposedValueSupported});
 
 export function migrateDispute(v01) {
@@ -49,7 +50,7 @@ export const disputeCases = [
     input: {claim: retention,
       objection: {id: 'objection-amendment', claimId: 'retention', proposedValue: '21 days', sourceId: 'signed-amendment'},
       policy, sources: [src('signed-agreement', '14 days'), src('signed-amendment', '21 days', {supersedes: 'signed-agreement'})]},
-    expected: {status: 'unresolved', value: '14 days', objectionAssessment: assess('secondary', null)}},
+    expected: {status: 'unresolved', value: '14 days', objectionAssessment: assess('secondary', null), warnings: []}},
   {id: 'v02-dispute-controller-contradicts-both', kind: 'dispute', origin: 'v0.2-new',
     why: 'The controlling source supports neither the claim nor the proposal. v0.1 said unresolved; v0.2 says the claim is contradicted.',
     input: {claim: retention, objection: objection('well-researched-blog'), policy,
@@ -60,12 +61,13 @@ export const disputeCases = [
     input: {claim: retention, objection: objection('well-researched-blog'), policy, sources: [
       src('signed-agreement', '14 days'), src('signed-amendment', '14 days', {supersedes: 'signed-agreement'}),
       src('well-researched-blog', '21 days')]},
-    expected: {status: 'confirmed', value: '14 days', objectionAssessment: assess('secondary', false)}},
+    expected: {status: 'confirmed', value: '14 days', objectionAssessment: assess('secondary', false),
+      warnings: ['contradicted-undeclared:well-researched-blog']}},
   {id: 'v02-dispute-unverified-amendment-cannot-block', kind: 'dispute', origin: 'v0.2-new',
     why: 'Only a verified instrument can dispute applicability; otherwise anyone could block every confirmation by attaching a supersedes field.',
     input: {claim: retention, objection: objection('signed-amendment'), policy, sources: [
       src('signed-agreement', '14 days'), src('signed-amendment', '21 days', {status: 'unverified', supersedes: 'signed-agreement'})]},
-    expected: {status: 'confirmed', value: '14 days', objectionAssessment: assess('secondary', false)}},
+    expected: {status: 'confirmed', value: '14 days', objectionAssessment: assess('secondary', false), warnings: []}},
   {id: 'v02-dispute-supersedes-list', kind: 'dispute', origin: 'v0.2-new',
     why: 'supersedes may be a list of source ids.',
     input: {claim: retention, objection: objection('signed-amendment'), policy, sources: [
@@ -74,5 +76,12 @@ export const disputeCases = [
   {id: 'v02-dispute-hunch-objection-labelled-none', kind: 'dispute', origin: 'v0.2-new',
     why: 'An objection without a source is a declared hunch. The claim status still follows the controlling source.',
     input: {claim: retention, objection: objection(null), policy, sources: [src('signed-agreement', '21 days')]},
-    expected: {status: 'correction_supported', value: '14 days', objectionAssessment: assess('none', true)}}
+    expected: {status: 'correction_supported', value: '14 days', objectionAssessment: assess('none', true)}},
+  {id: 'v021-dispute-silent-contradiction-is-reported', kind: 'dispute', origin: 'external-counterexample', source: CLARA_WARNING,
+    why: 'Clara Bon, 15/09: the variant of case 2 without supersedes. A verified same-scope source contradicts the designated one and declares nothing. The status stays confirmed, and the contradiction is reported apart instead of staying invisible.',
+    input: {claim: retention,
+      objection: {id: 'objection-amendment', claimId: 'retention', proposedValue: '21 days', sourceId: 'signed-amendment'},
+      policy, sources: [src('signed-agreement', '14 days'), src('signed-amendment', '21 days')]},
+    expected: {status: 'confirmed', value: '14 days', objectionAssessment: assess('secondary', false),
+      warnings: ['contradicted-undeclared:signed-amendment']}}
 ];

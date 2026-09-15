@@ -18,6 +18,7 @@
 | Cases added in response | 6 |
 | Same implementation on the revised suite, 80 cases | 76 / 80 |
 | Differential test after the revision, 30,000 inputs | 3 divergences, all on one point now pinned by a case |
+| Same implementation on the 0.2.1 suite, 81 cases | 73 / 81: it predates the 0.2.1 warning |
 
 The 4 failures on the revised suite are exactly the cases that pin rules rewritten after the implementation was written (`run-after-text-fixes.json`). This is the intended outcome: the new cases detect the old reading.
 

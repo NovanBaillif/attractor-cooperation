@@ -1,5 +1,5 @@
 // SPEC section 7.2 — status of a disputed claim against a locally designated controlling source.
-import {nonEmpty, same} from './canonical.mjs';
+import {nonEmpty, same, sorted} from './canonical.mjs';
 
 const supersedesOf = source =>
   typeof source?.supersedes === 'string' ? [source.supersedes]
@@ -10,6 +10,7 @@ export function inspectDispute(input) {
   const original = structuredClone(claim ?? null);
   const preservedObjection = structuredClone(objection ?? null);
   let controlling = null;
+  let warnings = [];
 
   const result = (status, reason) => {
     const cited = objection?.sourceId;
@@ -18,7 +19,8 @@ export function inspectDispute(input) {
     const decided = ['confirmed', 'correction_supported', 'contradicted'].includes(status);
     return {status, value: original?.value, original, objection: preservedObjection, reason,
       applied: false, objectionAssessment: {citation,
-        proposedValueSupported: decided ? same(controlling.value, objection.proposedValue) : null}};
+        proposedValueSupported: decided ? same(controlling.value, objection.proposedValue) : null},
+      warnings};
   };
 
   if (!claim || !objection || !policy || !nonEmpty(claim.id) || !nonEmpty(objection.id) ||
@@ -41,10 +43,14 @@ export function inspectDispute(input) {
     return result('unresolved', 'Applicable source missing, unverified or out of scope.');
   }
   controlling = candidate;
-  const rival = sources.find(source => source !== candidate && source.status === 'verified' &&
-    source.domain === claim.domain && source.version === claim.version &&
-    supersedesOf(source).includes(candidate.id) && Object.hasOwn(source, 'value') &&
+  // 0.2.1 (Clara Bon, issue #84): a verified same-scope source that contradicts the controlling one
+  // without claiming precedence is reported, never allowed to change the status.
+  const contradicting = sources.filter(source => source !== candidate && source.status === 'verified' &&
+    source.domain === claim.domain && source.version === claim.version && Object.hasOwn(source, 'value') &&
     !same(source.value, candidate.value));
+  warnings = sorted(contradicting.filter(source => !supersedesOf(source).includes(candidate.id))
+    .map(source => 'contradicted-undeclared:' + source.id));
+  const rival = contradicting.find(source => supersedesOf(source).includes(candidate.id));
   if (rival) {
     return result('unresolved', 'Applicable source disputed: a verified same-scope instrument claims precedence; local policy must adjudicate.');
   }

@@ -1,4 +1,4 @@
-# attractor-cooperation 0.2 (draft)
+# attractor-cooperation 0.2.1 (draft)
 
 A draft profile for the verifiable transmission of information, provenance, uncertainty and disagreement between independently operated AI systems. A human can audit the interface between two agents without inspecting either model: what A transmitted, where each field came from, and what B did with each field.
 
@@ -13,7 +13,7 @@ Written by Claude (Anthropic lineage) for the human-led Attractor project. This 
 | [`SPEC.md`](SPEC.md) | The normative text: object model, sender and receiver requirements, the six checks, the per-hop human report, conformance, known limits. Start here. |
 | [`schema/`](schema/) | JSON Schema 2020-12 for Record, Receipt and Reveal. |
 | [`reference/`](reference/) | Reference checker, no dependencies. |
-| [`conformance/`](conformance/) | 80 cases with expected outcomes and reasons, the replay harness, a Python cross-check of every hash, the case generator and its fixtures. |
+| [`conformance/`](conformance/) | 81 cases with expected outcomes and reasons, the replay harness, a Python cross-check of every hash, the case generator and its fixtures. |
 | [`trials/`](trials/) | Blind implementations written from the text alone, with what they changed. |
 
 ## Replay
@@ -21,7 +21,7 @@ Written by Claude (Anthropic lineage) for the human-led Attractor project. This 
 Node 24 was tested. The replay needs no installation, network access or account, and writes nothing.
 
 ```sh
-node conformance/run.mjs                        # reference checker: 80 / 80
+node conformance/run.mjs                        # reference checker: 81 / 81
 node conformance/run.mjs path/to/your-impl.mjs  # any ESM module exporting the six functions
 python conformance/cross-check.py               # independent recomputation of hashes
 node trials/2026-09-15-blind-same-lineage/diff-fuzz.mjs path/to/your-impl.mjs 5000
