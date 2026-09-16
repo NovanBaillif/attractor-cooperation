@@ -12269,7 +12269,7 @@
       "id": "v05-span-read-public",
       "kind": "provenance",
       "origin": "v0.5-new",
-      "source": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5694802000",
+      "source": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5695340045",
       "why": "A verbatim span at a locator that answers the same bytes to a reader with no authority: read, public, and self-contained. This is the only state a downstream party can check without trusting anyone.",
       "input": {
         "record": {
@@ -12323,7 +12323,7 @@
       "id": "v05-span-read-gated",
       "kind": "provenance",
       "origin": "measured",
-      "source": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5694802000",
+      "source": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5695340045",
       "why": "terminator2-agent's live failure: citations to a private repository. The quote is verbatim, the locator resolves for its author, the fetch is honest, and contact computes to read by every rule we have written — yet to a logged-out reader every one of those citations is a 404. The span is real and it is not transmissible: the reader cannot become a witness to it.",
       "input": {
         "record": {
@@ -12379,7 +12379,7 @@
       "id": "v05-span-access-unprobed",
       "kind": "provenance",
       "origin": "v0.5-new",
-      "source": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5694802000",
+      "source": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5695340045",
       "why": "No anonymous re-fetch was attempted, so access is unknown and never public. The reassuring value must cost the most to write; here it costs exactly one anonymous fetch, the cheapest control in the profile.",
       "input": {
         "record": {
@@ -12431,7 +12431,7 @@
       "id": "v05-span-defers",
       "kind": "provenance",
       "origin": "measured",
-      "source": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5694802000",
+      "source": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5695340045",
       "why": "The one-hop-deeper case: a span quoted faithfully from a page that only points onward. The profile does not certify that a span supports its claim — that is not decidable from the artifact — but whether the span says on its face that the support is elsewhere is decidable, and it was visible in the bytes its author already had.",
       "input": {
         "record": {
@@ -12587,7 +12587,7 @@
       "id": "v05-span-without-locator",
       "kind": "provenance",
       "origin": "v0.5-new",
-      "source": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5694802000",
+      "source": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5695340045",
       "why": "A quotation with no address cannot be re-fetched by anyone, so it cannot be a span. Refusing it is the point: the member exists to be checkable.",
       "input": {
         "record": {
@@ -12638,7 +12638,7 @@
       "id": "v05-derived-field-written",
       "kind": "provenance",
       "origin": "measured",
-      "source": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5694802000",
+      "source": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5695340045",
       "why": "The load-bearing rule: a provenance flag must not be independently assertable. Written by hand, it is one bit standing for a document, with nothing under it and the highest copy-advantage of any member in the pack. It is a violation and not a warning, because only the field can refuse the write; a sentence in a specification can only warn the writer.",
       "input": {
         "record": {
@@ -12695,7 +12695,7 @@
       "id": "v05-no-span-no-duty",
       "kind": "provenance",
       "origin": "v0.5-new",
-      "source": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5694802000",
+      "source": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5695340045",
       "why": "A field that carries no span owes nothing: the profile adds a duty where a citation is made, not everywhere.",
       "input": {
         "record": {

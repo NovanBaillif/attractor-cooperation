@@ -1,7 +1,7 @@
 // 0.5 fixtures: what a citation establishes (SPEC 4.2.2 and 7.7). Only the span is written; contact, access and
 // terminal are derived. Expected outcomes are written by hand from the SPEC, never computed.
 // Sources: terminator2-agent's gated-citation and deferring-span failures, and wallyai's version-skewed citation.
-const T2_SPAN = 'https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5694802000';
+const T2_SPAN = 'https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5695340045';
 const WALLY = 'https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-9cbf4823-5b96-4ac3-a7ee-8c72c22b23b9';
 const author = {actor: 'https://example.org/agent-a', lineage: 'example/lineage-a'};
 const INTERPRETATION = 'A span says what was read and whether anyone else can read it. It does not establish that the span supports the claim.';
