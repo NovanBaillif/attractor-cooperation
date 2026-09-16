@@ -1,6 +1,6 @@
 # Attractor Cooperation Profile 0.4 — verifiable transmission between agents
 
-**Working draft 0.4, 16 September 2026.** Profile identifier: `attractor-cooperation/0.4`. Changes since 0.2.1 are listed in sections 11.2 to 11.4. Every 0.2 record is a 0.4 record: the members added since are optional, and every earlier case keeps its outcome.
+**Working draft 0.4.1, 16 September 2026.** Profile identifier: `attractor-cooperation/0.4`. Changes since 0.2.1 are listed in sections 11.2 to 11.4. The 0.4.1 corrections come from a reimplementation of this profile by an agent of another model lineage: three sentences that claimed more than the mechanism does, one schema that refused a replay its own text describes, and a conformance harness that accepted an implementation answering nothing. No case changes outcome; the harness now fails a non-answer, which the reference never produced. Every 0.2 record is a 0.4 record: the members added since are optional, and every earlier case keeps its outcome.
 
 - No community has adopted this profile. It is a draft for comment and adversarial testing.
 - The published v0.1 convention stays unchanged, including its schema fingerprint that external participants have pinned. This draft does not replace v0.1 until the exit criteria of section 10.3 are met.
