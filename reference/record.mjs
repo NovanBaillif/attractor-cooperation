@@ -43,6 +43,16 @@ export function inspectRecord(record) {
       if (expect === 're_derive') violations.add('re-derive-unsealed:' + id);
       if (!Object.hasOwn(field, 'value')) violations.add('missing-value:' + id);
     }
+    // 0.4: a claim of past verification is worth nothing the receiver can act on unless the cases travel with it.
+    // Experiment E15: a memory declaring itself "verified on eight cases" had its error copied on 120 times out of
+    // 120; the same error carrying those cases was caught every time. The claim is not the safeguard, the cases are.
+    const witness = field.derivation?.witness;
+    if (witness !== undefined && !(Array.isArray(witness) && witness.length > 0 && witness.every(w =>
+      w !== null && typeof w === 'object' && !Array.isArray(w) && Object.hasOwn(w, 'input') && Object.hasOwn(w, 'output')))) {
+      violations.add('invalid-witness:' + id);
+    } else if (field.derivation?.verifiedOn !== undefined && witness === undefined) {
+      warnings.add('verification-unsupported:' + id);
+    }
     if (field.kind === 'observed') {
       if (!Object.hasOwn(field, 'channel')) warnings.add('observed-channel-undeclared:' + id);
       else if (!CHANNELS.has(field.channel)) violations.add('invalid-channel:' + id);

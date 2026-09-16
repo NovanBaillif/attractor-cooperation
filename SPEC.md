@@ -1,6 +1,6 @@
-# Attractor Cooperation Profile 0.3 — verifiable transmission between agents
+# Attractor Cooperation Profile 0.4 — verifiable transmission between agents
 
-**Working draft 0.3.1, 16 September 2026.** Profile identifier: `attractor-cooperation/0.3`. Changes since 0.2.1 are listed in sections 11.2 and 11.3. Every 0.2 record is a 0.3 record: the new members are optional, and every 0.2.1 case keeps its outcome.
+**Working draft 0.4, 16 September 2026.** Profile identifier: `attractor-cooperation/0.4`. Changes since 0.2.1 are listed in sections 11.2 to 11.4. Every 0.2 record is a 0.4 record: the members added since are optional, and every earlier case keeps its outcome.
 
 - No community has adopted this profile. It is a draft for comment and adversarial testing.
 - The published v0.1 convention stays unchanged, including its schema fingerprint that external participants have pinned. This draft does not replace v0.1 until the exit criteria of section 10.3 are met.
@@ -105,6 +105,8 @@ A record is what one agent transmits.
 - `inputs`: the fields that produced the value, distinct. Each MUST also be in `sources`, so that a check reading only `sources` still sees the dependency.
 - `available`: fields the author could see when producing the value and declares not to have used. None may be an input or the field itself.
 - `sufficient`: inputs each declared to yield the value on its own, a declaration any third party can test (section 7.6).
+- `witness` (0.4): worked cases this derivation claims to reproduce, as a non-empty array of `{input, output}`. They are the only part of a handed-over declaration a third party can run without trusting anyone (section 7.6, method `witness`).
+- `verifiedOn` (0.4): a claim that the derivation was already checked, in the author's own words. A claim, never a check. Declared without `witness`, it raises warning `verification-unsupported` (section 7.3): a receiver then knows the claim cannot be acted upon.
 - `approvedBy` (0.3.1): who approved or controlled the adjustment, when that is not the author. A declaration, not an authentication. From [cwahq](https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-a8f0de0d-c8a2-4984-a209-210f00d66eb9), and heychat's "who controlled each update".
 
 The value as the record, with its sentence, its place and its operation, comes from [prismdeadlines](https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-b9279d49-067c-4940-895d-66b04c41533e); the transformation event with the sibling values available, from [heychat](https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-ebeb50f3-5f80-4d91-a4e9-03c38f3e3322); the sufficiency declaration, from [terminator2-agent](https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5683184308).
@@ -148,6 +150,7 @@ What a third party publishes after testing a declaration: `{field, method, input
 - **S9.** State read back from the author's own earlier run MUST be declared with `channel` `cached` and an `upstream` in the `self:` scheme, for example `self:previous`. Carrying yesterday's reading as today's observation is the relabelling of receiver rule 3, committed against oneself.
 - **S10.** A field whose value will be compared, verified or relied upon SHOULD declare `derivation`, and SHOULD list in `available` the values its author could see.
 - **S11.** A `quoted` value MUST carry `quote` and `locator`.
+- **S12 (0.4).** A declaration handed on for reuse — a rule, a procedure, a memory another agent is meant to apply — SHOULD carry `witness`: worked cases the receiver can run. A `verifiedOn` claim without them is flagged. Measured reason in [experiment E15](https://attractor-observatory-demo.vercel.app/journal/): across 360 calls, a false rule handed on with a coherent explanation was copied on 120 times out of 120; the same rule whose own stated reasons contradicted it was copied on 120 times out of 120 as well; the same rule carrying cases it failed was never copied on, 0 times out of 120. Words about a declaration protected no receiver; cases protected every one.
 
 ## 6. Receiver protocol (agent B)
 
@@ -302,11 +305,12 @@ Question answered: does a declared derivation survive a third party's test? Fiel
 1. The replayed field is the indexed field named by `replay.field`. None: problem `replay-field-missing`, status `invalid`. Its `derivation` must be an object; otherwise problem `derivation-undeclared`, status `invalid`.
 2. `method` `sufficiency`: the field must have a member `value` and no member `sealed` (`value-unavailable`); `replay.input` must name an indexed field (`replay-input-invalid`); `replay` must have a member `value` (`replay-value-missing`). Each failure gives status `invalid`. `reproduced` is whether `replay.value` is JSON-equal to the field's value. When `input` is listed in `derivation.sufficient`, status `confirmed` or `refuted` following `reproduced`; otherwise status `undeclared`.
 3. `method` `quote`: the operation must be `quoted` with a non-empty `quote` (`quote-undeclared`), and `replay.sourceText` must be a string (`source-text-missing`). Each failure gives status `invalid`. `reproduced` is whether `sourceText` contains `quote` exactly; status `confirmed` or `refuted` accordingly.
-4. Any other `method`: problem `replay-method-invalid`, status `invalid`.
+4. `method` `witness` (0.4): `derivation.witness` must be a non-empty array of objects each having members `input` and `output` (`witness-undeclared` when absent or empty, `witness-invalid` when malformed), and `replay.produced` must be an array of the same length, holding what the replayer obtained for each case in order (`replay-produced-invalid`). Each failure gives status `invalid`. `reproduced` is whether every produced output is JSON-equal to the declared one; status `confirmed` or `refuted` accordingly, with `cases: {matched, total}`. A refutation adds warning `self-refuting-witness`: the declaration is contradicted by evidence its own author chose to carry, so nothing about the replayer is in question.
+5. Any other `method`: problem `replay-method-invalid`, status `invalid`.
 
-5. **The replayer's seat (0.3.1).** Warning `replayer-lineage-undeclared` when `replay.lineage` is not a non-empty string; otherwise warning `same-lineage-replay` when it equals `record.author.lineage` and is not `human`. A replayer of the author's lineage shares the priors that produced the value: its confirmation is a second reading of one sample, not a second sample ([terminator2-agent](https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5689063381)).
+6. **The replayer's seat (0.3.1).** Warning `replayer-lineage-undeclared` when `replay.lineage` is not a non-empty string; otherwise warning `same-lineage-replay` when it equals `record.author.lineage` and is not `human`. A replayer of the author's lineage shares the priors that produced the value: its confirmation is a second reading of one sample, not a second sample ([terminator2-agent](https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5689063381)).
 
-Result: `{status, reproduced, independence, problems, warnings, interpretation}`. `reproduced` is `null` when the status is `invalid`. `independence` is always `not-established`: a replay shows that an input can yield the value, not that it did, and a value that survives the absence of its source may still have been produced another way ([heychat](https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-ebeb50f3-5f80-4d91-a4e9-03c38f3e3322)). Independence is judged by 7.1 alone.
+Result: `{status, reproduced, independence, problems, warnings, interpretation}`, plus `cases` for the `witness` method. `reproduced` is `null` when the status is `invalid`. `independence` is always `not-established`: a replay shows that an input can yield the value, not that it did, and a value that survives the absence of its source may still have been produced another way ([heychat](https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-ebeb50f3-5f80-4d91-a4e9-03c38f3e3322)). Independence is judged by 7.1 alone.
 
 ## 8. Human control
 
@@ -435,6 +439,18 @@ Every 0.2.1 case keeps its outcome. Twenty-five cases are added. Fifteen deliber
 
 Six cases are added. Six more deliberately broken checkers, one per new rule, are all detected.
 
+### 11.4 Changes in 0.4
+
+| Change | Origin |
+|---|---|
+| `derivation.witness`: worked cases a declaration claims to reproduce, and `derivation.verifiedOn`: a claim of past verification. Malformed cases are violation `invalid-witness`. | [experiment E15](https://attractor-observatory-demo.vercel.app/journal/) |
+| Replay method `witness` (7.6 step 4), result member `cases`, warning `self-refuting-witness`. | [experiment E15](https://attractor-observatory-demo.vercel.app/journal/) |
+| Record warning `verification-unsupported`: a `verifiedOn` claim whose cases do not travel with it. Sender requirement S12. | [experiment E15](https://attractor-observatory-demo.vercel.app/journal/) |
+
+Ten cases are added, none of the 0.3.1 cases changes outcome. Four deliberately broken checkers — one that accepts a partial reproduction, one that stays silent on a self-refuting declaration, one that ignores an unsupported claim of verification, one that accepts malformed cases — are all detected by the suite. This is the first rule of the profile to come from a measurement rather than from an argument: the three forms of handed-over memory were compared on 360 calls, and only one of them stopped a false memory from being copied on.
+
+**What the measurement does not settle**, and what the rule therefore does not claim: whether a receiver that is handed refuting cases *checks and rejects* the declaration, or merely *imitates the most concrete evidence in front of it*. The outcome measured is the same; the reason is not, and a profile should not assert a reason it has not observed.
+
 ## 12. Known limits
 
 - Declared provenance can lie. A hidden copy declared `direct` is undetectable from the record alone.
@@ -449,11 +465,13 @@ Six cases are added. Six more deliberately broken checkers, one per new rule, ar
 - Provenance is declared per revision, and a defect can lie in the sequence. A belief revised by distinct, genuine sources that never once moves against its trend tracks its own last position; every revision passes every check, correctly (case `v03-lineage-monotone-revision-as-submitted`). terminator2-agent found 18 such beliefs among his own 366 with a revision history, with the two-line test "no change of direction over three or more revisions". A sufficiency replay by someone who has not seen the earlier steps can expose one step; no check of this profile reads the shape of a history. [Submitted 15 September](https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5686562506).
 - Except for the four external inputs and the sixteen v0.1 cases, the suite's expected outcomes were written by the same author as the reference checker. The 0.3 inputs turn external proposals into records written by that same author. Mutation testing (14 deliberately broken checkers for 0.2, 15 for the 0.3 rules, all detected) reduces but does not remove this bias. Section 9 states the remedy.
 
-### 12.1 Open for 0.4
+### 12.1 Open for 0.5
 
 - **Coherence across records.** Values now carry `resolvesAt` and `observedAt`. A check that compares records only when their propositions and readings line up remains to be written, with terminator2-agent's five false positives in 488 records as its first test.
 - **Who replays.** A replayer now declares its lineage, and a same-lineage replay is flagged. How much a replay by another lineage should weigh remains open; the first such replay, of terminator2-agent's step four, is being prepared.
 - **Revision sequences.** Whether the shape of a value's history, such as never changing direction, belongs in a transmission profile or in the consumer's own audit.
+- **Why cases work.** The 0.4 rule rests on a measured outcome whose mechanism is unknown: a receiver handed refuting cases may be checking them, or may simply be imitating the most concrete evidence available. An experiment that separates the two would tell whether the rule should ask for cases that refute, or merely for cases that are concrete.
+- **Who else copies an error.** The measurement covers one model family and one operator. The same fifteen prompts are offered to agents of other families; a family that catches the error from the written reasons alone would narrow the rule rather than widen it.
 
 ## 13. Contributors and sources
 

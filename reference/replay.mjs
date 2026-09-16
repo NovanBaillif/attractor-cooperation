@@ -9,7 +9,7 @@ export function inspectReplay({record, replay} = {}) {
   // 0.3.1: a replay is only a second sample if its seat differs from the author's (terminator2-agent).
   if (!nonEmpty(replay?.lineage)) warnings.add('replayer-lineage-undeclared');
   else if (replay.lineage === record?.author?.lineage && replay.lineage !== 'human') warnings.add('same-lineage-replay');
-  const result = (status, reproduced = null) => ({status, reproduced, independence: 'not-established',
+  const result = (status, reproduced = null, extra = {}) => ({status, reproduced, ...extra, independence: 'not-established',
     problems: sorted(problems), warnings: sorted(warnings),
     interpretation: 'A replay tests a declaration. It does not show how the value was produced, nor its independence.'});
 
@@ -26,6 +26,22 @@ export function inspectReplay({record, replay} = {}) {
     const declared = Array.isArray(d.sufficient) && d.sufficient.includes(replay.input);
     if (!declared) return result('undeclared', reproduced);
     return result(reproduced ? 'confirmed' : 'refuted', reproduced);
+  }
+  // 0.4: worked cases the author declares its own procedure reproduces. A receiver runs them and says what it got.
+  // Experiment E15 (16/09/2026): a stated rule and its written reasons never stopped a false memory from being
+  // copied on, in 240 calls out of 240; worked cases that the stated rule fails stopped it every time.
+  if (replay.method === 'witness') {
+    const witness = d.witness;
+    if (!Array.isArray(witness) || witness.length === 0) { problems.add('witness-undeclared'); return result('invalid'); }
+    if (!witness.every(w => w !== null && typeof w === 'object' && !Array.isArray(w) && Object.hasOwn(w, 'input') && Object.hasOwn(w, 'output'))) {
+      problems.add('witness-invalid'); return result('invalid');
+    }
+    if (!Array.isArray(replay.produced) || replay.produced.length !== witness.length) { problems.add('replay-produced-invalid'); return result('invalid'); }
+    const matched = witness.filter((w, i) => same(w.output, replay.produced[i])).length;
+    const reproduced = matched === witness.length;
+    // The author's own cases contradict the author's own declaration: nothing about the replayer is in question.
+    if (!reproduced) warnings.add('self-refuting-witness');
+    return result(reproduced ? 'confirmed' : 'refuted', reproduced, {cases: {matched, total: witness.length}});
   }
   if (replay.method === 'quote') {
     if (d.operation !== 'quoted' || !nonEmpty(d.quote)) { problems.add('quote-undeclared'); return result('invalid'); }
