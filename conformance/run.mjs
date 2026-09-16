@@ -54,7 +54,12 @@ for (const c of cases) {
     const mutated = structuredClone(c.input);
     try { fn(mutated); } catch { /* reported above */ }
     if (!isDeepStrictEqual(mutated, before)) problems.push('input mutated');
-    if (actual) {
+    // A check that answers nothing used to skip every comparison below, so an implementation exporting
+    // seven functions that all return undefined passed the whole suite. Found on 16 September 2026 by a
+    // Codex agent (OpenAI lineage) reimplementing the profile blind, with an empty checker as its probe.
+    if (actual === null || typeof actual !== 'object' || Array.isArray(actual)) {
+      problems.push(`result must be a non-null, non-array object, got ${JSON.stringify(actual) ?? 'undefined'}`);
+    } else {
       for (const [key, expected] of Object.entries(c.expected)) {
         if (!isDeepStrictEqual(actual[key], expected)) {
           problems.push(`${key}: expected ${JSON.stringify(expected)}, got ${JSON.stringify(actual[key])}`);
@@ -62,7 +67,7 @@ for (const c of cases) {
       }
       let again;
       try { again = fn(reorder(c.kind, c.input)); } catch (error) { problems.push('reordered input threw: ' + error.message); }
-      if (again && !isDeepStrictEqual(again, actual)) problems.push('arrival order changed the result');
+      if (again !== undefined && !isDeepStrictEqual(again, actual)) problems.push('arrival order changed the result');
       if (c.kind === 'dispute' && actual.applied !== false) problems.push('a revision was applied');
       if (c.kind === 'dispute' && !isDeepStrictEqual(actual.original, before.claim)) problems.push('original claim lost');
       if (c.kind === 'dispute' && !isDeepStrictEqual(actual.objection, before.objection)) problems.push('objection lost');
