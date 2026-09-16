@@ -21,7 +21,8 @@ const CHECKS = {
   hop: ['inspectHop', input => input],
   reveal: ['inspectReveal', input => input],
   drift: ['driftReport', input => input],
-  replay: ['inspectReplay', input => input]
+  replay: ['inspectReplay', input => input],
+  provenance: ['inspectProvenance', input => input]
 };
 
 // Arrival order must never change a decision (SPEC section 10). Receipt arrays are left alone for
@@ -37,7 +38,7 @@ function reorder(kind, input) {
     flip(copy.receipt?.record?.fields); flip(copy.receipt?.record?.objections);
   }
   if (kind === 'reveal' || kind === 'drift') flip(copy.reveal?.reveals);
-  if (kind === 'replay') { flip(copy.record?.fields); copy.record?.fields?.forEach(f => flip(f?.sources)); }
+  if (kind === 'replay' || kind === 'provenance') { flip(copy.record?.fields); copy.record?.fields?.forEach(f => flip(f?.sources)); }
   return copy;
 }
 

@@ -7,6 +7,7 @@ import {migrateDispute, disputeCases} from './fixtures/dispute.mjs';
 import {recordCases, hopCases, revealCases, driftCases} from './fixtures/transmission.mjs';
 import {v03LineageCases, v03RecordCases, v03HopCases, v03ReplayCases} from './fixtures/v03.mjs';
 import {v04RecordCases, v04ReplayCases} from './fixtures/v04.mjs';
+import {v05ProvenanceCases} from './fixtures/v05.mjs';
 
 const V01 = new URL('./v01-cases.json', import.meta.url);
 const V01_SHA256 = 'd26bc5658913acb925d5681f41c05c12fe3ebd7135bef613ff65bfacd1491c5a';
@@ -18,13 +19,13 @@ const v01 = JSON.parse(bytes);
 const cases = [
   ...migrateLineage(v01), ...lineageCases, ...v03LineageCases,
   ...migrateDispute(v01), ...disputeCases,
-  ...recordCases, ...v03RecordCases, ...v04RecordCases, ...hopCases, ...v03HopCases, ...revealCases, ...driftCases, ...v03ReplayCases, ...v04ReplayCases
+  ...recordCases, ...v03RecordCases, ...v04RecordCases, ...hopCases, ...v03HopCases, ...revealCases, ...driftCases, ...v03ReplayCases, ...v04ReplayCases, ...v05ProvenanceCases
 ];
 const ids = new Set(cases.map(c => c.id));
 if (ids.size !== cases.length) throw new Error('Duplicate case id.');
 
 const suite = {
-  suite: 'attractor-cooperation/0.4 conformance cases (draft)',
+  suite: 'attractor-cooperation/0.5 conformance cases (draft)',
   built_from: {
     v01_cases: {path: 'civilisation/convention/feedback-trial/cases.json', sha256: V01_SHA256},
     external_counterexamples: [
@@ -43,7 +44,7 @@ const suite = {
     ]
   },
   authorship: 'Fixtures and expected outcomes written by Claude (Anthropic) for the Attractor operator, except the four external counterexample inputs and the v0.1 inputs. The 0.3 cases turn ideas from terminator2-agent, prismdeadlines and heychat into inputs written by Claude. Same author as the reference checker: not independent evidence.',
-  counts: Object.fromEntries(['lineage', 'dispute', 'record', 'hop', 'reveal', 'drift', 'replay']
+  counts: Object.fromEntries(['lineage', 'dispute', 'record', 'hop', 'reveal', 'drift', 'replay', 'provenance']
     .map(kind => [kind, cases.filter(c => c.kind === kind).length])),
   cases
 };

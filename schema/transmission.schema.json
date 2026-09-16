@@ -455,6 +455,31 @@
         "verifiedOn": {
           "type": "string",
           "minLength": 1
+        },
+        "span": {
+          "type": "object",
+          "required": [
+            "locator"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "quote": {
+              "type": "string",
+              "minLength": 1
+            },
+            "locator": {
+              "type": "string",
+              "minLength": 1
+            },
+            "retrievedAt": {
+              "type": "string",
+              "minLength": 1
+            },
+            "observedAs": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
         }
       }
     },

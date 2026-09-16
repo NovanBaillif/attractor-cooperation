@@ -7,4 +7,5 @@ export {inspectHop} from './hop.mjs';
 export {inspectReveal} from './reveal.mjs';
 export {driftReport} from './drift.mjs';
 export {inspectReplay} from './replay.mjs';
+export {inspectProvenance} from './provenance.mjs';
 export {canonical, commitmentOf, digestOf} from './canonical.mjs';
