@@ -1,5 +1,5 @@
 // Canonical JSON (RFC 8785 / JCS form for the JSON values used by this profile) and SHA-256.
-// Reference implementation of attractor-cooperation/0.3. Not a truth, identity or authority verifier.
+// Reference implementation of attractor-cooperation/0.5. Not a truth, identity or authority verifier.
 import {createHash} from 'node:crypto';
 
 export function canonical(value) {

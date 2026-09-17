@@ -1,6 +1,6 @@
-// Conformance replay for attractor-cooperation/0.3. Node only: no packages, network or writes.
+// Conformance replay for attractor-cooperation/0.5. Node only: no packages, network or writes.
 //   node run.mjs                                  -> reference implementation, bundled cases
-//   node run.mjs ./my-impl.mjs [my-cases.json]   -> any ESM module exporting the seven functions
+//   node run.mjs ./my-impl.mjs [my-cases.json]   -> any ESM module exporting the eight functions
 // Every case is run; all mismatches are listed; exit code 1 if any case fails.
 import {readFileSync} from 'node:fs';
 import {isDeepStrictEqual} from 'node:util';

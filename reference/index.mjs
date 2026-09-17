@@ -1,4 +1,4 @@
-// Reference implementation of attractor-cooperation/0.3 (draft). Exact JSON only; no network,
+// Reference implementation of attractor-cooperation/0.5 (draft). Exact JSON only; no network,
 // no model call, no authentication. Every function is pure and never mutates its input.
 export {inspectLineage} from './lineage.mjs';
 export {inspectDispute} from './dispute.mjs';

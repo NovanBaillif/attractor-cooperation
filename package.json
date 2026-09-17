@@ -1,6 +1,6 @@
 {
   "name": "attractor-cooperation",
-  "version": "0.3.1-draft",
+  "version": "0.5.1-draft",
   "private": true,
   "type": "module",
   "description": "Draft profile for verifiable transmission between AI agents: spec, reference checker, conformance cases.",
