@@ -61,9 +61,9 @@ The canonical form is RFC 8785. For the JSON values used by this profile, an imp
 
 We read Pramana's paper and repository and found none of the following there. This profile keeps them, and treats each as a claim still to be confirmed with Pramana's author:
 
-- what a receiving agent did with each field, recorded apart from the sender's provenance (sections 4.4 and 6);
+- what a receiving agent did with each field when it did not simply verify it (accepted on trust, re-derived, contested, modified, dropped), recorded apart from the sender's provenance (sections 4.4 and 6). Pramana records the outcome of a verification: `pending`, `verified`, `rejected` or `unverifiable`;
 - an observable proof that a receiver re-derived a value before seeing the sender's (sealed fields and commit–reveal, section 7.5);
-- checks on the independence of sources and of the agents that produced them (sections 7.1 and 9).
+- checks, in the record itself, on the independence of sources and of the agents that produced them (sections 7.1 and 9). Pramana's experiments compare same-model, same-family and cross-family reviewer ensembles; we found no independence member in its wire format.
 
 The two are meant to compose: a Pramana attestation for the claim, and this profile's receipt for what the receiver did with it. Nobody has tested that composition yet.
 
@@ -71,6 +71,7 @@ The two are meant to compose: a Pramana attestation for the claim, and this prof
 
 | This profile | Existing term | Relation |
 |---|---|---|
+| `derivation.span` as a whole: `locator`, `quote`, `retrievedAt` (4.2.2) | Pramana `CitationClaim`: `source_uri`, `source_excerpt`, `source_retrieved_at`, with an optional `source_hash` | same; Pramana's hash does more (see 4.2.2) |
 | `derivation.span.quote` (4.2.2) | [W3C Web Annotation](https://www.w3.org/TR/annotation-model/) (2017) `TextQuoteSelector.exact`, with `prefix` and `suffix` | same |
 | `derivation.span.retrievedAt` | Web Annotation `TimeState.sourceDate` | same |
 | a copy of the state that was read (absent from 0.5) | Web Annotation `TimeState.cached`; [Robust Links](https://journal.code4lib.org/articles/15509) `data-versionurl` and `data-versiondate`; [Memento, RFC 7089](https://www.rfc-editor.org/rfc/rfc7089.html) | to adopt; see 4.2.2 |
@@ -163,7 +164,7 @@ Three states and not four: each is decidable from the artifact by a party who tr
 
 **What the span alone does not repair.** A citation with no quote records that bytes arrived, never that the claim is in them, and a later version of the same address leaves no trace of the difference — the version-skewed citation and its honest-cache twin ([wallyai](https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-9cbf4823-5b96-4ac3-a7ee-8c72c22b23b9)). Without more, `fetched` is as far as the profile will go for such a value.
 
-*Correction in 0.6.* Up to 0.5.1 this paragraph said that nothing repairs the version skew. That was wrong: existing standards already repair it in part. A dated copy of the state that was read lets a third party check the bytes after the address has changed: Web Annotation's `TimeState.cached`, and Robust Links' `data-versionurl` with `data-versiondate`. Memento (RFC 7089) retrieves a past state by date wherever an archive holds one. 0.6 adopts these terms rather than defining its own (section 3.3).
+*Correction in 0.6.* Up to 0.5.1 this paragraph said that nothing repairs the version skew. That was wrong: existing standards already repair it in part. A dated copy of the state that was read lets a third party check the bytes after the address has changed: Web Annotation's `TimeState.cached`, and Robust Links' `data-versionurl` with `data-versiondate`. Memento (RFC 7089) retrieves a past state by date wherever an archive holds one. Pramana's `CitationClaim` carries `source_hash`, a content hash of the source at retrieval time. With it, a later version of the same address fails verification instead of passing silently. 0.6 adopts these terms rather than defining its own (section 3.3).
 
 ### 4.3 Objection
 

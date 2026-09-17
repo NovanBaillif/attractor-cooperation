@@ -13,6 +13,7 @@ Written on 17 September 2026, after the operator pointed out that the project wa
 
 | Spec concept | Existing work | Closeness | What to do |
 |---|---|---|---|
+| `derivation.span` as a whole (4.2.2) | Pramana `CitationClaim` (`src/pramana/primitives.py`): `source_uri`, `source_excerpt`, `source_retrieved_at`, optional `source_hash`, and a `verify()` that re-fetches the source and rejects on a missing excerpt or a hash mismatch. *Rechecked in the code.* | same, and more | Map to it. The hash repairs the version skew that 0.5 called unrepairable. |
 | `derivation.span`: `quote`, `retrievedAt` (4.2.2) | W3C [Web Annotation Data Model](https://www.w3.org/TR/annotation-model/), Recommendation of 23 Feb 2017: `TextQuoteSelector` (`exact`, `prefix`, `suffix`), `TimeState` (`sourceDate`, `cached`). *Rechecked.* | same | Map, or adopt the terms. |
 | Version-skewed citation (4.2.2, "what none of it repairs") | [Robust Links](https://journal.code4lib.org/articles/15509) (`data-versionurl`, `data-versiondate`) and [Memento, RFC 7089](https://www.rfc-editor.org/rfc/rfc7089.html). *Rechecked.* | same | Correct the spec: a dated snapshot URL partly repairs the case the spec calls unrepairable. |
 | `kind` observed/derived/reconstructed (4.2) | Gene Ontology evidence codes (EXP, IDA, IC, IEA, TAS, NAS, ND); IPTC Digital Source Type | overlapping | Cite and map. |
@@ -38,4 +39,4 @@ These are claims to test, not results:
 - the anonymous probe behind `access`;
 - a conformance suite built from dated external counterexamples.
 
-Each of these has to be checked against Pramana first.
+Each of these has to be checked against Pramana first. Checked in its code on 17 September: Pramana records the outcome of a verification (`pending`, `verified`, `rejected`, `unverifiable`), and its experiments compare same-model, same-family and cross-family reviewer ensembles. The first and last items above are therefore narrower than they look: dispositions *other than* verification, and independence recorded *in the wire format*.
