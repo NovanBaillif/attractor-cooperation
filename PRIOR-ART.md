@@ -18,12 +18,12 @@ Written on 17 September 2026, after the operator pointed out that the project wa
 | `kind` observed/derived/reconstructed (4.2) | Gene Ontology evidence codes (EXP, IDA, IC, IEA, TAS, NAS, ND); IPTC Digital Source Type | overlapping | Cite and map. |
 | `channel` cached/mirrored/republished, self-state (4.2) | W3C PROV-DM Quotation, PrimarySource, alternateOf, Revision | overlapping | Add the PROV terms that section 3 does not cite yet. |
 | `derivation.operation` (4.2.1) | OpenLineage column-lineage transformation types; Pramana claim types; Buneman et al., *Why and Where*, ICDT 2001 | overlapping | Map. `reconciled`, `available` and `sufficient` have no equivalent found. |
-| Controlling source, `supersedes` (7.2) | Nanopublication `npx:supersedes` / `npx:retracts`; PROV-DM Revision and Invalidation; ODRL 2.2 conflict strategy; AIF conflict and preference nodes | overlapping | Map. |
+| Controlling source, `supersedes` (7.2) | Nanopublication `npx:supersedes` / `npx:retracts` (*rechecked*); PROV-DM Revision and Invalidation; ODRL 2.2 conflict strategy; AIF conflict and preference nodes | overlapping | Map. |
 | Dispute statuses (7.2) | FEVER labels SUPPORTED / REFUTED / NOTENOUGHINFO; schema.org ClaimReview | overlapping | Map. `correction_supported` has no equivalent found. |
-| Objection citation controlling/secondary (4.3), dispositions (4.4) | CiTO 2.9.0: `citesAsAuthority`, `citesAsEvidence`, `disputes`, `corrects`, `confirms` | overlapping | Adopt or map. The name "Receipt" clashes with IETF SCITT. |
+| Objection citation controlling/secondary (4.3), dispositions (4.4) | CiTO 2.9.0 (2026-09-03): `citesAsAuthority`, `citesAsEvidence`, `disputes`, `corrects`, `confirms`. *Rechecked.* | overlapping | Adopt or map. The name "Receipt" clashes with IETF SCITT. |
 | Sealed field and commit–reveal (7.5) | Blind analysis in particle physics (Klein and Roodman, 2005); Sigstore Rekor transparency log | related | Keep. Cite the method's origin. Optionally anchor digests in a public log. |
-| Replay, `witness`, `verifiedOn` (7.6, S12) | SLSA Verification Summary Attestation; in-toto test-result predicate; known-answer tests (NIST CAVP); ACM artifact badges | overlapping | Give `verifiedOn` the fields of the VSA. Cite known-answer tests for `witness`. |
-| Lineage strings | OpenTelemetry GenAI conventions `gen_ai.provider.name`, `gen_ai.request.model` | overlapping | Adopt the values. |
+| Replay, `witness`, `verifiedOn` (7.6, S12) | SLSA Verification Summary Attestation v1: `verifier.id`, `timeVerified`, `policy`, `verificationResult` PASSED/FAILED (*rechecked*); in-toto test-result predicate; known-answer tests (NIST CAVP); ACM artifact badges | overlapping | Give `verifiedOn` the fields of the VSA. Cite known-answer tests for `witness`. |
+| Lineage strings | OpenTelemetry GenAI conventions `gen_ai.provider.name`, `gen_ai.request.model`. *Rechecked*; the attributes are now maintained in the dedicated GenAI conventions repository. | overlapping | Adopt the values. |
 | `access` public/gated (7.7) | COAR Access Rights vocabulary | overlapping for the values | Map. The anonymous re-fetch that decides the value has no equivalent found. |
 | Diagnostics and red/orange/green (7, 8.2) | OASIS SARIF 2.1.0 (`level`, `kind`, `ruleId`) | overlapping | Emit or map to SARIF. |
 
