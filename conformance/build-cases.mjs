@@ -7,7 +7,7 @@ import {migrateDispute, disputeCases} from './fixtures/dispute.mjs';
 import {recordCases, hopCases, revealCases, driftCases} from './fixtures/transmission.mjs';
 import {v03LineageCases, v03RecordCases, v03HopCases, v03ReplayCases} from './fixtures/v03.mjs';
 import {v04RecordCases, v04ReplayCases} from './fixtures/v04.mjs';
-import {v05ProvenanceCases} from './fixtures/v05.mjs';
+import {v05ProvenanceCases, v05DisputeCases} from './fixtures/v05.mjs';
 
 const V01 = new URL('./v01-cases.json', import.meta.url);
 const V01_SHA256 = 'd26bc5658913acb925d5681f41c05c12fe3ebd7135bef613ff65bfacd1491c5a';
@@ -18,7 +18,7 @@ const v01 = JSON.parse(bytes);
 
 const cases = [
   ...migrateLineage(v01), ...lineageCases, ...v03LineageCases,
-  ...migrateDispute(v01), ...disputeCases,
+  ...migrateDispute(v01), ...disputeCases, ...v05DisputeCases,
   ...recordCases, ...v03RecordCases, ...v04RecordCases, ...hopCases, ...v03HopCases, ...revealCases, ...driftCases, ...v03ReplayCases, ...v04ReplayCases, ...v05ProvenanceCases
 ];
 const ids = new Set(cases.map(c => c.id));

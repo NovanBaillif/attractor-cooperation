@@ -3,6 +3,7 @@
 // Sources: terminator2-agent's gated-citation and deferring-span failures, and wallyai's version-skewed citation.
 const T2_SPAN = 'https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5695340045';
 const WALLY = 'https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-9cbf4823-5b96-4ac3-a7ee-8c72c22b23b9';
+const JARVIS = 'https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-17e49e29-43d7-4f38-b6c6-70c1445c882b';
 const author = {actor: 'https://example.org/agent-a', lineage: 'example/lineage-a'};
 const INTERPRETATION = 'A span says what was read and whether anyone else can read it. It does not establish that the span supports the claim.';
 
@@ -62,5 +63,47 @@ export const v05ProvenanceCases = [
   {id: 'v05-no-span-no-duty', kind: 'provenance', origin: 'v0.5-new', source: T2_SPAN,
     why: 'A field that carries no span owes nothing: the profile adds a duty where a citation is made, not everywhere.',
     input: {record: claim(null), probes: {}},
-    expected: ok({})}
+    expected: ok({})},
+
+  {id: 'v05-span-perfect-from-the-wrong-document', kind: 'provenance', origin: 'external-counterexample', source: JARVIS,
+    why: 'jarvis_oscar: "provenance of the document is not provenance of the sentence". A verbatim span, quoted from a README that anyone can fetch and that does not defer: every derived value is green. Yet the README describes a vote that the project manifest declares retired. The provenance check cannot see that, and says so: it establishes what was read and who else can read it, not that the document read is the one that governs. That is the job of a declared controlling source (7.2), exercised by the two dispute cases below.',
+    input: {record: {id: 'claim', author, fields: [
+      {id: 'mechanism', value: 'the module settles disagreements by a vote', kind: 'observed', sources: [], channel: 'direct',
+        upstream: 'https://example.org/learned-intuition/README.md',
+        derivation: {operation: 'quoted', inputs: [], span: {
+          quote: 'Disagreements between agents are settled by a vote.',
+          locator: 'https://example.org/learned-intuition/README.md#consensus',
+          retrievedAt: '2026-09-12T08:00:00Z', observedAs: 'anonymous'}}}]},
+      probes: {mechanism: {anonymous: 'same-bytes'}}},
+    expected: ok({mechanism: {contact: 'read', access: 'public', terminal: true}})}
+];
+
+// Deux documents d'un même projet qui se contredisent, et celui qui fait foi. Cas de jarvis_oscar
+// (OpenClaw, opérateur Oscar Serra) : un README décrit un vote que le manifeste v3.1 déclare retiré ;
+// une correction a cité le README et a dû être corrigée à son tour. « Quand le README et le
+// manifeste divergent, le manifeste l'emporte » : c'est exactement une source qui fait foi.
+const JARVIS_POLICY = {claimId: 'vote-mechanism', sourceId: 'manifest-v3.1', domain: 'learned-intuition', version: 'v3.1', verified: true};
+const JARVIS_SOURCES = [
+  {id: 'manifest-v3.1', value: 'retired', domain: 'learned-intuition', version: 'v3.1', status: 'verified'},
+  {id: 'readme', value: 'active', domain: 'learned-intuition', version: 'v3.1', status: 'verified'}
+];
+
+export const v05DisputeCases = [
+  {id: 'v05-dispute-manifest-governs-the-readme', kind: 'dispute', origin: 'external-counterexample', source: JARVIS,
+    why: 'The first half of jarvis_oscar\'s case. A claim built on the README says the vote is active; an objection citing the manifest says it is retired. The manifest is the declared controlling source, so the correction is supported. The README stays a verified document with a different value and no supersession, and the profile names it instead of dropping it: an undeclared note does not govern, but it must not stay unseen.',
+    input: {claim: {id: 'vote-mechanism', value: 'active', domain: 'learned-intuition', version: 'v3.1'},
+      objection: {id: 'correction-1', claimId: 'vote-mechanism', proposedValue: 'retired', sourceId: 'manifest-v3.1'},
+      policy: JARVIS_POLICY, sources: JARVIS_SOURCES},
+    expected: {status: 'correction_supported', value: 'active',
+      objectionAssessment: {citation: 'controlling', proposedValueSupported: true},
+      warnings: ['contradicted-undeclared:readme']}},
+
+  {id: 'v05-dispute-a-correction-quoting-the-readme', kind: 'dispute', origin: 'external-counterexample', source: JARVIS,
+    why: 'The second half: "a later correction quoted that README and had to be corrected again". Here the claim is already right — retired — and an objection quoting the README proposes active. The controlling source confirms the claim, rates the objection\'s citation as secondary rather than controlling, and still names the README as an undeclared contradiction. A verbatim quote from a real document of the right project is not enough to overturn what the governing document says.',
+    input: {claim: {id: 'vote-mechanism', value: 'retired', domain: 'learned-intuition', version: 'v3.1'},
+      objection: {id: 'correction-2', claimId: 'vote-mechanism', proposedValue: 'active', sourceId: 'readme'},
+      policy: JARVIS_POLICY, sources: JARVIS_SOURCES},
+    expected: {status: 'confirmed', value: 'retired',
+      objectionAssessment: {citation: 'secondary', proposedValueSupported: false},
+      warnings: ['contradicted-undeclared:readme']}}
 ];
