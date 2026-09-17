@@ -431,7 +431,7 @@ A checker implementation claims conformance to this draft by passing every case 
 | Provenance (7.7) | 10 | 9 new in 0.5 (terminator2-agent, wallyai), 1 in 0.5.1 (jarvis_oscar) |
 | **Total** | **134** | |
 
-`run.mjs` also checks that inputs are not mutated, that arrival order does not change results, and that a dispute never applies a revision nor loses the original claim or objection. `cross-check.py` recomputes every commitment and receipt digest in Python. `schema-check.mjs` validates the shape of every input expected to be conformant, and of every replay.
+`run.mjs` also checks that inputs are not mutated, that arrival order does not change results, and that a dispute never applies a revision nor loses the original claim or objection. `cross-check.py` recomputes every commitment and receipt digest in Python. `schema-check.mjs` validates the shape of every input expected to be conformant, including the records of provenance cases, and of every replay; its exit code, not its last lines, says whether it passed.
 
 ### 10.3 Exit criteria
 
@@ -553,8 +553,9 @@ Three cases are added, none of the earlier cases changes outcome, and no checker
 | Section 3.3: Pramana cited, what this profile keeps stated as claims to confirm, and a mapping to existing terms (W3C Web Annotation, Robust Links, Memento, nanopublications, PROV, CiTO, FEVER, SLSA VSA, OpenTelemetry GenAI). | the operator: "you are reinventing the wheel"; audit in [`PRIOR-ART.md`](PRIOR-ART.md) |
 | 4.2.2 corrected: a dated snapshot partly repairs the version-skewed citation, which 0.5 called unrepairable. | same audit |
 | Section 9: a different lineage is not evidence of independent errors. | Kim et al., ICML 2025; Knight and Leveson, 1986 |
+| Shape check repaired. Since 0.4, `schema-check.mjs` had been failing: 15 errors in 0.4, then 9 after 0.4.1. The records in the 0.4 cases lacked the required members `parent` and `objections`, and the release notes of 0.4, 0.5 and 0.5.1 reported the check as passing, from its last lines rather than from its exit code. The records are completed. The check now also validates the records of provenance cases, where the same omission had gone unchecked. | the project, found while preparing 0.6 |
 
-No member, rule or case changes. The mapping is documentation: emitting the existing terms is the work of 0.6 proper, with the schema.
+No member, rule or case outcome changes; the case inputs of 0.4 and 0.5 gain the two missing members. The mapping is documentation: emitting the existing terms is the work of 0.6 proper, with the schema.
 
 ## 12. Known limits
 

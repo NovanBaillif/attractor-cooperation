@@ -4103,10 +4103,12 @@
       "why": "E15: the false memory announced itself as verified on eight fixed cases, and that sentence protected no one — the error was copied on 120 times out of 120. A claim of past verification whose cases do not travel with it is therefore flagged, so that a receiver knows the claim cannot be acted on.",
       "input": {
         "id": "handover",
+        "parent": null,
         "author": {
           "actor": "https://example.org/agent-a",
           "lineage": "example/lineage-a"
         },
+        "objections": [],
         "fields": [
           {
             "id": "source-entry",
@@ -4150,10 +4152,12 @@
       "why": "The same claim, with the cases that make it answerable, raises nothing.",
       "input": {
         "id": "handover",
+        "parent": null,
         "author": {
           "actor": "https://example.org/agent-a",
           "lineage": "example/lineage-a"
         },
+        "objections": [],
         "fields": [
           {
             "id": "source-entry",
@@ -4213,10 +4217,12 @@
       "why": "A field that claims nothing about having been verified owes no cases: the profile adds a duty where a claim is made, not everywhere. Asking the receiver to verify against its own sources stays a clean transmission.",
       "input": {
         "id": "handover",
+        "parent": null,
         "author": {
           "actor": "https://example.org/agent-a",
           "lineage": "example/lineage-a"
         },
+        "objections": [],
         "fields": [
           {
             "id": "source-entry",
@@ -4257,10 +4263,12 @@
       "why": "Cases that are not pairs of an input and an output cannot be replayed by anyone; announcing them is worse than announcing nothing, so it is a violation and not a warning.",
       "input": {
         "id": "handover",
+        "parent": null,
         "author": {
           "actor": "https://example.org/agent-a",
           "lineage": "example/lineage-a"
         },
+        "objections": [],
         "fields": [
           {
             "id": "source-entry",
@@ -11908,10 +11916,12 @@
       "input": {
         "record": {
           "id": "handover",
+          "parent": null,
           "author": {
             "actor": "https://example.org/agent-a",
             "lineage": "example/lineage-a"
           },
+          "objections": [],
           "fields": [
             {
               "id": "source-entry",
@@ -11991,10 +12001,12 @@
       "input": {
         "record": {
           "id": "handover",
+          "parent": null,
           "author": {
             "actor": "https://example.org/agent-a",
             "lineage": "example/lineage-a"
           },
+          "objections": [],
           "fields": [
             {
               "id": "source-entry",
@@ -12076,10 +12088,12 @@
       "input": {
         "record": {
           "id": "handover",
+          "parent": null,
           "author": {
             "actor": "https://example.org/agent-a",
             "lineage": "example/lineage-a"
           },
+          "objections": [],
           "fields": [
             {
               "id": "source-entry",
@@ -12161,10 +12175,12 @@
       "input": {
         "record": {
           "id": "handover",
+          "parent": null,
           "author": {
             "actor": "https://example.org/agent-a",
             "lineage": "example/lineage-a"
           },
+          "objections": [],
           "fields": [
             {
               "id": "source-entry",
@@ -12221,10 +12237,12 @@
       "input": {
         "record": {
           "id": "handover",
+          "parent": null,
           "author": {
             "actor": "https://example.org/agent-a",
             "lineage": "example/lineage-a"
           },
+          "objections": [],
           "fields": [
             {
               "id": "source-entry",
@@ -12299,10 +12317,12 @@
       "input": {
         "record": {
           "id": "handover",
+          "parent": null,
           "author": {
             "actor": "https://example.org/agent-a",
             "lineage": "example/lineage-a"
           },
+          "objections": [],
           "fields": [
             {
               "id": "source-entry",
@@ -12384,10 +12404,12 @@
       "input": {
         "record": {
           "id": "claim",
+          "parent": null,
           "author": {
             "actor": "https://example.org/agent-a",
             "lineage": "example/lineage-a"
           },
+          "objections": [],
           "fields": [
             {
               "id": "rule",
@@ -12438,10 +12460,12 @@
       "input": {
         "record": {
           "id": "claim",
+          "parent": null,
           "author": {
             "actor": "https://example.org/agent-a",
             "lineage": "example/lineage-a"
           },
+          "objections": [],
           "fields": [
             {
               "id": "rule",
@@ -12494,10 +12518,12 @@
       "input": {
         "record": {
           "id": "claim",
+          "parent": null,
           "author": {
             "actor": "https://example.org/agent-a",
             "lineage": "example/lineage-a"
           },
+          "objections": [],
           "fields": [
             {
               "id": "rule",
@@ -12546,10 +12572,12 @@
       "input": {
         "record": {
           "id": "claim",
+          "parent": null,
           "author": {
             "actor": "https://example.org/agent-a",
             "lineage": "example/lineage-a"
           },
+          "objections": [],
           "fields": [
             {
               "id": "rule",
@@ -12602,10 +12630,12 @@
       "input": {
         "record": {
           "id": "claim",
+          "parent": null,
           "author": {
             "actor": "https://example.org/agent-a",
             "lineage": "example/lineage-a"
           },
+          "objections": [],
           "fields": [
             {
               "id": "rule",
@@ -12655,10 +12685,12 @@
       "input": {
         "record": {
           "id": "claim",
+          "parent": null,
           "author": {
             "actor": "https://example.org/agent-a",
             "lineage": "example/lineage-a"
           },
+          "objections": [],
           "fields": [
             {
               "id": "rule",
@@ -12702,10 +12734,12 @@
       "input": {
         "record": {
           "id": "claim",
+          "parent": null,
           "author": {
             "actor": "https://example.org/agent-a",
             "lineage": "example/lineage-a"
           },
+          "objections": [],
           "fields": [
             {
               "id": "rule",
@@ -12753,10 +12787,12 @@
       "input": {
         "record": {
           "id": "claim",
+          "parent": null,
           "author": {
             "actor": "https://example.org/agent-a",
             "lineage": "example/lineage-a"
           },
+          "objections": [],
           "fields": [
             {
               "id": "rule",
@@ -12810,10 +12846,12 @@
       "input": {
         "record": {
           "id": "claim",
+          "parent": null,
           "author": {
             "actor": "https://example.org/agent-a",
             "lineage": "example/lineage-a"
           },
+          "objections": [],
           "fields": [
             {
               "id": "rule",
@@ -12848,10 +12886,12 @@
       "input": {
         "record": {
           "id": "claim",
+          "parent": null,
           "author": {
             "actor": "https://example.org/agent-a",
             "lineage": "example/lineage-a"
           },
+          "objections": [],
           "fields": [
             {
               "id": "mechanism",

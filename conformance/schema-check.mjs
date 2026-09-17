@@ -28,12 +28,27 @@ for (const c of cases.filter(c => ['record', 'hop', 'reveal', 'drift'].includes(
     if (!valid) shapeInvalidAmongViolations += 1;
   }
 }
+// 0.5: a provenance case carries a record, checked like a record case: a conformant one must have a valid shape,
+// a non-conformant one is counted with the violations. Added on 17 September 2026, when the 0.4 and 0.5 records
+// were found to lack two required members.
+let provenanceValidated = 0;
+for (const c of cases.filter(c => c.kind === 'provenance')) {
+  const valid = record(c.input.record);
+  if (c.expected.status === 'conformant') {
+    provenanceValidated += 1;
+    if (!valid) errors.push({id: c.id, errors: record.errors});
+  } else {
+    violationCases += 1;
+    if (!valid) shapeInvalidAmongViolations += 1;
+  }
+}
 // 0.3: every replay case carries a record and a replay object of valid shape, whatever its outcome.
 let replaysValidated = 0;
 for (const c of cases.filter(c => c.kind === 'replay')) {
   replaysValidated += 1;
   for (const [validate, value] of [[record, c.input.record], [replay, c.input.replay]]) if (!validate(value)) errors.push({id: c.id, errors: validate.errors});
 }
-console.log(JSON.stringify({replays_validated: replaysValidated, conformant_inputs_validated: validated, schema_errors: errors,
+console.log(JSON.stringify({replays_validated: replaysValidated, provenance_records_validated: provenanceValidated,
+  conformant_inputs_validated: validated, schema_errors: errors,
   violation_cases: violationCases, violation_cases_also_rejected_by_schema: shapeInvalidAmongViolations}, null, 2));
 process.exit(errors.length ? 1 : 0);

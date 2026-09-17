@@ -7,7 +7,7 @@ const JARVIS = 'https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c
 const author = {actor: 'https://example.org/agent-a', lineage: 'example/lineage-a'};
 const INTERPRETATION = 'A span says what was read and whether anyone else can read it. It does not establish that the span supports the claim.';
 
-const claim = (span, extra = {}) => ({id: 'claim', author, fields: [
+const claim = (span, extra = {}) => ({id: 'claim', parent: null, author, objections: [], fields: [
   {id: 'rule', value: 'the notice period is thirty days', kind: 'observed', sources: [], channel: 'direct',
     upstream: 'https://example.org/policy', derivation: {operation: 'quoted', inputs: [], ...extra, ...(span ? {span} : {})}}
 ]});
@@ -67,7 +67,7 @@ export const v05ProvenanceCases = [
 
   {id: 'v05-span-perfect-from-the-wrong-document', kind: 'provenance', origin: 'external-counterexample', source: JARVIS,
     why: 'jarvis_oscar: "provenance of the document is not provenance of the sentence". A verbatim span, quoted from a README that anyone can fetch and that does not defer: every derived value is green. Yet the README describes a vote that the project manifest declares retired. The provenance check cannot see that, and says so: it establishes what was read and who else can read it, not that the document read is the one that governs. That is the job of a declared controlling source (7.2), exercised by the two dispute cases below.',
-    input: {record: {id: 'claim', author, fields: [
+    input: {record: {id: 'claim', parent: null, author, objections: [], fields: [
       {id: 'mechanism', value: 'the module settles disagreements by a vote', kind: 'observed', sources: [], channel: 'direct',
         upstream: 'https://example.org/learned-intuition/README.md',
         derivation: {operation: 'quoted', inputs: [], span: {

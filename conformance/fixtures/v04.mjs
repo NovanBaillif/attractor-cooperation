@@ -13,7 +13,7 @@ const witness = [
   {input: {code: 'ab-009'}, output: {code_registre: 'AB-009'}}
 ];
 const handover = (derivation, expect = 'accept') => ({
-  id: 'handover', author,
+  id: 'handover', parent: null, author, objections: [],
   fields: [
     {id: 'source-entry', value: 'previous entry of the register', kind: 'observed', sources: [], channel: 'direct', upstream: 'https://example.org/register/entry-1'},
     {id: 'procedure', value: rule, kind: 'derived', sources: ['source-entry'], expect, derivation}
