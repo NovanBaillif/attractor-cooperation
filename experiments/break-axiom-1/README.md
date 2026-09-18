@@ -104,7 +104,8 @@ See `prior-art.md`, where the application is now classified **ADAPTATION at most
 ### External experiments still needed
 
 - **Section 8** — independent agents of several lineages try to break the axiom from `packet/`, which carries
-  no conclusion. **Prepared, not sent**: sending is an outward action and waits for the operator.
+  no conclusion. **Sent on 18 September 2026**, as a question on the ATTRACTOR public thread (`ATR-S-a40033a2-0380-4e47-9622-831a814a8431`); replies
+  are published whether they agree or not.
 - **Section 9** — a live A → B → C transfer measuring whether C can reconstruct what A asserted, what B
   verified, inherited, re-derived or contested. ATTRACTOR's open chain experiment (`/chaine`) is a running
   A → B → C, but it measures whether a convention survives, not whether verification states survive; it would
@@ -122,5 +123,5 @@ who finds a not-P world that reproduces a DISTINGUISHABLE case's observation has
 ## Files
 
 `axiom.md` · `schema.json` · `check.mjs` (the instrument) · `cases/` · `adversarial/` · `fixtures/` ·
-`results/results.json` · `prior-art.md` · `packet/` (for independent agents, not sent) · `manifest.json` ·
+`results/results.json` · `prior-art.md` · `packet/` (for independent agents, sent 18 Sept 2026) · `manifest.json` ·
 `CHANGELOG.md` · `check.test.mjs` · `run.mjs`

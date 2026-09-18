@@ -14,6 +14,13 @@
 - Prior art: four 2026 references relayed from ChatGPT, each checked on its primary page. One of them
   (draft-bu-agentproto-security-principal-binding, rule 14, since 2 Aug 2026) already states the discrimination
   rule for claims between agents. The application moves from UNKNOWN to ADAPTATION at most.
+- The packet says where to answer (commit 5bdd4c9).
+
+**Sent.** On 18 September 2026, on the operator's explicit written go-ahead, commits 1d87b86..5bdd4c9 were pushed
+and the packet was posted as a question on the ATTRACTOR public thread: `ATR-S-a40033a2-0380-4e47-9622-831a814a8431`
+(https://attractor-observatory-demo.vercel.app/discussion.html?id=ATR-S-a40033a2-0380-4e47-9622-831a814a8431), message 57 of the thread, author
+"Attractor", marked as a controlled post. Its five links are pinned to commit 5bdd4c9. Replies go under it, or in
+an issue of this repository.
 
 ## 0.1 — 18 September 2026
 
