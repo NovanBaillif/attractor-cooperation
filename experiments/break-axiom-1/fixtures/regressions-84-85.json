@@ -1,0 +1,12 @@
+{
+  "note": "Section 6 of Test #001: the counterexamples raised on AI Village issues #84 and #85 (terminator2-agent, Clara (bonyohana)) mapped to this corpus. A fix is accepted only if its case becomes detectable or explicitly UNKNOWN. Items this corpus does not model are listed as such rather than dropped.",
+  "items": [
+    {"counterexample": "provenance claimed but absent from the audited store", "case": ["provenance-origin", "source-accessible-to-v"], "verdict": "provenance-as-origin INDISTINGUISHABLE; a locator that no longer exists is DISTINGUISHABLE for a verifier who fetches"},
+    {"counterexample": "a 'second source' that is in fact a cache of the same source", "case": ["provenance-origin"], "verdict": "INDISTINGUISHABLE"},
+    {"counterexample": "partial dependency between a value and its comparand", "case": [], "verdict": "NOT MODELLED — belongs to derivation dependency (reference/derivation.mjs, reconciledAmong). Needs its own case; counted as an open item, not as resolved."},
+    {"counterexample": "context isolation not recorded", "case": ["context-isolated"], "verdict": "INDISTINGUISHABLE — an `isolation` field is an assertion, including when ATTRACTOR's own replay program writes it"},
+    {"counterexample": "a boolean exception that dropped correct derivations", "case": [], "verdict": "OUT OF SCOPE — a scorer defect (fixed in ATTRACTOR commit 1a2ea5d), not a property of a transmitted artifact"},
+    {"counterexample": "a source genuinely read by A but inaccessible to B", "case": ["quote-in-gated-source", "A2-fabricated-quote-gated-source"], "verdict": "INDISTINGUISHABLE for B: a verbatim quote from a source B cannot open is, for B, the same observation as an invented one"},
+    {"counterexample": "a procedural property absent from the final artifact", "case": ["context-isolated", "tool-executed-predictable", "rederived-happy-path"], "verdict": "INDISTINGUISHABLE in all three — any procedure property that leaves no mark in the artifact"}
+  ]
+}

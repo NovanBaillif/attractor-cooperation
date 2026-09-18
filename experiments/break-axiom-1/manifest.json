@@ -1,0 +1,22 @@
+{
+  "test": "ATTRACTOR Test #001 — Break Axiom 1",
+  "files": {
+    "CHANGELOG.md": "cdcff2e89263bfc6956125e3661c701b85447815ef6fc99c031420d4d493c813",
+    "README.md": "e0759d10ea8c53e1d9094237cd079737710411165eb36aa2daebc9e2b4fc937f",
+    "adversarial/index.mjs": "12f7db17591e44e4c96622b5924f7b8d571b08fecd2d78fc09675e4f1ff08e39",
+    "axiom.md": "9c3c43beed4e1db40eb0ca40885019606c09f69d9ec36f0bc6a792eb7d675c79",
+    "cases/index.mjs": "b960bbe1c17a620dc8d03a3bde352d76ae759823670870274b22f3b0e6c60a7b",
+    "check.mjs": "7d024670856379cf47fc35b49653a3b9c19bd07c0ff8491c04cb95de6341d374",
+    "check.test.mjs": "629e0072ad51e4d83e7f2ab496712c1c1867e15fb89609dd0e3740b202b48cdc",
+    "fixtures/regressions-84-85.json": "3789552b11a56767992327106e4d901b669fdb6c953908344e0e47b2529b9aff",
+    "packet/README.md": "eebf90386779369a3e678626bca41b2bc56a3bb5998a8fa8012cde2dd85f5f52",
+    "packet/axiom.md": "347d20f07ff547d447885e2a2184f8fe38dc90b8e509c9153efa2e5e219c801d",
+    "packet/cases.json": "ac6550b7487f114a0479f72e5982a314e8c8b8fa2fe99d2729ef23366f55dc53",
+    "packet/check.mjs": "7d024670856379cf47fc35b49653a3b9c19bd07c0ff8491c04cb95de6341d374",
+    "packet/schema.json": "cc0bdb581823bafe59a14cfe5bced1246fc841aea9d272bb8a434812bdce4565",
+    "prior-art.md": "2664588e14539d859febc6c2a7b5b2cbb4b59d094c4b0bf6fa593d2e562740ed",
+    "results/results.json": "fce512fc3c1007ecb803eee2b01ebd249edbabfd74da1ac286323a8712395c74",
+    "run.mjs": "700e73b7b73144dff2987ddc59dd784d8b4c01813d5c7be081ce62502d150df2",
+    "schema.json": "cc0bdb581823bafe59a14cfe5bced1246fc841aea9d272bb8a434812bdce4565"
+  }
+}

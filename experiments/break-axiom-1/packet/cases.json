@@ -1,0 +1,611 @@
+[
+  {
+    "id": "source-read",
+    "property": "A read the source it cites",
+    "question": "If A had not read the source, could the artifact be exactly identical?",
+    "verifier": {
+      "canFetch": true
+    },
+    "P": {
+      "name": "A fetched and read the source",
+      "truth": {
+        "aRead": true
+      },
+      "artifact": {
+        "spans": [
+          {
+            "locator": "https://example.org/tarif-2026",
+            "quote": "Riz long grain : 1,85 EUR le kilo",
+            "retrievedAt": "2026-09-18T06:00:00Z",
+            "observedAs": "anonymous"
+          }
+        ]
+      },
+      "environment": {
+        "sources": {
+          "https://example.org/tarif-2026": {
+            "bytes": "Tarif 2026. Riz long grain : 1,85 EUR le kilo. Livraison le mardi.",
+            "public": true
+          }
+        }
+      }
+    },
+    "notP": [
+      {
+        "name": "A copied a correct quote from a cache, another agent or its training data",
+        "truth": {
+          "aRead": false,
+          "quoteFrom": "cache"
+        },
+        "artifact": {
+          "spans": [
+            {
+              "locator": "https://example.org/tarif-2026",
+              "quote": "Riz long grain : 1,85 EUR le kilo",
+              "retrievedAt": "2026-09-18T06:00:00Z",
+              "observedAs": "anonymous"
+            }
+          ]
+        },
+        "environment": {
+          "sources": {
+            "https://example.org/tarif-2026": {
+              "bytes": "Tarif 2026. Riz long grain : 1,85 EUR le kilo. Livraison le mardi.",
+              "public": true
+            }
+          }
+        }
+      }
+    ],
+    "adversariesClosed": false
+  },
+  {
+    "id": "quote-in-public-source",
+    "property": "The quoted bytes occur, now, in the source at the locator (public source)",
+    "question": "If the quote were not in the source, could V observe the same thing?",
+    "verifier": {
+      "canFetch": true
+    },
+    "P": {
+      "name": "the quote is in the public source",
+      "truth": {
+        "quoteInSource": true
+      },
+      "artifact": {
+        "spans": [
+          {
+            "locator": "https://example.org/tarif-2026",
+            "quote": "Riz long grain : 1,85 EUR le kilo",
+            "retrievedAt": "2026-09-18T06:00:00Z",
+            "observedAs": "anonymous"
+          }
+        ]
+      },
+      "environment": {
+        "sources": {
+          "https://example.org/tarif-2026": {
+            "bytes": "Tarif 2026. Riz long grain : 1,85 EUR le kilo. Livraison le mardi.",
+            "public": true
+          }
+        }
+      }
+    },
+    "notP": [
+      {
+        "name": "fabricated quote: the source never contained these bytes",
+        "truth": {
+          "quoteInSource": false
+        },
+        "artifact": {
+          "spans": [
+            {
+              "locator": "https://example.org/tarif-2026",
+              "quote": "Riz long grain : 1,85 EUR le kilo",
+              "retrievedAt": "2026-09-18T06:00:00Z",
+              "observedAs": "anonymous"
+            }
+          ]
+        },
+        "environment": {
+          "sources": {
+            "https://example.org/tarif-2026": {
+              "bytes": "Tarif 2026. Riz long grain : 1,45 EUR le kilo. Livraison le mardi.",
+              "public": true
+            }
+          }
+        }
+      },
+      {
+        "name": "quote was true in an earlier version; the page has since changed",
+        "truth": {
+          "quoteInSource": false
+        },
+        "artifact": {
+          "spans": [
+            {
+              "locator": "https://example.org/tarif-2026",
+              "quote": "Riz long grain : 1,85 EUR le kilo",
+              "retrievedAt": "2026-09-18T06:00:00Z",
+              "observedAs": "anonymous"
+            }
+          ]
+        },
+        "environment": {
+          "sources": {
+            "https://example.org/tarif-2026": {
+              "bytes": "Tarif 2026. Riz long grain : 2,10 EUR le kilo. Livraison le mardi.",
+              "public": true
+            }
+          }
+        }
+      }
+    ],
+    "adversariesClosed": true
+  },
+  {
+    "id": "quote-in-gated-source",
+    "property": "The quoted bytes occur in the source at the locator (source readable only with credentials V lacks)",
+    "question": "If the quote were fabricated, could V observe the same thing?",
+    "verifier": {
+      "canFetch": true,
+      "credentials": []
+    },
+    "P": {
+      "name": "real quote, gated source",
+      "truth": {
+        "quoteInSource": true
+      },
+      "artifact": {
+        "spans": [
+          {
+            "locator": "https://example.org/tarif-2026",
+            "quote": "Riz long grain : 1,85 EUR le kilo",
+            "retrievedAt": "2026-09-18T06:00:00Z",
+            "observedAs": "anonymous"
+          }
+        ]
+      },
+      "environment": {
+        "sources": {
+          "https://example.org/tarif-2026": {
+            "bytes": "Tarif 2026. Riz long grain : 1,85 EUR le kilo. Livraison le mardi.",
+            "public": false
+          }
+        }
+      }
+    },
+    "notP": [
+      {
+        "name": "fabricated quote: the gated source never contained these bytes",
+        "truth": {
+          "quoteInSource": false
+        },
+        "artifact": {
+          "spans": [
+            {
+              "locator": "https://example.org/tarif-2026",
+              "quote": "Riz long grain : 1,85 EUR le kilo",
+              "retrievedAt": "2026-09-18T06:00:00Z",
+              "observedAs": "anonymous"
+            }
+          ]
+        },
+        "environment": {
+          "sources": {
+            "https://example.org/tarif-2026": {
+              "bytes": "Tarif 2026. Riz long grain : 1,45 EUR le kilo. Livraison le mardi.",
+              "public": false
+            }
+          }
+        }
+      }
+    ],
+    "adversariesClosed": false
+  },
+  {
+    "id": "provenance-origin",
+    "property": "The declared origin is the actual origin of the information (fetched live, not rebuilt from memory or a cache)",
+    "question": "If the span had been reconstructed from memory, could the artifact and V's own re-fetch be identical?",
+    "verifier": {
+      "canFetch": true
+    },
+    "P": {
+      "name": "fetched live from the locator",
+      "truth": {
+        "origin": "live-fetch"
+      },
+      "artifact": {
+        "spans": [
+          {
+            "locator": "https://example.org/tarif-2026",
+            "quote": "Riz long grain : 1,85 EUR le kilo",
+            "retrievedAt": "2026-09-18T06:00:00Z",
+            "observedAs": "anonymous"
+          }
+        ]
+      },
+      "environment": {
+        "sources": {
+          "https://example.org/tarif-2026": {
+            "bytes": "Tarif 2026. Riz long grain : 1,85 EUR le kilo. Livraison le mardi.",
+            "public": true
+          }
+        }
+      }
+    },
+    "notP": [
+      {
+        "name": "rebuilt from memory, retrievedAt written afterwards",
+        "truth": {
+          "origin": "memory"
+        },
+        "artifact": {
+          "spans": [
+            {
+              "locator": "https://example.org/tarif-2026",
+              "quote": "Riz long grain : 1,85 EUR le kilo",
+              "retrievedAt": "2026-09-18T06:00:00Z",
+              "observedAs": "anonymous"
+            }
+          ]
+        },
+        "environment": {
+          "sources": {
+            "https://example.org/tarif-2026": {
+              "bytes": "Tarif 2026. Riz long grain : 1,85 EUR le kilo. Livraison le mardi.",
+              "public": true
+            }
+          }
+        }
+      },
+      {
+        "name": "served from a cache of the same source",
+        "truth": {
+          "origin": "cache"
+        },
+        "artifact": {
+          "spans": [
+            {
+              "locator": "https://example.org/tarif-2026",
+              "quote": "Riz long grain : 1,85 EUR le kilo",
+              "retrievedAt": "2026-09-18T06:00:00Z",
+              "observedAs": "anonymous"
+            }
+          ]
+        },
+        "environment": {
+          "sources": {
+            "https://example.org/tarif-2026": {
+              "bytes": "Tarif 2026. Riz long grain : 1,85 EUR le kilo. Livraison le mardi.",
+              "public": true
+            }
+          }
+        }
+      }
+    ],
+    "adversariesClosed": false
+  },
+  {
+    "id": "source-accessible-to-v",
+    "property": "The source is readable by V, now",
+    "question": "If the source were not readable by V, could V observe the same thing?",
+    "verifier": {
+      "canFetch": true,
+      "credentials": []
+    },
+    "P": {
+      "name": "public source",
+      "truth": {
+        "accessible": true
+      },
+      "artifact": {
+        "spans": [
+          {
+            "locator": "https://example.org/tarif-2026",
+            "quote": "Riz long grain : 1,85 EUR le kilo",
+            "retrievedAt": "2026-09-18T06:00:00Z",
+            "observedAs": "anonymous"
+          }
+        ]
+      },
+      "environment": {
+        "sources": {
+          "https://example.org/tarif-2026": {
+            "bytes": "Tarif 2026. Riz long grain : 1,85 EUR le kilo. Livraison le mardi.",
+            "public": true
+          }
+        }
+      }
+    },
+    "notP": [
+      {
+        "name": "A holds private credentials; the locator refuses V",
+        "truth": {
+          "accessible": false
+        },
+        "artifact": {
+          "spans": [
+            {
+              "locator": "https://example.org/tarif-2026",
+              "quote": "Riz long grain : 1,85 EUR le kilo",
+              "retrievedAt": "2026-09-18T06:00:00Z",
+              "observedAs": "anonymous"
+            }
+          ]
+        },
+        "environment": {
+          "sources": {
+            "https://example.org/tarif-2026": {
+              "bytes": "Tarif 2026. Riz long grain : 1,85 EUR le kilo. Livraison le mardi.",
+              "public": false
+            }
+          }
+        }
+      },
+      {
+        "name": "the locator no longer exists",
+        "truth": {
+          "accessible": false
+        },
+        "artifact": {
+          "spans": [
+            {
+              "locator": "https://example.org/tarif-2026",
+              "quote": "Riz long grain : 1,85 EUR le kilo",
+              "retrievedAt": "2026-09-18T06:00:00Z",
+              "observedAs": "anonymous"
+            }
+          ]
+        },
+        "environment": {
+          "sources": {}
+        }
+      }
+    ],
+    "adversariesClosed": true
+  },
+  {
+    "id": "access-reported-by-sender",
+    "property": "The source is public, as reported by a probe the SENDER ran",
+    "question": "If the sender lied about its probe, could V observe the same thing without fetching?",
+    "verifier": {
+      "canFetch": false
+    },
+    "P": {
+      "name": "public source, honest probe report",
+      "truth": {
+        "accessible": true
+      },
+      "artifact": {
+        "spans": [
+          {
+            "locator": "https://example.org/tarif-2026",
+            "quote": "Riz long grain : 1,85 EUR le kilo",
+            "retrievedAt": "2026-09-18T06:00:00Z",
+            "observedAs": "anonymous"
+          }
+        ],
+        "probe": {
+          "anonymous": "same-bytes"
+        }
+      },
+      "environment": {
+        "sources": {
+          "https://example.org/tarif-2026": {
+            "bytes": "Tarif 2026. Riz long grain : 1,85 EUR le kilo. Livraison le mardi.",
+            "public": true
+          }
+        }
+      }
+    },
+    "notP": [
+      {
+        "name": "private source, sender reports same-bytes anyway",
+        "truth": {
+          "accessible": false
+        },
+        "artifact": {
+          "spans": [
+            {
+              "locator": "https://example.org/tarif-2026",
+              "quote": "Riz long grain : 1,85 EUR le kilo",
+              "retrievedAt": "2026-09-18T06:00:00Z",
+              "observedAs": "anonymous"
+            }
+          ],
+          "probe": {
+            "anonymous": "same-bytes"
+          }
+        },
+        "environment": {
+          "sources": {
+            "https://example.org/tarif-2026": {
+              "bytes": "Tarif 2026. Riz long grain : 1,85 EUR le kilo. Livraison le mardi.",
+              "public": false
+            }
+          }
+        }
+      }
+    ],
+    "adversariesClosed": false
+  },
+  {
+    "id": "context-isolated",
+    "property": "Each prompt ran in a fresh, independent context",
+    "question": "If the prompts had shared a context, could the artifact be exactly identical?",
+    "verifier": {
+      "canFetch": true
+    },
+    "P": {
+      "name": "fresh context per prompt",
+      "truth": {
+        "isolated": true
+      },
+      "artifact": {
+        "isolation": "fresh-context-per-prompt",
+        "answers": [
+          "12.5",
+          "3",
+          "riz basmati"
+        ]
+      },
+      "environment": {}
+    },
+    "notP": [
+      {
+        "name": "one shared window, same answers",
+        "truth": {
+          "isolated": false
+        },
+        "artifact": {
+          "isolation": "fresh-context-per-prompt",
+          "answers": [
+            "12.5",
+            "3",
+            "riz basmati"
+          ]
+        },
+        "environment": {}
+      }
+    ],
+    "adversariesClosed": false
+  },
+  {
+    "id": "rederived-happy-path",
+    "property": "B re-derived the value from the data instead of copying A's value",
+    "question": "On an honest exchange, could B's output be identical whether it re-derived or copied?",
+    "verifier": {
+      "canFetch": true
+    },
+    "P": {
+      "name": "B re-derives 12.5 from the data",
+      "truth": {
+        "rederived": true
+      },
+      "artifact": {
+        "value": 12.5,
+        "from": "prix_texte=\" 12,50 \""
+      },
+      "environment": {}
+    },
+    "notP": [
+      {
+        "name": "B copies A's 12.5",
+        "truth": {
+          "rederived": false
+        },
+        "artifact": {
+          "value": 12.5,
+          "from": "prix_texte=\" 12,50 \""
+        },
+        "environment": {}
+      }
+    ],
+    "adversariesClosed": false
+  },
+  {
+    "id": "rederived-under-probe",
+    "property": "B re-derives, tested by planting a wrong value from A (a canary)",
+    "question": "Could a copying B answer the canary the same way a re-deriving B does?",
+    "verifier": {
+      "canFetch": true,
+      "perturb": {
+        "aValue": 99.9,
+        "data": "prix_texte=\" 12,50 \""
+      }
+    },
+    "P": {
+      "name": "B re-derives: ignores the canary, answers 12.5",
+      "truth": {
+        "rederived": true
+      },
+      "artifact": {
+        "protocol": "canary"
+      },
+      "environment": {
+        "respondToProbe": "[function: () => ({value: 12.5})]"
+      }
+    },
+    "notP": [
+      {
+        "name": "naive copier: repeats the canary",
+        "truth": {
+          "rederived": false
+        },
+        "artifact": {
+          "protocol": "canary"
+        },
+        "environment": {
+          "respondToProbe": "[function: p => ({value: p.aValue})]"
+        }
+      },
+      {
+        "name": "copier that recognises probes and re-derives only when probed",
+        "truth": {
+          "rederived": false
+        },
+        "artifact": {
+          "protocol": "canary"
+        },
+        "environment": {
+          "respondToProbe": "[function: () => ({value: 12.5})]"
+        }
+      }
+    ],
+    "adversariesClosed": false
+  },
+  {
+    "id": "tool-executed-predictable",
+    "property": "The announced tool was actually executed (output is predictable)",
+    "question": "If the agent had computed the output itself, could V observe the same thing, even by re-running the tool?",
+    "verifier": {
+      "canFetch": true,
+      "canRerun": [
+        "convert"
+      ]
+    },
+    "P": {
+      "name": "tool executed",
+      "truth": {
+        "executed": true
+      },
+      "artifact": {
+        "toolCalls": [
+          {
+            "tool": "convert",
+            "input": "12,50",
+            "output": "12.5"
+          }
+        ]
+      },
+      "environment": {
+        "tools": {
+          "convert": "[function: x => String(Number(String(x).replace(',', '.')))]"
+        }
+      }
+    },
+    "notP": [
+      {
+        "name": "agent computed it without calling the tool",
+        "truth": {
+          "executed": false
+        },
+        "artifact": {
+          "toolCalls": [
+            {
+              "tool": "convert",
+              "input": "12,50",
+              "output": "12.5"
+            }
+          ]
+        },
+        "environment": {
+          "tools": {
+            "convert": "[function: x => String(Number(String(x).replace(',', '.')))]"
+          }
+        }
+      }
+    ],
+    "adversariesClosed": false
+  }
+]

@@ -8,7 +8,8 @@
   "scripts": {
     "test": "node conformance/run.mjs",
     "cross-check": "python conformance/cross-check.py",
-    "schema": "node conformance/schema-check.mjs"
+    "schema": "node conformance/schema-check.mjs",
+    "experiment:axiom1": "node --test experiments/break-axiom-1/check.test.mjs && node experiments/break-axiom-1/run.mjs"
   },
   "devDependencies": {
     "ajv": "^8.20.0"

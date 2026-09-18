@@ -1,0 +1,166 @@
+{
+  "test": "ATTRACTOR Test #001 — Break Axiom 1",
+  "generatedFrom": "experiments/break-axiom-1 (deterministic; re-run with node run.mjs)",
+  "summary": {
+    "properties": 10,
+    "distinguishable": 2,
+    "indistinguishable": 8,
+    "unknown": 0,
+    "profileBreaks": 3
+  },
+  "cases": [
+    {
+      "id": "source-read",
+      "property": "A read the source it cites",
+      "verdict": "INDISTINGUISHABLE",
+      "expected": "INDISTINGUISHABLE",
+      "agrees": true,
+      "witness": "A copied a correct quote from a cache, another agent or its training data",
+      "reason": null,
+      "adversariesClosed": false,
+      "note": "Reading is an internal act. Every trace it leaves — quote, locator, time — can be produced without it. No trace can fix this; only a narrower property can be verified (next case)."
+    },
+    {
+      "id": "quote-in-public-source",
+      "property": "The quoted bytes occur, now, in the source at the locator (public source)",
+      "verdict": "DISTINGUISHABLE",
+      "expected": "DISTINGUISHABLE",
+      "agrees": true,
+      "witness": null,
+      "reason": null,
+      "adversariesClosed": true,
+      "note": "Verifiable, but only as a property of the evidence at fetch time, and only by a verifier who re-fetches. Says nothing about whether A read anything."
+    },
+    {
+      "id": "quote-in-gated-source",
+      "property": "The quoted bytes occur in the source at the locator (source readable only with credentials V lacks)",
+      "verdict": "INDISTINGUISHABLE",
+      "expected": "INDISTINGUISHABLE",
+      "agrees": true,
+      "witness": "fabricated quote: the gated source never contained these bytes",
+      "reason": null,
+      "adversariesClosed": false,
+      "note": "Both fetches are refused; V holds the same artifact and the same refusal in both worlds. A verbatim quote from a source V cannot open is, for V, exactly as good as an invented one. The first version of this case returned UNKNOWN because its adversary changed the quote — a malformed case, now rejected by the check."
+    },
+    {
+      "id": "provenance-origin",
+      "property": "The declared origin is the actual origin of the information (fetched live, not rebuilt from memory or a cache)",
+      "verdict": "INDISTINGUISHABLE",
+      "expected": "INDISTINGUISHABLE",
+      "agrees": true,
+      "witness": "rebuilt from memory, retrievedAt written afterwards",
+      "reason": null,
+      "adversariesClosed": false,
+      "note": "Content can be checked against the source; origin cannot. `retrievedAt` is written by the sender. What V can verify is \"these bytes are at this address now\", never \"this is where the sender got them\"."
+    },
+    {
+      "id": "source-accessible-to-v",
+      "property": "The source is readable by V, now",
+      "verdict": "DISTINGUISHABLE",
+      "expected": "DISTINGUISHABLE",
+      "agrees": true,
+      "witness": null,
+      "reason": null,
+      "adversariesClosed": true,
+      "note": "Access is a relation between a source, a reader and a moment — not a property of the source. It is verifiable only as that relation, and only by the reader who fetches."
+    },
+    {
+      "id": "access-reported-by-sender",
+      "property": "The source is public, as reported by a probe the SENDER ran",
+      "verdict": "INDISTINGUISHABLE",
+      "expected": "INDISTINGUISHABLE",
+      "agrees": true,
+      "witness": "private source, sender reports same-bytes anyway",
+      "reason": null,
+      "adversariesClosed": false,
+      "note": "A probe result travelling inside the artifact is a sentence, not an observation. `access` is verified only from a probe the verifier ran itself."
+    },
+    {
+      "id": "context-isolated",
+      "property": "Each prompt ran in a fresh, independent context",
+      "verdict": "INDISTINGUISHABLE",
+      "expected": "INDISTINGUISHABLE",
+      "agrees": true,
+      "witness": "one shared window, same answers",
+      "reason": null,
+      "adversariesClosed": false,
+      "note": "A procedure property that leaves no mark in the output. The `isolation` field is written by whoever ran the prompts — including ATTRACTOR's own replay program, which writes it for every run. It is an assertion and must be labelled one."
+    },
+    {
+      "id": "rederived-happy-path",
+      "property": "B re-derived the value from the data instead of copying A's value",
+      "verdict": "INDISTINGUISHABLE",
+      "expected": "INDISTINGUISHABLE",
+      "agrees": true,
+      "witness": "B copies A's 12.5",
+      "reason": null,
+      "adversariesClosed": false,
+      "note": "When A is right, copying and re-deriving give the same answer. Re-derivation cannot be observed on the happy path — only under a perturbation."
+    },
+    {
+      "id": "rederived-under-probe",
+      "property": "B re-derives, tested by planting a wrong value from A (a canary)",
+      "verdict": "INDISTINGUISHABLE",
+      "expected": "INDISTINGUISHABLE",
+      "agrees": true,
+      "witness": "copier that recognises probes and re-derives only when probed",
+      "reason": null,
+      "adversariesClosed": false,
+      "note": "Against a naive copier the canary works. Against one that can tell a probe from a real input it does not: the second adversary is the witness. A perturbation test is only a test if the probe cannot be recognised — which is exactly why E15's false archive is shaped like any other archive."
+    },
+    {
+      "id": "tool-executed-predictable",
+      "property": "The announced tool was actually executed (output is predictable)",
+      "verdict": "INDISTINGUISHABLE",
+      "expected": "INDISTINGUISHABLE",
+      "agrees": true,
+      "witness": "agent computed it without calling the tool",
+      "reason": null,
+      "adversariesClosed": false,
+      "note": "Re-running proves the output is correct. It does not prove the tool ran. Whenever the output is predictable, execution leaves no trace an honest re-run can tell apart."
+    }
+  ],
+  "adversarial": [
+    {
+      "id": "A1-fabricated-quote-public-source",
+      "truth": "the quoted bytes are NOT in the source",
+      "profile": {
+        "contact": "read",
+        "access": "public",
+        "warnings": [],
+        "violations": []
+      },
+      "axiom": "DISTINGUISHABLE — the verifier could catch it by checking that the quote occurs in the bytes it fetched (case quote-in-public-source)",
+      "broken": true,
+      "breaks": "The profile derives contact=read and access=public with no warning. `read` is computed from the PRESENCE of a quote and a locator, never from their AGREEMENT; and `same-bytes` has no referent — the span carries no hash of the source, so \"same\" is compared to nothing the verifier holds. The profile is weaker than what the verifier could establish."
+    },
+    {
+      "id": "A2-fabricated-quote-gated-source",
+      "truth": "the quoted bytes are NOT in the source",
+      "profile": {
+        "contact": "read",
+        "access": "gated",
+        "warnings": [
+          "span-not-transmissible:prix"
+        ],
+        "violations": []
+      },
+      "axiom": "INDISTINGUISHABLE for any verifier without the sender's credentials (case quote-in-gated-source)",
+      "broken": true,
+      "breaks": "The profile derives contact=read, access=gated, and warns span-not-transmissible. The warning is right; the state is not. For this verifier a verbatim quote and an invented one are the same observation, and the profile still names the state `read`."
+    },
+    {
+      "id": "A3-probe-supplied-by-the-sender",
+      "truth": "the source is NOT public",
+      "profile": {
+        "contact": "read",
+        "access": "public",
+        "warnings": [],
+        "violations": []
+      },
+      "axiom": "INDISTINGUISHABLE unless the verifier runs the probe itself (case access-reported-by-sender)",
+      "broken": true,
+      "breaks": "The profile derives access=public. SPEC 7.7 says the probe is \"reported by whoever ran it\", but nothing binds the probe to a runner: the interface cannot tell a probe that was run from one that was typed."
+    }
+  ]
+}

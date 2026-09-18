@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/NovanBaillif/attractor-cooperation/experiments/break-axiom-1/schema.json",
+  "title": "Tested property (Test #001, Break Axiom 1)",
+  "description": "A property carried by a transmission. `status` is derived by the verifier from its own observations and is never accepted from the sender: a record arriving with status 'verified' is treated as having no status.",
+  "type": "object",
+  "required": ["property", "verifier", "evidence"],
+  "additionalProperties": false,
+  "properties": {
+    "property": {"type": "string", "description": "What is claimed, as a property of evidence where possible (e.g. 'quote occurs in source at locator'), not of an agent's act (e.g. 'A read the source')."},
+    "claim": {"type": "boolean", "description": "What the sender asserts. Moves no status."},
+    "verifier": {"type": "string", "description": "Who the status is for. The same property can be verified for one verifier and asserted for another."},
+    "evidence": {
+      "type": "array",
+      "description": "Primitive data only. Flags such as 'sourced' or 'checked' are not evidence.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "quote": {"type": "string"},
+          "locator": {"type": "string"},
+          "retrieved_at": {"type": "string", "format": "date-time"},
+          "observed_as": {"type": "string", "description": "The authority under which the sender fetched: anonymous, or a named credential."},
+          "content_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$", "description": "Proposed by this test: a hash of the bytes the sender fetched, so that a verifier's 'same bytes' has a referent. Absent from the 0.5.1 profile."}
+        }
+      }
+    },
+    "status": {
+      "enum": ["verified", "contested", "asserted", "unknown"],
+      "description": "Derived. Written only by the verifier's own check, from the distinguishability verdict for this verifier."
+    }
+  }
+}
