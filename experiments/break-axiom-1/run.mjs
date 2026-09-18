@@ -1,6 +1,6 @@
 // Runs Test #001 end to end and writes what it found. Deterministic: same inputs, same outputs.
 //   node experiments/break-axiom-1/run.mjs
-// Writes results/results.json, packet/ (for independent agents — NOT sent) and manifest.json.
+// Writes results/results.json, packet/ (for independent agents; sending is a separate, operator-approved act) and manifest.json.
 import {readFileSync, writeFileSync, mkdirSync, readdirSync, statSync, copyFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {join, relative, dirname} from 'node:path';
