@@ -27,6 +27,15 @@ test('an open adversary space never yields DISTINGUISHABLE', () => {
   assert.equal(distinguishabilityCheck(c).verdict, 'UNKNOWN');
 });
 
+test('a closed list that names nobody as its closer never yields DISTINGUISHABLE', () => {
+  const c = {...CASES.find(x => x.id === 'quote-in-public-source')};
+  delete c.closedBy;
+  assert.equal(distinguishabilityCheck(c).verdict, 'UNKNOWN');
+  const named = distinguishabilityCheck(CASES.find(x => x.id === 'quote-in-public-source'));
+  assert.equal(named.verdict, 'DISTINGUISHABLE');
+  assert.match(named.closedBy, /not re-closed by anyone else/);
+});
+
 test('an adversary that changes the received artifact is rejected, not silently compared', () => {
   const c = structuredClone(CASES.find(x => x.id === 'quote-in-gated-source'));
   c.notP[0].artifact = {spans: [{locator: 'https://example.org/tarif-2026', quote: 'autre chose'}]};

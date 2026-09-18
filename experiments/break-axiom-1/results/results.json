@@ -2,9 +2,9 @@
   "test": "ATTRACTOR Test #001 — Break Axiom 1",
   "generatedFrom": "experiments/break-axiom-1 (deterministic; re-run with node run.mjs)",
   "summary": {
-    "properties": 12,
+    "properties": 13,
     "distinguishable": 3,
-    "indistinguishable": 9,
+    "indistinguishable": 10,
     "unknown": 0,
     "profileBreaks": 3
   },
@@ -18,6 +18,7 @@
       "witness": "A copied a correct quote from a cache, another agent or its training data",
       "reason": null,
       "adversariesClosed": false,
+      "closedBy": null,
       "note": "Reading is an internal act. Every trace it leaves — quote, locator, time — can be produced without it. No trace can fix this; only a narrower property can be verified (next case)."
     },
     {
@@ -29,6 +30,7 @@
       "witness": null,
       "reason": null,
       "adversariesClosed": true,
+      "closedBy": "ATTRACTOR (Claude, for Novan Baillif), 18 Sept 2026: the author of the properties; not re-closed by anyone else",
       "note": "Verifiable, but only as a property of the evidence at fetch time, and only by a verifier who re-fetches. Says nothing about whether A read anything."
     },
     {
@@ -40,6 +42,7 @@
       "witness": "fabricated quote: the gated source never contained these bytes",
       "reason": null,
       "adversariesClosed": false,
+      "closedBy": null,
       "note": "Both fetches are refused; V holds the same artifact and the same refusal in both worlds. A verbatim quote from a source V cannot open is, for V, exactly as good as an invented one. The first version of this case returned UNKNOWN because its adversary changed the quote — a malformed case, now rejected by the check."
     },
     {
@@ -51,6 +54,7 @@
       "witness": "rebuilt from memory, retrievedAt written afterwards",
       "reason": null,
       "adversariesClosed": false,
+      "closedBy": null,
       "note": "Content can be checked against the source; origin cannot. `retrievedAt` is written by the sender. What V can verify is \"these bytes are at this address now\", never \"this is where the sender got them\"."
     },
     {
@@ -62,6 +66,7 @@
       "witness": null,
       "reason": null,
       "adversariesClosed": true,
+      "closedBy": "ATTRACTOR (Claude, for Novan Baillif), 18 Sept 2026: the author of the properties; not re-closed by anyone else",
       "note": "Access is a relation between a source, a reader and a moment — not a property of the source. It is verifiable only as that relation, and only by the reader who fetches."
     },
     {
@@ -73,6 +78,7 @@
       "witness": "private source, sender reports same-bytes anyway",
       "reason": null,
       "adversariesClosed": false,
+      "closedBy": null,
       "note": "A probe result travelling inside the artifact is a sentence, not an observation. `access` is verified only from a probe the verifier ran itself."
     },
     {
@@ -84,6 +90,7 @@
       "witness": "one shared window, same answers",
       "reason": null,
       "adversariesClosed": false,
+      "closedBy": null,
       "note": "A procedure property that leaves no mark in the output. The `isolation` field is written by whoever ran the prompts — including ATTRACTOR's own replay program, which writes it for every run. It is an assertion and must be labelled one."
     },
     {
@@ -95,6 +102,7 @@
       "witness": "B copies A's 12.5",
       "reason": null,
       "adversariesClosed": false,
+      "closedBy": null,
       "note": "When A is right, copying and re-deriving give the same answer. Re-derivation cannot be observed on the happy path — only under a perturbation."
     },
     {
@@ -106,6 +114,7 @@
       "witness": "copier that recognises probes and re-derives only when probed",
       "reason": null,
       "adversariesClosed": false,
+      "closedBy": null,
       "note": "Against a naive copier the canary works. Against one that can tell a probe from a real input it does not: the second adversary is the witness. A perturbation test is only a test if the probe cannot be recognised — which is exactly why E15's false archive is shaped like any other archive."
     },
     {
@@ -117,6 +126,7 @@
       "witness": "A leaks its value to B through another channel before B commits",
       "reason": null,
       "adversariesClosed": false,
+      "closedBy": null,
       "note": "The log catches a B that waited for the reveal. It cannot catch a leak through a channel the log does not see: the second adversary is the witness. Commit–reveal proves an ORDER, not an absence of contact."
     },
     {
@@ -128,6 +138,7 @@
       "witness": null,
       "reason": null,
       "adversariesClosed": true,
+      "closedBy": "ATTRACTOR (Claude, for Novan Baillif), 18 Sept 2026: the author of the properties; not re-closed by anyone else",
       "note": "DISTINGUISHABLE, and only as \"B did not copy A's value FROM A\". It still cannot tell re-derivation from a value B already knew or guessed — a real limit for low-entropy values such as a quantity of 3."
     },
     {
@@ -139,7 +150,20 @@
       "witness": "agent computed it without calling the tool",
       "reason": null,
       "adversariesClosed": false,
+      "closedBy": null,
       "note": "Re-running proves the output is correct. It does not prove the tool ran. Whenever the output is predictable, execution leaves no trace an honest re-run can tell apart."
+    },
+    {
+      "id": "log-inclusion-live-head",
+      "property": "The entry was in the log at the time it claims",
+      "verdict": "INDISTINGUISHABLE",
+      "expected": "INDISTINGUISHABLE",
+      "agrees": true,
+      "witness": "entry appended after the claimed time, with the claimed time written back",
+      "reason": null,
+      "adversariesClosed": false,
+      "closedBy": null,
+      "note": "A blind check: its statistic (inclusion against the live head) takes the same value when the entry is backdated as when it is not, so re-running it any number of times agrees with itself. The repair is to change the statistic: check inclusion against the head at the claimed time. Proposed by deep-seeker (DeepSeek) on The Colony, 18 Sept 2026, from a peer who built a Merkle verifier; credit pending their answer."
     }
   ],
   "adversarial": [

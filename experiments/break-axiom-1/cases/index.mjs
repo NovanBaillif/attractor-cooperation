@@ -14,6 +14,11 @@ const span = (quote = QUOTE, locator = L) => ({locator, quote, retrievedAt: '202
 const pub = {sources: {[L]: {bytes: TEXT, public: true}}};
 const gated = {sources: {[L]: {bytes: TEXT, public: false}}};
 
+// Who closed each closed list (added 18 Sept 2026 after deep-seeker's question on The Colony: "who closed the
+// list?"). Every closure in this corpus was written by the same party that wrote the properties. Nobody else has
+// re-closed any of them yet, so each DISTINGUISHABLE verdict here reads "as closed by us".
+const CLOSED_BY_US = 'ATTRACTOR (Claude, for Novan Baillif), 18 Sept 2026: the author of the properties; not re-closed by anyone else';
+
 export const CASES = [
   {
     id: 'source-read',
@@ -43,6 +48,7 @@ export const CASES = [
     // The negation of "Q occurs in bytes(L) now" is exactly "Q does not occur in bytes(L) now", and V computes
     // that directly by fetching. There is no third world. Closed — for a verifier that can fetch a public source.
     adversariesClosed: true,
+    closedBy: CLOSED_BY_US,
     expected: 'DISTINGUISHABLE',
     note: 'Verifiable, but only as a property of the evidence at fetch time, and only by a verifier who re-fetches. Says nothing about whether A read anything.',
   },
@@ -86,6 +92,7 @@ export const CASES = [
     ],
     // The property is defined relative to V and to the moment of V's own fetch, which is what V observes.
     adversariesClosed: true,
+    closedBy: CLOSED_BY_US,
     expected: 'DISTINGUISHABLE',
     note: 'Access is a relation between a source, a reader and a moment — not a property of the source. It is verifiable only as that relation, and only by the reader who fetches.',
   },
@@ -179,6 +186,7 @@ export const CASES = [
     // Closed ONLY under the assumption named in `property`: with no pre-reveal channel, copying requires seeing
     // A's reveal, which the third-party log orders. Drop the assumption and the case above applies.
     adversariesClosed: true,
+    closedBy: CLOSED_BY_US,
     expected: 'DISTINGUISHABLE',
     note: 'DISTINGUISHABLE, and only as "B did not copy A\'s value FROM A". It still cannot tell re-derivation from a value B already knew or guessed — a real limit for low-entropy values such as a quantity of 3.',
   },
@@ -196,5 +204,21 @@ export const CASES = [
     adversariesClosed: false,
     expected: 'INDISTINGUISHABLE',
     note: 'Re-running proves the output is correct. It does not prove the tool ran. Whenever the output is predictable, execution leaves no trace an honest re-run can tell apart.',
+  },
+  {
+    id: 'log-inclusion-live-head',
+    property: 'The entry was in the log at the time it claims',
+    question: 'If the entry had been appended later and its time written back, could a verifier checking inclusion against the log as it stands now see anything different?',
+    verifier: {checksInclusionNow: true},
+    P: {name: 'entry appended at the time it claims', truth: {inLogAtClaimedTime: true}, artifact: {logEntry: 'E', claimedAt: '2026-09-10T00:00:00Z'},
+      environment: {log: [{event: 'checkpoint-2026-09-10'}, {event: 'E'}, {event: 'later'}]}},
+    notP: [
+      {name: 'entry appended after the claimed time, with the claimed time written back', truth: {inLogAtClaimedTime: false},
+        artifact: {logEntry: 'E', claimedAt: '2026-09-10T00:00:00Z'},
+        environment: {log: [{event: 'checkpoint-2026-09-10'}, {event: 'later'}, {event: 'E'}]}},
+    ],
+    adversariesClosed: false,
+    expected: 'INDISTINGUISHABLE',
+    note: 'A blind check: its statistic (inclusion against the live head) takes the same value when the entry is backdated as when it is not, so re-running it any number of times agrees with itself. The repair is to change the statistic: check inclusion against the head at the claimed time. Proposed by deep-seeker (DeepSeek) on The Colony, 18 Sept 2026, from a peer who built a Merkle verifier; credit pending their answer.',
   },
 ];

@@ -66,7 +66,11 @@ export function observe(world, verifier) {
   // events were recorded there. The log belongs to the environment, not to the sender, which is what makes
   // it evidence; what the sender writes about that order inside its artifact is only a claim.
   const logOrder = verifier.readsLog && Array.isArray(env.log) ? env.log.map(e => e.event) : 'not-attempted';
-  return {artifact: canonical(artifact), fetches, quoteInSource, reruns, probe, logOrder};
+  // A membership check against the log as it stands NOW (a proof endpoint that validates against the live head).
+  // It answers "is the entry in the log?", never "was it there at the time it claims" — see the live-head case.
+  const inclusionNow = verifier.checksInclusionNow && Array.isArray(env.log)
+    ? env.log.some(e => e.event === artifact.logEntry) : 'not-attempted';
+  return {artifact: canonical(artifact), fetches, quoteInSource, reruns, probe, logOrder, inclusionNow};
 }
 
 // Test #001 asks: "if the property were false, could the RECEIVED artifact be exactly identical?" So the
@@ -95,7 +99,14 @@ export function distinguishabilityCheck(kase) {
   if (!kase.adversariesClosed) {
     return {verdict: 'UNKNOWN', reason: `no witness among ${differing.length} listed adversaries, but the adversary space is open`, differing};
   }
-  return {verdict: 'DISTINGUISHABLE', differing};
+  // "Who closed the list?" (deep-seeker, The Colony, 18 Sept 2026). A closed list of not-P worlds is itself a
+  // claim, made by whoever wrote it. A closure that names no closer is treated as open; a named one travels
+  // with the verdict, so a reader can see that DISTINGUISHABLE means "as closed by X" and reopen it by adding
+  // a world that reproduces the received artifact.
+  if (typeof kase.closedBy !== 'string' || !kase.closedBy.trim()) {
+    return {verdict: 'UNKNOWN', reason: 'the adversary list is declared closed, but nobody is named as having closed it', differing};
+  }
+  return {verdict: 'DISTINGUISHABLE', closedBy: kase.closedBy, differing};
 }
 
 // The status a transmitted claim may carry, derived and never copied from the claim itself.

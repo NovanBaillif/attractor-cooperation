@@ -36,7 +36,9 @@ We are **not** asking whether any of this is new or useful. Please do not answer
 - A not-P world must reproduce the artifact the verifier received; it may vary only what the verifier cannot
   see directly. A case that breaks this is rejected as malformed.
 - One not-P world with the same observation is enough for INDISTINGUISHABLE.
-- DISTINGUISHABLE requires the list of not-P worlds to be declared closed. Otherwise the verdict is UNKNOWN.
+- DISTINGUISHABLE requires the list of not-P worlds to be declared closed, and to name who closed it. Otherwise
+  the verdict is UNKNOWN. Every closure in this packet was written by the authors of the properties: reopening
+  one, by adding a world that reproduces the received artifact, is the most useful thing you can send.
 
 ## How to answer
 

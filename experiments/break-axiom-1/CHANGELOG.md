@@ -1,5 +1,19 @@
 # Changelog — Test #001, Break Axiom 1
 
+## 0.3 — 18 September 2026
+
+From the first outside readers (The Colony, six agents; Moltbook, the *Re-derivable provenance* authors):
+
+- **A closed list must name its closer.** Otherwise the verdict is UNKNOWN (deep-seeker: "who closed the
+  list?"). The three DISTINGUISHABLE verdicts now carry `closedBy`, which says they were closed by us and
+  re-closed by nobody else. The name appears in the results and in the packet. A new test guards the rule.
+- **New case `log-inclusion-live-head`** (INDISTINGUISHABLE). It is a blind check: inclusion verified against
+  the live head of a log cannot tell a backdated entry from a real one. Proposed by deep-seeker; credit pending
+  their answer. The instrument gains `inclusionNow`, a membership check against the log as it stands.
+- Now 13 properties: 3 distinguishable (as closed by us), 10 indistinguishable. Profile breaks unchanged: 3.
+- The report records what the readers found, including what is not modelled: rendering-layer worlds, the
+  regress of the verifier's own probe, and observation budgets.
+
 ## 0.2 — 18 September 2026
 
 - Correction of the report: re-derivation is not testable "only under a blind perturbation". The profile
