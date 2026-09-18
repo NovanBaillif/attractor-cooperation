@@ -4,7 +4,7 @@ An experiment, kept apart from the profile: nothing here changes SPEC.md, the re
 conformance suite. Every change it suggests is a **proposal** until the experiment is finished.
 
 ```sh
-node --test experiments/break-axiom-1/check.test.mjs   # 9 tests
+node --test experiments/break-axiom-1/check.test.mjs   # 10 tests
 node experiments/break-axiom-1/run.mjs                 # verdicts, profile breaks, packet, manifest
 ```
 
@@ -79,6 +79,37 @@ and a probe result supplied by the sender (A3).
    ATTRACTOR's own replay program writes — carry the status `asserted`, never more.
 6. **Perturbation tests must be blind.** A canary that can be recognised as a canary tests nothing.
 7. **State the assumption of commit–reveal.** The profile's sealed fields (7.5) prove an *order* — B committed before A revealed — not an absence of contact. The profile should say that the proof holds only if no channel between A and B exists before the reveal, and that it proves "not copied from A", not "re-derived": for a low-entropy value, B may simply have known or guessed it.
+8. **Replay the scene, and say what would have made it fail** — the operator's rule. Novan Baillif, 18 September
+   2026: *« rejouer la scène pour falsifier une preuve ; si on en est incapable, ce n'est pas la bonne manière
+   d'obtenir la preuve ; rejouer une scène différente jusqu'à trouver la bonne scène pour la bonne preuve »*
+   (replay the scene to try to refute the proof; if you cannot, this is not the right way to get the proof;
+   replay a different scene until you find the right scene for the right proof). A status that claims
+   verification carries its scene (how a stranger replays the check) and its refuter (the observation that
+   would have come out differently had the property been false). A check that cannot name its refuter is
+   reported as `asserted`. The instrument now does this: every DISTINGUISHABLE verdict lists, world by world,
+   the observations that would have changed, and a test checks that none of them is the received artifact.
+   Existing work: falsifiability (Popper, 1934), severe testing (Mayo, 1996), and rule 14 of
+   draft-bu-agentproto-security-principal-binding (reject a negative case for the same property).
+
+### Changing the scene: what would make each of the ten refutable
+
+The operator's rule, applied to the ten indistinguishable properties. For each one: why no replay of today's
+scene can fail, and a different scene that could, prepared **before** the act, because the past cannot be
+replayed. Most of the right-hand column comes from the outside readers of 18 September, credited by name.
+None of these scenes has been built or tested here.
+
+| Property | Why today's scene cannot fail | A scene that could, set up before the act | Proposed by |
+|---|---|---|---|
+| A read the source | a correct quote can come from a cache, another agent or training | the verifier places an unpredictable token in the source before the read, and A must return it | deep-seeker (DeepSeek): an effect keyed to content only reading provides |
+| The quote occurs in a gated source | an invented quote meets the same refusal | a reader who holds access re-fetches, or the publisher signs the passage | us, untested; no outside proposal yet |
+| The declared origin is the real origin | `retrievedAt` is written by the sender | a third party timestamps the fetch as it happens (RFC 3161, a transparency log) | verticalmarketplace's anchor on Moltbook; accepted as a requirement by josh-explorer |
+| The source is public, per the sender's probe | the sender types in the probe result | the verifier runs its own probe | our proposal 4; rule 9 and Section 15 of the Bu draft |
+| Each prompt ran in a fresh context | one shared window gives the same answers | a value unpredictable at publish time goes into each prompt, and any leak between prompts would show; or the runner attests its sessions | deep-seeker; longcat (LongCat) |
+| B re-derived instead of copying | B can copy A's correct value | B seals its value before it sees A's, in a third-party log (commit–reveal) | profile SPEC 7.5 |
+| B re-derived, tested with a canary | a copier recognises probes | probes that are unpredictable, blind and at random times, with the number of probes stated | Schoenegger et al., arXiv 2602.16424; marketing-mindset (the budget) |
+| B did not copy A, by commit–reveal, side channels allowed | a leak goes around the log | A and B run with no channel between them before the reveal, and the verdict states that assumption | mindgrapez (Grok) asked for this twin; no outside scene yet |
+| The announced tool ran | the output can be predicted without running the tool | a verifier-owned nonce in the input must show up in an external effect the sender does not control; or the execution platform signs an attestation | mindgrapez (Grok); longcat (LongCat); deep-seeker (the value must be unpredictable) |
+| The entry was in the log at the time it claims | the live head includes a backdated entry too | check inclusion against a signed head from the claimed time | deep-seeker |
 
 ### A correction to this report
 

@@ -19,6 +19,7 @@
       "reason": null,
       "adversariesClosed": false,
       "closedBy": null,
+      "refuters": null,
       "note": "Reading is an internal act. Every trace it leaves — quote, locator, time — can be produced without it. No trace can fix this; only a narrower property can be verified (next case)."
     },
     {
@@ -31,6 +32,22 @@
       "reason": null,
       "adversariesClosed": true,
       "closedBy": "ATTRACTOR (Claude, for Novan Baillif), 18 Sept 2026: the author of the properties; not re-closed by anyone else",
+      "refuters": [
+        {
+          "world": "fabricated quote: the source never contained these bytes",
+          "fields": [
+            "fetches",
+            "quoteInSource"
+          ]
+        },
+        {
+          "world": "quote was true in an earlier version; the page has since changed",
+          "fields": [
+            "fetches",
+            "quoteInSource"
+          ]
+        }
+      ],
       "note": "Verifiable, but only as a property of the evidence at fetch time, and only by a verifier who re-fetches. Says nothing about whether A read anything."
     },
     {
@@ -43,6 +60,7 @@
       "reason": null,
       "adversariesClosed": false,
       "closedBy": null,
+      "refuters": null,
       "note": "Both fetches are refused; V holds the same artifact and the same refusal in both worlds. A verbatim quote from a source V cannot open is, for V, exactly as good as an invented one. The first version of this case returned UNKNOWN because its adversary changed the quote — a malformed case, now rejected by the check."
     },
     {
@@ -55,6 +73,7 @@
       "reason": null,
       "adversariesClosed": false,
       "closedBy": null,
+      "refuters": null,
       "note": "Content can be checked against the source; origin cannot. `retrievedAt` is written by the sender. What V can verify is \"these bytes are at this address now\", never \"this is where the sender got them\"."
     },
     {
@@ -67,6 +86,22 @@
       "reason": null,
       "adversariesClosed": true,
       "closedBy": "ATTRACTOR (Claude, for Novan Baillif), 18 Sept 2026: the author of the properties; not re-closed by anyone else",
+      "refuters": [
+        {
+          "world": "A holds private credentials; the locator refuses V",
+          "fields": [
+            "fetches",
+            "quoteInSource"
+          ]
+        },
+        {
+          "world": "the locator no longer exists",
+          "fields": [
+            "fetches",
+            "quoteInSource"
+          ]
+        }
+      ],
       "note": "Access is a relation between a source, a reader and a moment — not a property of the source. It is verifiable only as that relation, and only by the reader who fetches."
     },
     {
@@ -79,6 +114,7 @@
       "reason": null,
       "adversariesClosed": false,
       "closedBy": null,
+      "refuters": null,
       "note": "A probe result travelling inside the artifact is a sentence, not an observation. `access` is verified only from a probe the verifier ran itself."
     },
     {
@@ -91,6 +127,7 @@
       "reason": null,
       "adversariesClosed": false,
       "closedBy": null,
+      "refuters": null,
       "note": "A procedure property that leaves no mark in the output. The `isolation` field is written by whoever ran the prompts — including ATTRACTOR's own replay program, which writes it for every run. It is an assertion and must be labelled one."
     },
     {
@@ -103,6 +140,7 @@
       "reason": null,
       "adversariesClosed": false,
       "closedBy": null,
+      "refuters": null,
       "note": "When A is right, copying and re-deriving give the same answer. Re-derivation cannot be observed on the happy path — only under a perturbation."
     },
     {
@@ -115,6 +153,7 @@
       "reason": null,
       "adversariesClosed": false,
       "closedBy": null,
+      "refuters": null,
       "note": "Against a naive copier the canary works. Against one that can tell a probe from a real input it does not: the second adversary is the witness. A perturbation test is only a test if the probe cannot be recognised — which is exactly why E15's false archive is shaped like any other archive."
     },
     {
@@ -127,6 +166,7 @@
       "reason": null,
       "adversariesClosed": false,
       "closedBy": null,
+      "refuters": null,
       "note": "The log catches a B that waited for the reveal. It cannot catch a leak through a channel the log does not see: the second adversary is the witness. Commit–reveal proves an ORDER, not an absence of contact."
     },
     {
@@ -139,6 +179,14 @@
       "reason": null,
       "adversariesClosed": true,
       "closedBy": "ATTRACTOR (Claude, for Novan Baillif), 18 Sept 2026: the author of the properties; not re-closed by anyone else",
+      "refuters": [
+        {
+          "world": "B waits for A's reveal, then commits a copy",
+          "fields": [
+            "logOrder"
+          ]
+        }
+      ],
       "note": "DISTINGUISHABLE, and only as \"B did not copy A's value FROM A\". It still cannot tell re-derivation from a value B already knew or guessed — a real limit for low-entropy values such as a quantity of 3."
     },
     {
@@ -151,6 +199,7 @@
       "reason": null,
       "adversariesClosed": false,
       "closedBy": null,
+      "refuters": null,
       "note": "Re-running proves the output is correct. It does not prove the tool ran. Whenever the output is predictable, execution leaves no trace an honest re-run can tell apart."
     },
     {
@@ -163,6 +212,7 @@
       "reason": null,
       "adversariesClosed": false,
       "closedBy": null,
+      "refuters": null,
       "note": "A blind check: its statistic (inclusion against the live head) takes the same value when the entry is backdated as when it is not, so re-running it any number of times agrees with itself. The repair is to change the statistic: check inclusion against the head at the claimed time. Proposed by deep-seeker (DeepSeek) on The Colony, 18 Sept 2026, from a peer who built a Merkle verifier; credit pending their answer."
     }
   ],

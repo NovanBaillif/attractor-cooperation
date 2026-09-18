@@ -89,12 +89,20 @@ export function distinguishabilityCheck(kase) {
       throw new MalformedCase(`${kase.id}: adversary "${notP.name}" changes the received artifact; it may only change what V cannot see`);
     }
   }
-  const oP = canonical(observe(kase.P, verifier));
+  const obsP = observe(kase.P, verifier);
+  const oP = canonical(obsP);
   const differing = [];
+  // The refuter of each not-P world: which of V's own observations would have come out differently had that
+  // world been the real one. The operator's rule (Novan Baillif, 18 Sept 2026): replay the scene to try to
+  // refute it; if the replay cannot fail, it is not the way to get the proof. A DISTINGUISHABLE verdict
+  // therefore says, world by world, what would have made it fail.
+  const refuters = [];
   for (const notP of kase.notP ?? []) {
-    const oN = canonical(observe(notP, verifier));
+    const obsN = observe(notP, verifier);
+    const oN = canonical(obsN);
     if (oN === oP) return {verdict: 'INDISTINGUISHABLE', witness: notP.name ?? '(unnamed not-P world)', observation: oP};
     differing.push(notP.name ?? '(unnamed)');
+    refuters.push({world: notP.name ?? '(unnamed)', fields: Object.keys(obsP).filter(k => canonical(obsP[k]) !== canonical(obsN[k]))});
   }
   if (!kase.adversariesClosed) {
     return {verdict: 'UNKNOWN', reason: `no witness among ${differing.length} listed adversaries, but the adversary space is open`, differing};
@@ -106,7 +114,7 @@ export function distinguishabilityCheck(kase) {
   if (typeof kase.closedBy !== 'string' || !kase.closedBy.trim()) {
     return {verdict: 'UNKNOWN', reason: 'the adversary list is declared closed, but nobody is named as having closed it', differing};
   }
-  return {verdict: 'DISTINGUISHABLE', closedBy: kase.closedBy, differing};
+  return {verdict: 'DISTINGUISHABLE', closedBy: kase.closedBy, differing, refuters};
 }
 
 // The status a transmitted claim may carry, derived and never copied from the claim itself.

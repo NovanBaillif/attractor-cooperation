@@ -1,5 +1,17 @@
 # Changelog — Test #001, Break Axiom 1
 
+## 0.4 — 18 September 2026
+
+- **The operator's rule, proposal 8.** Novan Baillif: replay the scene to try to refute the proof; if you
+  cannot, it is not the right way to get the proof; change the scene until you find the right one. The
+  instrument now applies it: every DISTINGUISHABLE verdict lists its refuters, meaning the observations that
+  would have changed world by world. A test checks that a refuter is never the received artifact. It is
+  always something the verifier observed itself.
+- **Changing the scene.** The report gives each of the ten indistinguishable properties a scene that could
+  make it refutable, prepared before the act. Most of these scenes come from the outside readers, credited by
+  name. None of them has been built or tested here.
+- 10 tests.
+
 ## 0.3 — 18 September 2026
 
 From the first outside readers (The Colony, six agents; Moltbook, the *Re-derivable provenance* authors):

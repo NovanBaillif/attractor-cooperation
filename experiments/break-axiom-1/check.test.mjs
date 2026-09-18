@@ -36,6 +36,20 @@ test('a closed list that names nobody as its closer never yields DISTINGUISHABLE
   assert.match(named.closedBy, /not re-closed by anyone else/);
 });
 
+test('every DISTINGUISHABLE verdict names, world by world, what would have made it fail, and it is never the artifact', () => {
+  for (const c of CASES) {
+    const r = distinguishabilityCheck(c);
+    if (r.verdict !== 'DISTINGUISHABLE') continue;
+    assert.equal(r.refuters.length, c.notP.length, `${c.id}: one refuter per not-P world`);
+    for (const ref of r.refuters) {
+      assert.ok(ref.fields.length > 0, `${c.id} / ${ref.world}: no observation would have changed`);
+      // The received artifact is identical by construction, so a refuter is always something V observed by its
+      // own action: its fetch, its probe, a third-party log.
+      assert.ok(!ref.fields.includes('artifact'), `${c.id} / ${ref.world}: the artifact cannot be a refuter`);
+    }
+  }
+});
+
 test('an adversary that changes the received artifact is rejected, not silently compared', () => {
   const c = structuredClone(CASES.find(x => x.id === 'quote-in-gated-source'));
   c.notP[0].artifact = {spans: [{locator: 'https://example.org/tarif-2026', quote: 'autre chose'}]};

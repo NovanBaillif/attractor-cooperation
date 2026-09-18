@@ -16,7 +16,7 @@ const out = p => join(here, p);
 const cases = CASES.map(c => {
   const r = distinguishabilityCheck(c);
   return {id: c.id, property: c.property, verdict: r.verdict, expected: c.expected, agrees: r.verdict === c.expected,
-    witness: r.witness ?? null, reason: r.reason ?? null, adversariesClosed: !!c.adversariesClosed, closedBy: r.closedBy ?? null, note: c.note};
+    witness: r.witness ?? null, reason: r.reason ?? null, adversariesClosed: !!c.adversariesClosed, closedBy: r.closedBy ?? null, refuters: r.refuters ?? null, note: c.note};
 });
 // ——— 2. Against the published profile ———
 const adversarial = runAdversarial();
