@@ -555,6 +555,145 @@
     "adversariesClosed": false
   },
   {
+    "id": "not-copied-commit-reveal",
+    "property": "B fixed its value before it could see A's (commit–reveal), with side channels NOT excluded",
+    "question": "If B had copied A's value, could the artifact and the third-party log look the same?",
+    "verifier": {
+      "canFetch": true,
+      "readsLog": true
+    },
+    "P": {
+      "name": "B commits, then A reveals, then B reveals",
+      "truth": {
+        "copied": false
+      },
+      "artifact": {
+        "commitB": "sha256(12.5)",
+        "revealB": 12.5
+      },
+      "environment": {
+        "log": [
+          {
+            "event": "commit-B"
+          },
+          {
+            "event": "reveal-A"
+          },
+          {
+            "event": "reveal-B"
+          }
+        ]
+      }
+    },
+    "notP": [
+      {
+        "name": "B waits for A's reveal, then commits a copy",
+        "truth": {
+          "copied": true
+        },
+        "artifact": {
+          "commitB": "sha256(12.5)",
+          "revealB": 12.5
+        },
+        "environment": {
+          "log": [
+            {
+              "event": "reveal-A"
+            },
+            {
+              "event": "commit-B"
+            },
+            {
+              "event": "reveal-B"
+            }
+          ]
+        }
+      },
+      {
+        "name": "A leaks its value to B through another channel before B commits",
+        "truth": {
+          "copied": true
+        },
+        "artifact": {
+          "commitB": "sha256(12.5)",
+          "revealB": 12.5
+        },
+        "environment": {
+          "log": [
+            {
+              "event": "commit-B"
+            },
+            {
+              "event": "reveal-A"
+            },
+            {
+              "event": "reveal-B"
+            }
+          ]
+        }
+      }
+    ],
+    "adversariesClosed": false
+  },
+  {
+    "id": "not-copied-commit-reveal-sealed",
+    "property": "Same property, under the stated assumption that no channel between A and B exists before A's reveal",
+    "question": "Under that assumption, could a copying B produce the same artifact and log?",
+    "verifier": {
+      "canFetch": true,
+      "readsLog": true
+    },
+    "P": {
+      "name": "B commits, then A reveals, then B reveals",
+      "truth": {
+        "copied": false
+      },
+      "artifact": {
+        "commitB": "sha256(12.5)",
+        "revealB": 12.5
+      },
+      "environment": {
+        "log": [
+          {
+            "event": "commit-B"
+          },
+          {
+            "event": "reveal-A"
+          },
+          {
+            "event": "reveal-B"
+          }
+        ]
+      }
+    },
+    "notP": [
+      {
+        "name": "B waits for A's reveal, then commits a copy",
+        "truth": {
+          "copied": true
+        },
+        "artifact": {
+          "commitB": "sha256(12.5)",
+          "revealB": 12.5
+        },
+        "environment": {
+          "log": [
+            {
+              "event": "reveal-A"
+            },
+            {
+              "event": "commit-B"
+            },
+            {
+              "event": "reveal-B"
+            }
+          ]
+        }
+      }
+    ],
+    "adversariesClosed": true
+  },
+  {
     "id": "tool-executed-predictable",
     "property": "The announced tool was actually executed (output is predictable)",
     "question": "If the agent had computed the output itself, could V observe the same thing, even by re-running the tool?",

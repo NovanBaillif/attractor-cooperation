@@ -62,7 +62,11 @@ export function observe(world, verifier) {
   // when the world defines how the agent responds to a probe — that response is behaviour, which is
   // observable, unlike the internal procedure that produced it.
   const probe = verifier.perturb && typeof env.respondToProbe === 'function' ? canonical(env.respondToProbe(verifier.perturb)) : 'not-attempted';
-  return {artifact: canonical(artifact), fetches, quoteInSource, reruns, probe};
+  // An append-only log kept by a third party (the commit–reveal of SPEC 7.5): V reads the ORDER in which
+  // events were recorded there. The log belongs to the environment, not to the sender, which is what makes
+  // it evidence; what the sender writes about that order inside its artifact is only a claim.
+  const logOrder = verifier.readsLog && Array.isArray(env.log) ? env.log.map(e => e.event) : 'not-attempted';
+  return {artifact: canonical(artifact), fetches, quoteInSource, reruns, probe, logOrder};
 }
 
 // Test #001 asks: "if the property were false, could the RECEIVED artifact be exactly identical?" So the

@@ -145,6 +145,43 @@ export const CASES = [
     expected: 'INDISTINGUISHABLE',
     note: 'Against a naive copier the canary works. Against one that can tell a probe from a real input it does not: the second adversary is the witness. A perturbation test is only a test if the probe cannot be recognised — which is exactly why E15\'s false archive is shaped like any other archive.',
   },
+  // Added after the first report: the profile ALREADY has a mechanism for this (sealed fields and commit–reveal,
+  // SPEC 7.5, since 0.4) and the first run did not test it. Its claim is narrower than "B re-derived": it is
+  // "B's value was fixed before B could see A's". Two cases, because the verdict depends on an assumption.
+  {
+    id: 'not-copied-commit-reveal',
+    property: 'B fixed its value before it could see A\'s (commit–reveal), with side channels NOT excluded',
+    question: 'If B had copied A\'s value, could the artifact and the third-party log look the same?',
+    verifier: {canFetch: true, readsLog: true},
+    P: {name: 'B commits, then A reveals, then B reveals', truth: {copied: false},
+      artifact: {commitB: 'sha256(12.5)', revealB: 12.5}, environment: {log: [{event: 'commit-B'}, {event: 'reveal-A'}, {event: 'reveal-B'}]}},
+    notP: [
+      {name: 'B waits for A\'s reveal, then commits a copy', truth: {copied: true},
+        artifact: {commitB: 'sha256(12.5)', revealB: 12.5}, environment: {log: [{event: 'reveal-A'}, {event: 'commit-B'}, {event: 'reveal-B'}]}},
+      {name: 'A leaks its value to B through another channel before B commits', truth: {copied: true},
+        artifact: {commitB: 'sha256(12.5)', revealB: 12.5}, environment: {log: [{event: 'commit-B'}, {event: 'reveal-A'}, {event: 'reveal-B'}]}},
+    ],
+    adversariesClosed: false,
+    expected: 'INDISTINGUISHABLE',
+    note: 'The log catches a B that waited for the reveal. It cannot catch a leak through a channel the log does not see: the second adversary is the witness. Commit–reveal proves an ORDER, not an absence of contact.',
+  },
+  {
+    id: 'not-copied-commit-reveal-sealed',
+    property: 'Same property, under the stated assumption that no channel between A and B exists before A\'s reveal',
+    question: 'Under that assumption, could a copying B produce the same artifact and log?',
+    verifier: {canFetch: true, readsLog: true},
+    P: {name: 'B commits, then A reveals, then B reveals', truth: {copied: false},
+      artifact: {commitB: 'sha256(12.5)', revealB: 12.5}, environment: {log: [{event: 'commit-B'}, {event: 'reveal-A'}, {event: 'reveal-B'}]}},
+    notP: [
+      {name: 'B waits for A\'s reveal, then commits a copy', truth: {copied: true},
+        artifact: {commitB: 'sha256(12.5)', revealB: 12.5}, environment: {log: [{event: 'reveal-A'}, {event: 'commit-B'}, {event: 'reveal-B'}]}},
+    ],
+    // Closed ONLY under the assumption named in `property`: with no pre-reveal channel, copying requires seeing
+    // A's reveal, which the third-party log orders. Drop the assumption and the case above applies.
+    adversariesClosed: true,
+    expected: 'DISTINGUISHABLE',
+    note: 'DISTINGUISHABLE, and only as "B did not copy A\'s value FROM A". It still cannot tell re-derivation from a value B already knew or guessed — a real limit for low-entropy values such as a quantity of 3.',
+  },
   {
     id: 'tool-executed-predictable',
     property: 'The announced tool was actually executed (output is predictable)',

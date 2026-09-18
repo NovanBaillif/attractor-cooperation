@@ -1,5 +1,20 @@
 # Changelog — Test #001, Break Axiom 1
 
+## 0.2 — 18 September 2026
+
+- Correction of the report: re-derivation is not testable "only under a blind perturbation". The profile
+  already has sealed fields and commit–reveal (SPEC 7.5), which the first run did not test. Two cases added:
+  side channels allowed → INDISTINGUISHABLE (witness: a leak the log does not see); side channels excluded by
+  a stated assumption → DISTINGUISHABLE, and only as "not copied from A", never "re-derived".
+- The instrument now reads the ORDER of an append-only third-party log (`readsLog`), never the sender's
+  statement about that order.
+- The "claim:true never yields verified" test now names the cases allowed to reach "verified", so adding one
+  is a decision, not an accident. It failed once, on purpose, when the new case appeared.
+- Now 12 properties: 3 distinguishable, 9 indistinguishable. Profile breaks unchanged: 3.
+- Prior art: four 2026 references relayed from ChatGPT, each checked on its primary page. One of them
+  (draft-bu-agentproto-security-principal-binding, rule 14, since 2 Aug 2026) already states the discrimination
+  rule for claims between agents. The application moves from UNKNOWN to ADAPTATION at most.
+
 ## 0.1 — 18 September 2026
 
 First run, from a test specification written by ChatGPT and relayed by the operator, Novan Baillif.

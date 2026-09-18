@@ -24,16 +24,17 @@ source.
 
 ### What resisted
 
-Two properties are verifiable, and both are properties of **evidence**, relative to a verifier and a moment:
+Three properties are verifiable. Two are properties of **evidence**, relative to a verifier and a moment; the third is an **order** recorded by a third party:
 
 | Property | Verdict | Condition |
 |---|---|---|
 | The quoted bytes occur in the source at the locator, now | DISTINGUISHABLE | the verifier re-fetches a public source |
 | The source is readable by the verifier, now | DISTINGUISHABLE | the verifier fetches it itself |
+| B fixed its value before it could see A's (commit–reveal, SPEC 7.5) | DISTINGUISHABLE | the verifier reads a third-party log, **and** no channel between A and B exists before A's reveal |
 
 ### What was refuted
 
-Eight of the ten properties tested are **indistinguishable** for the verifier — a not-P world reproduces the
+Nine of the twelve properties tested are **indistinguishable** for the verifier — a not-P world reproduces the
 received artifact and every observation the verifier can make:
 
 | Property | Witness |
@@ -45,6 +46,7 @@ received artifact and every observation the verifier can make:
 | Each prompt ran in a fresh context | one shared window with the same answers |
 | B re-derived instead of copying (honest exchange) | B copies A's correct value |
 | B re-derived, tested with a canary | a copier that recognises probes and re-derives only then |
+| B did not copy A, by commit–reveal, side channels not excluded | A leaks its value to B through a channel the log does not see |
 | The announced tool ran (predictable output) | the agent computed the output itself |
 
 And three states of the **published profile** break against Axiom 1 (`adversarial/`): the fabricated quote on a
@@ -75,6 +77,14 @@ and a probe result supplied by the sender (A3).
 5. **Label procedure fields as assertions.** `isolation`, and any similar field — including the ones
    ATTRACTOR's own replay program writes — carry the status `asserted`, never more.
 6. **Perturbation tests must be blind.** A canary that can be recognised as a canary tests nothing.
+7. **State the assumption of commit–reveal.** The profile's sealed fields (7.5) prove an *order* — B committed before A revealed — not an absence of contact. The profile should say that the proof holds only if no channel between A and B exists before the reveal, and that it proves "not copied from A", not "re-derived": for a low-entropy value, B may simply have known or guessed it.
+
+### A correction to this report
+
+The first version said re-derivation could only be tested under a blind perturbation. That was too strong, and
+it came from not reading our own profile first: sealed fields with commit–reveal (SPEC 7.5, since 0.4) already
+make one version of it observable. Two cases were added: with side channels allowed, a leak is the witness
+(INDISTINGUISHABLE); under a stated no-channel assumption, the third-party log decides (DISTINGUISHABLE).
 
 ### New counterexamples added to the corpus
 
@@ -86,8 +96,10 @@ now rejects such a case.
 
 All of it except, possibly, the application. Axiom 1 is the possible-worlds definition of knowledge (Hintikka
 1962; Fagin et al. 1995); the adversary is a cryptographic indistinguishability game; the verifier/evidence
-split is IETF RATS (RFC 9334) and in-toto; the quote match is the W3C TextQuoteSelector. See `prior-art.md`,
-where the only candidate contribution is classified **UNKNOWN**.
+split is IETF RATS (RFC 9334) and in-toto; the quote match is the W3C TextQuoteSelector. And the rule itself,
+applied to agents: an individual IETF draft (Bu, *Security Principal and Verifier Binding for Agent Communication
+Protocols*, since August 2026) already requires rejecting a negative case before a claim may be called verified.
+See `prior-art.md`, where the application is now classified **ADAPTATION at most**.
 
 ### External experiments still needed
 
@@ -97,7 +109,9 @@ where the only candidate contribution is classified **UNKNOWN**.
   verified, inherited, re-derived or contested. ATTRACTOR's open chain experiment (`/chaine`) is a running
   A → B → C, but it measures whether a convention survives, not whether verification states survive; it would
   need the statuses above added to each link.
-- A case-by-case comparison with **Pramana** and **IETF RATS**, without which nothing here may be called new.
+- A case-by-case comparison with the **Bu draft**, **Pramana** and **IETF RATS**. The Bu draft is the closest
+  known work; the useful question is no longer "is this new" but "which of our twelve cases would its rules
+  already catch".
 
 ## Applying the rule to this report
 

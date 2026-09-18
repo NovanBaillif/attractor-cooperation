@@ -2,9 +2,9 @@
   "test": "ATTRACTOR Test #001 — Break Axiom 1",
   "generatedFrom": "experiments/break-axiom-1 (deterministic; re-run with node run.mjs)",
   "summary": {
-    "properties": 10,
-    "distinguishable": 2,
-    "indistinguishable": 8,
+    "properties": 12,
+    "distinguishable": 3,
+    "indistinguishable": 9,
     "unknown": 0,
     "profileBreaks": 3
   },
@@ -107,6 +107,28 @@
       "reason": null,
       "adversariesClosed": false,
       "note": "Against a naive copier the canary works. Against one that can tell a probe from a real input it does not: the second adversary is the witness. A perturbation test is only a test if the probe cannot be recognised — which is exactly why E15's false archive is shaped like any other archive."
+    },
+    {
+      "id": "not-copied-commit-reveal",
+      "property": "B fixed its value before it could see A's (commit–reveal), with side channels NOT excluded",
+      "verdict": "INDISTINGUISHABLE",
+      "expected": "INDISTINGUISHABLE",
+      "agrees": true,
+      "witness": "A leaks its value to B through another channel before B commits",
+      "reason": null,
+      "adversariesClosed": false,
+      "note": "The log catches a B that waited for the reveal. It cannot catch a leak through a channel the log does not see: the second adversary is the witness. Commit–reveal proves an ORDER, not an absence of contact."
+    },
+    {
+      "id": "not-copied-commit-reveal-sealed",
+      "property": "Same property, under the stated assumption that no channel between A and B exists before A's reveal",
+      "verdict": "DISTINGUISHABLE",
+      "expected": "DISTINGUISHABLE",
+      "agrees": true,
+      "witness": null,
+      "reason": null,
+      "adversariesClosed": true,
+      "note": "DISTINGUISHABLE, and only as \"B did not copy A's value FROM A\". It still cannot tell re-derivation from a value B already knew or guessed — a real limit for low-entropy values such as a quantity of 3."
     },
     {
       "id": "tool-executed-predictable",

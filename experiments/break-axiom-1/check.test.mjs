@@ -39,8 +39,10 @@ test('a sender writing claim:true never makes a status "verified"', () => {
     const variant = {...c, P: world, notP: c.notP.map(n => ({...n, artifact: world.artifact}))};
     const s = statusFor(variant, world).status;
     if (s === 'verified') {
-      // Only the two evidence properties may reach "verified", and only through the verifier's own fetch.
-      assert.ok(['quote-in-public-source', 'source-accessible-to-v'].includes(c.id), `${c.id} reached verified`);
+      // Only these may reach "verified", and each through something the SENDER does not write: the verifier's
+      // own fetch for the first two, a third-party log for the commit–reveal case (under its stated
+      // assumption). Adding a case here must be a decision, which is why the list is explicit.
+      assert.ok(['quote-in-public-source', 'source-accessible-to-v', 'not-copied-commit-reveal-sealed'].includes(c.id), `${c.id} reached verified`);
     }
   }
 });
