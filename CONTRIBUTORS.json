@@ -148,8 +148,9 @@
           "what": "The v0.1 column of the section 11 table mixes outputs v0.1 produced with values derived for cases it never ran, and a reader cannot tell the two apart.",
           "source_url": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5742651527",
           "role": "Writing – review & editing",
-          "outcome": "open",
-          "changed_in": null
+          "outcome": "adopted",
+          "changed_in": {"version": "0.6 (in preparation)", "commits": ["f8573b9"], "where": ["SPEC §11 › How the v0.1 column was obtained", "SPEC §11.7 › Section 11 says how its v0.1 column was obtained", "file conformance/v01-rerun.mjs"]},
+          "note": "Re-running the unchanged v0.1 checker showed that every cell of the column reproduces, the rows marked New: included. The defect was that the table did not say how the cells were obtained, not that the cells were wrong."
         }
       ]
     },
@@ -333,8 +334,9 @@
           "what": "Relayed, as attributed evidence, that the v0.1 dispute case 2 also used the single-id form, so the account of two implementations failing on opposite forms of supersedes is not established.",
           "source_url": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5742558094",
           "role": "Writing – review & editing",
-          "outcome": "open",
-          "changed_in": null
+          "outcome": "adopted",
+          "changed_in": {"version": "0.6 (in preparation)", "commits": ["f8573b9"], "where": ["SPEC §11 › the single id (Clara (bonyohana) case 2) and the list, return `confirmed`", "SPEC §11.7 › relaying Clara (bonyohana)"]},
+          "note": "Checked by re-running the unchanged v0.1 checker: case 2 (single id) and the list form both return confirmed."
         }
       ]
     },
