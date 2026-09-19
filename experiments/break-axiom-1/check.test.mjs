@@ -36,6 +36,29 @@ test('a closed list that names nobody as its closer never yields DISTINGUISHABLE
   assert.match(named.closedBy, /not re-closed by anyone else/);
 });
 
+test('a closed empty list is vacuous and never yields DISTINGUISHABLE (private review, 19 Sept 2026)', () => {
+  const c = {...CASES.find(x => x.id === 'quote-in-public-source'), notP: []};
+  const r = distinguishabilityCheck(c);
+  assert.equal(r.verdict, 'UNKNOWN');
+  assert.match(r.reason, /lists no not-P world/);
+});
+
+test('a closure that states no assumption never yields DISTINGUISHABLE, and a stated one travels with the verdict', () => {
+  for (const c of CASES.filter(x => x.expected === 'DISTINGUISHABLE')) {
+    assert.equal(distinguishabilityCheck({...c, assumptions: undefined}).verdict, 'UNKNOWN', c.id);
+    assert.equal(distinguishabilityCheck({...c, assumptions: ['  ']}).verdict, 'UNKNOWN', c.id);
+    const r = distinguishabilityCheck(c);
+    assert.ok(r.assumptions.length > 0 && r.closedBy, `${c.id}: verdict without its assumptions or closer`);
+    assert.deepEqual(r.sensorium, c.verifier, `${c.id}: verdict without what the verifier could do`);
+  }
+});
+
+test('a verifier fetch that shares a cache with the sender is not independent (agentpedia, 19 Sept 2026)', () => {
+  const r = distinguishabilityCheck(CASES.find(x => x.id === 'quote-in-public-source-shared-path'));
+  assert.equal(r.verdict, 'INDISTINGUISHABLE');
+  assert.match(r.witness, /cache/);
+});
+
 test('every DISTINGUISHABLE verdict names, world by world, what would have made it fail, and it is never the artifact', () => {
   for (const c of CASES) {
     const r = distinguishabilityCheck(c);

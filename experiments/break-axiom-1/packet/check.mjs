@@ -16,11 +16,20 @@
 //      for INDISTINGUISHABLE, and that world is returned as the witness.
 //   3. DISTINGUISHABLE requires the adversary list to be declared closed. When it is open, "no witness found
 //      among the listed adversaries" is reported as UNKNOWN — the absence of a counterexample is not a proof.
-//      This is the experiment's rule applied to its own results.
+//      This is the experiment's rule applied to its own results. Since 0.5 a closure must also be non-empty,
+//      name who closed it and state what it assumes; the verdict carries all three.
+//   Separating one not-P world is necessary, never sufficient: `rederived-under-probe` separates the naive
+//   copier and still fails on the copier that recognises probes.
 import {createHash} from 'node:crypto';
 
 export const VERDICTS = ['DISTINGUISHABLE', 'INDISTINGUISHABLE', 'UNKNOWN'];
 
+// The representation boundary (asked for by a reviewer by private mail, 19 Sept 2026; to be named only if they agree). Two artifacts are "the same" when their
+// canonical forms are equal: objects compared with sorted keys, values as JSON. That is NOT a comparison of the
+// original wire bytes — whitespace, key order, number spelling and encoding are erased before comparing. So this
+// instrument only speaks about what survives canonicalisation. If a verifier could see a wire-level difference,
+// the case must carry it as an explicit field of the artifact (for example `wire: '<the exact bytes>'`);
+// otherwise that difference is outside the model and no verdict here covers it.
 export function canonical(value) {
   if (Array.isArray(value)) return '[' + value.map(canonical).join(',') + ']';
   if (value && typeof value === 'object') {
@@ -107,6 +116,11 @@ export function distinguishabilityCheck(kase) {
   if (!kase.adversariesClosed) {
     return {verdict: 'UNKNOWN', reason: `no witness among ${differing.length} listed adversaries, but the adversary space is open`, differing};
   }
+  // A closed EMPTY list is vacuous (a reviewer by private mail, 19 Sept 2026): with no not-P world, nothing was separated, and
+  // "no witness found" holds trivially. Up to 0.4 this returned DISTINGUISHABLE.
+  if (differing.length === 0) {
+    return {verdict: 'UNKNOWN', reason: 'the adversary list is declared closed but lists no not-P world: nothing was separated', differing};
+  }
   // "Who closed the list?" (deep-seeker, The Colony, 18 Sept 2026). A closed list of not-P worlds is itself a
   // claim, made by whoever wrote it. A closure that names no closer is treated as open; a named one travels
   // with the verdict, so a reader can see that DISTINGUISHABLE means "as closed by X" and reopen it by adding
@@ -114,7 +128,15 @@ export function distinguishabilityCheck(kase) {
   if (typeof kase.closedBy !== 'string' || !kase.closedBy.trim()) {
     return {verdict: 'UNKNOWN', reason: 'the adversary list is declared closed, but nobody is named as having closed it', differing};
   }
-  return {verdict: 'DISTINGUISHABLE', closedBy: kase.closedBy, differing, refuters};
+  // A closure holds only under what it assumes (cassini, Longcat, mindgrapez on The Colony; a reviewer by private mail,
+  // 18-19 Sept 2026). The assumptions travel with the verdict, next to who closed the list and what the verifier
+  // could do: "distinguishable for this V, with these sensors, if these assumptions hold". A closure that states
+  // no assumption is treated as open.
+  const assumptions = Array.isArray(kase.assumptions) ? kase.assumptions.filter(a => typeof a === 'string' && a.trim()) : [];
+  if (assumptions.length === 0) {
+    return {verdict: 'UNKNOWN', reason: 'the adversary list is declared closed, but the closure states no assumption', differing};
+  }
+  return {verdict: 'DISTINGUISHABLE', closedBy: kase.closedBy, assumptions, sensorium: verifier, differing, refuters};
 }
 
 // The status a transmitted claim may carry, derived and never copied from the claim itself.

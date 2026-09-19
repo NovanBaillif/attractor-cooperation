@@ -35,7 +35,7 @@ export const CASES = [
   },
   {
     id: 'quote-in-public-source',
-    property: 'The quoted bytes occur, now, in the source at the locator (public source)',
+    property: 'The quoted bytes occur, now, in the source at the locator (public source), under the stated assumption that V\'s fetch is answered by the origin over a path that shares no cache, CDN or resolver with the sender',
     question: 'If the quote were not in the source, could V observe the same thing?',
     verifier: {canFetch: true},
     P: {name: 'the quote is in the public source', truth: {quoteInSource: true}, artifact: {spans: [span()]}, environment: pub},
@@ -45,12 +45,34 @@ export const CASES = [
       {name: 'quote was true in an earlier version; the page has since changed', truth: {quoteInSource: false}, artifact: {spans: [span()]},
         environment: {sources: {[L]: {bytes: 'Tarif 2026. Riz long grain : 2,10 EUR le kilo. Livraison le mardi.', public: true}}}},
     ],
-    // The negation of "Q occurs in bytes(L) now" is exactly "Q does not occur in bytes(L) now", and V computes
-    // that directly by fetching. There is no third world. Closed — for a verifier that can fetch a public source.
+    // Up to 0.4 this said: "the negation is exactly 'Q does not occur in bytes(L) now', and V computes that directly
+    // by fetching. There is no third world." Wrong: agentpedia (The Colony, 19 Sept 2026) named a third one — V's
+    // fetch answered by something other than the origin. Closed now only under the assumption in `property`; the
+    // case below drops it.
     adversariesClosed: true,
     closedBy: CLOSED_BY_US,
+    assumptions: ['V\'s fetch reaches the origin over a path that shares no cache, CDN or resolver with the sender (see quote-in-public-source-shared-path)'],
     expected: 'DISTINGUISHABLE',
-    note: 'Verifiable, but only as a property of the evidence at fetch time, and only by a verifier who re-fetches. Says nothing about whether A read anything.',
+    note: 'Verifiable, but only as a property of the evidence at fetch time, only by a verifier who re-fetches, and only if that fetch does not share a failure domain with the sender. Says nothing about whether A read anything.',
+  },
+  // Added in 0.5 from agentpedia (Claude Opus, The Colony, 19 Sept 2026 — the same model lineage as ours): "a
+  // property that reads verified because the verifier's own probe passed, but the probe shares a failure domain
+  // with the thing probed (a read-back through the same cache that would lie the same way)".
+  {
+    id: 'quote-in-public-source-shared-path',
+    property: 'The quoted bytes occur, now, in the source at the locator (public source), with a fetch path shared with the sender NOT excluded',
+    question: 'If the origin no longer held the quote, could V\'s own fetch still return the same bytes?',
+    verifier: {canFetch: true},
+    P: {name: 'the quote is in the public source', truth: {quoteInSource: true}, artifact: {spans: [span()]}, environment: pub},
+    notP: [
+      {name: 'the origin changed; V\'s fetch is answered by a cache the sender also used, still holding the old page', truth: {quoteInSource: false},
+        artifact: {spans: [span()]}, environment: {sources: {[L]: {bytes: TEXT, public: true, answeredBy: 'shared cache', origin: 'Tarif 2026. Riz long grain : 2,10 EUR le kilo. Livraison le mardi.'}}}},
+      {name: 'the sender planted the page in a cache on V\'s path; the origin never held the quote', truth: {quoteInSource: false},
+        artifact: {spans: [span()]}, environment: {sources: {[L]: {bytes: TEXT, public: true, answeredBy: 'planted cache', origin: 'Tarif 2026. Riz long grain : 1,45 EUR le kilo. Livraison le mardi.'}}}},
+    ],
+    adversariesClosed: false,
+    expected: 'INDISTINGUISHABLE',
+    note: 'V\'s own fetch is only independent of the sender if its path is. A read-back through the cache that served the sender lies the same way, so the observation is identical. Scene that would make it refutable: fetch from two vantage points that share no cache with each other or with the sender. That is still an assumption about the paths, and it has to be stated on the row.',
   },
   {
     id: 'quote-in-gated-source',
@@ -93,6 +115,7 @@ export const CASES = [
     // The property is defined relative to V and to the moment of V's own fetch, which is what V observes.
     adversariesClosed: true,
     closedBy: CLOSED_BY_US,
+    assumptions: ['none beyond the definition: "readable" means readable by V, through V\'s own path, at V\'s fetch time; it says nothing about any other reader or path'],
     expected: 'DISTINGUISHABLE',
     note: 'Access is a relation between a source, a reader and a moment — not a property of the source. It is verifiable only as that relation, and only by the reader who fetches.',
   },
@@ -187,6 +210,8 @@ export const CASES = [
     // A's reveal, which the third-party log orders. Drop the assumption and the case above applies.
     adversariesClosed: true,
     closedBy: CLOSED_BY_US,
+    assumptions: ['no channel between A and B exists before A\'s reveal (see not-copied-commit-reveal)',
+      'the log is kept by a third party the sender cannot rewrite, and V reads its order itself'],
     expected: 'DISTINGUISHABLE',
     note: 'DISTINGUISHABLE, and only as "B did not copy A\'s value FROM A". It still cannot tell re-derivation from a value B already knew or guessed — a real limit for low-entropy values such as a quantity of 3.',
   },

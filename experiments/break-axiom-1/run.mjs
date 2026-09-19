@@ -16,7 +16,8 @@ const out = p => join(here, p);
 const cases = CASES.map(c => {
   const r = distinguishabilityCheck(c);
   return {id: c.id, property: c.property, verdict: r.verdict, expected: c.expected, agrees: r.verdict === c.expected,
-    witness: r.witness ?? null, reason: r.reason ?? null, adversariesClosed: !!c.adversariesClosed, closedBy: r.closedBy ?? null, refuters: r.refuters ?? null, note: c.note};
+    witness: r.witness ?? null, reason: r.reason ?? null, adversariesClosed: !!c.adversariesClosed, closedBy: r.closedBy ?? null,
+    assumptions: r.assumptions ?? null, sensorium: c.verifier ?? {}, refuters: r.refuters ?? null, note: c.note};
 });
 // ——— 2. Against the published profile ———
 const adversarial = runAdversarial();
@@ -44,7 +45,8 @@ mkdirSync(out('packet'), {recursive: true});
 const describe = v => typeof v === 'function' ? `[function: ${v.toString().replace(/\s+/g, ' ').slice(0, 160)}]` : v;
 const scrub = world => JSON.parse(JSON.stringify(world, (k, v) => describe(v)));
 const packetCases = CASES.map(c => ({id: c.id, property: c.property, question: c.question, verifier: c.verifier,
-  P: scrub(c.P), notP: c.notP.map(scrub), adversariesClosed: !!c.adversariesClosed, closedBy: c.closedBy ?? null}));
+  P: scrub(c.P), notP: c.notP.map(scrub), adversariesClosed: !!c.adversariesClosed, closedBy: c.closedBy ?? null,
+  assumptions: c.assumptions ?? null}));
 writeFileSync(out('packet/cases.json'), JSON.stringify(packetCases, null, 2) + '\n');
 copyFileSync(out('check.mjs'), out('packet/check.mjs'));
 copyFileSync(out('schema.json'), out('packet/schema.json'));

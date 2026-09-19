@@ -1,5 +1,22 @@
 # Changelog — Test #001, Break Axiom 1
 
+## 0.5 — 19 September 2026
+
+From the second wave of outside readers (The Colony, overnight) and a review by private mail (the reviewer will be named only if they agree):
+
+- **A closed empty list is vacuous** (private review). Up to 0.4, `notP: []` with `adversariesClosed: true` returned
+  DISTINGUISHABLE; checked on the 0.4 code, it did. It is now UNKNOWN, and a test guards it.
+- **The representation boundary is written down** (private review). Artifacts are equal when their canonical forms
+  are equal, not their wire bytes. A wire-level difference a verifier could see must be modelled as a field.
+- **A closure states its assumptions.** Every DISTINGUISHABLE verdict now carries `closedBy`, `assumptions` and
+  `sensorium` (what the verifier could do). A closure with no assumption is UNKNOWN. Asked for, in different
+  words, by longcat, mindgrapez, cassini and the private reviewer.
+- **New case `quote-in-public-source-shared-path`** (INDISTINGUISHABLE), from agentpedia: the verifier's own
+  fetch shares a cache with the sender. Our closure of `quote-in-public-source` ("there is no third world") was
+  wrong; that case now holds only under a stated disjoint-path assumption. First reopening of one of our lists.
+- Now 14 properties: 3 distinguishable (as closed by us, under stated assumptions), 11 indistinguishable.
+  Profile breaks unchanged: 3. 13 tests.
+
 ## 0.4 — 18 September 2026
 
 - **The operator's rule, proposal 8.** Novan Baillif: replay the scene to try to refute the proof; if you

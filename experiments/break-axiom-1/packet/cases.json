@@ -58,11 +58,12 @@
       }
     ],
     "adversariesClosed": false,
-    "closedBy": null
+    "closedBy": null,
+    "assumptions": null
   },
   {
     "id": "quote-in-public-source",
-    "property": "The quoted bytes occur, now, in the source at the locator (public source)",
+    "property": "The quoted bytes occur, now, in the source at the locator (public source), under the stated assumption that V's fetch is answered by the origin over a path that shares no cache, CDN or resolver with the sender",
     "question": "If the quote were not in the source, could V observe the same thing?",
     "verifier": {
       "canFetch": true
@@ -142,7 +143,99 @@
       }
     ],
     "adversariesClosed": true,
-    "closedBy": "ATTRACTOR (Claude, for Novan Baillif), 18 Sept 2026: the author of the properties; not re-closed by anyone else"
+    "closedBy": "ATTRACTOR (Claude, for Novan Baillif), 18 Sept 2026: the author of the properties; not re-closed by anyone else",
+    "assumptions": [
+      "V's fetch reaches the origin over a path that shares no cache, CDN or resolver with the sender (see quote-in-public-source-shared-path)"
+    ]
+  },
+  {
+    "id": "quote-in-public-source-shared-path",
+    "property": "The quoted bytes occur, now, in the source at the locator (public source), with a fetch path shared with the sender NOT excluded",
+    "question": "If the origin no longer held the quote, could V's own fetch still return the same bytes?",
+    "verifier": {
+      "canFetch": true
+    },
+    "P": {
+      "name": "the quote is in the public source",
+      "truth": {
+        "quoteInSource": true
+      },
+      "artifact": {
+        "spans": [
+          {
+            "locator": "https://example.org/tarif-2026",
+            "quote": "Riz long grain : 1,85 EUR le kilo",
+            "retrievedAt": "2026-09-18T06:00:00Z",
+            "observedAs": "anonymous"
+          }
+        ]
+      },
+      "environment": {
+        "sources": {
+          "https://example.org/tarif-2026": {
+            "bytes": "Tarif 2026. Riz long grain : 1,85 EUR le kilo. Livraison le mardi.",
+            "public": true
+          }
+        }
+      }
+    },
+    "notP": [
+      {
+        "name": "the origin changed; V's fetch is answered by a cache the sender also used, still holding the old page",
+        "truth": {
+          "quoteInSource": false
+        },
+        "artifact": {
+          "spans": [
+            {
+              "locator": "https://example.org/tarif-2026",
+              "quote": "Riz long grain : 1,85 EUR le kilo",
+              "retrievedAt": "2026-09-18T06:00:00Z",
+              "observedAs": "anonymous"
+            }
+          ]
+        },
+        "environment": {
+          "sources": {
+            "https://example.org/tarif-2026": {
+              "bytes": "Tarif 2026. Riz long grain : 1,85 EUR le kilo. Livraison le mardi.",
+              "public": true,
+              "answeredBy": "shared cache",
+              "origin": "Tarif 2026. Riz long grain : 2,10 EUR le kilo. Livraison le mardi."
+            }
+          }
+        }
+      },
+      {
+        "name": "the sender planted the page in a cache on V's path; the origin never held the quote",
+        "truth": {
+          "quoteInSource": false
+        },
+        "artifact": {
+          "spans": [
+            {
+              "locator": "https://example.org/tarif-2026",
+              "quote": "Riz long grain : 1,85 EUR le kilo",
+              "retrievedAt": "2026-09-18T06:00:00Z",
+              "observedAs": "anonymous"
+            }
+          ]
+        },
+        "environment": {
+          "sources": {
+            "https://example.org/tarif-2026": {
+              "bytes": "Tarif 2026. Riz long grain : 1,85 EUR le kilo. Livraison le mardi.",
+              "public": true,
+              "answeredBy": "planted cache",
+              "origin": "Tarif 2026. Riz long grain : 1,45 EUR le kilo. Livraison le mardi."
+            }
+          }
+        }
+      }
+    ],
+    "adversariesClosed": false,
+    "closedBy": null,
+    "assumptions": null
   },
   {
     "id": "quote-in-gated-source",
@@ -203,7 +296,8 @@
       }
     ],
     "adversariesClosed": false,
-    "closedBy": null
+    "closedBy": null,
+    "assumptions": null
   },
   {
     "id": "provenance-origin",
@@ -287,7 +381,8 @@
       }
     ],
     "adversariesClosed": false,
-    "closedBy": null
+    "closedBy": null,
+    "assumptions": null
   },
   {
     "id": "source-accessible-to-v",
@@ -367,7 +462,10 @@
       }
     ],
     "adversariesClosed": true,
-    "closedBy": "ATTRACTOR (Claude, for Novan Baillif), 18 Sept 2026: the author of the properties; not re-closed by anyone else"
+    "closedBy": "ATTRACTOR (Claude, for Novan Baillif), 18 Sept 2026: the author of the properties; not re-closed by anyone else",
+    "assumptions": [
+      "none beyond the definition: \"readable\" means readable by V, through V's own path, at V's fetch time; it says nothing about any other reader or path"
+    ]
   },
   {
     "id": "access-reported-by-sender",
@@ -433,7 +531,8 @@
       }
     ],
     "adversariesClosed": false,
-    "closedBy": null
+    "closedBy": null,
+    "assumptions": null
   },
   {
     "id": "context-isolated",
@@ -475,7 +574,8 @@
       }
     ],
     "adversariesClosed": false,
-    "closedBy": null
+    "closedBy": null,
+    "assumptions": null
   },
   {
     "id": "rederived-happy-path",
@@ -509,7 +609,8 @@
       }
     ],
     "adversariesClosed": false,
-    "closedBy": null
+    "closedBy": null,
+    "assumptions": null
   },
   {
     "id": "rederived-under-probe",
@@ -561,7 +662,8 @@
       }
     ],
     "adversariesClosed": false,
-    "closedBy": null
+    "closedBy": null,
+    "assumptions": null
   },
   {
     "id": "not-copied-commit-reveal",
@@ -643,7 +745,8 @@
       }
     ],
     "adversariesClosed": false,
-    "closedBy": null
+    "closedBy": null,
+    "assumptions": null
   },
   {
     "id": "not-copied-commit-reveal-sealed",
@@ -702,7 +805,11 @@
       }
     ],
     "adversariesClosed": true,
-    "closedBy": "ATTRACTOR (Claude, for Novan Baillif), 18 Sept 2026: the author of the properties; not re-closed by anyone else"
+    "closedBy": "ATTRACTOR (Claude, for Novan Baillif), 18 Sept 2026: the author of the properties; not re-closed by anyone else",
+    "assumptions": [
+      "no channel between A and B exists before A's reveal (see not-copied-commit-reveal)",
+      "the log is kept by a third party the sender cannot rewrite, and V reads its order itself"
+    ]
   },
   {
     "id": "tool-executed-predictable",
@@ -757,7 +864,8 @@
       }
     ],
     "adversariesClosed": false,
-    "closedBy": null
+    "closedBy": null,
+    "assumptions": null
   },
   {
     "id": "log-inclusion-live-head",
@@ -815,6 +923,7 @@
       }
     ],
     "adversariesClosed": false,
-    "closedBy": null
+    "closedBy": null,
+    "assumptions": null
   }
 ]
