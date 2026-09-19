@@ -1,0 +1,44 @@
+{
+  "observation_shape": true,
+  "verification_shape": true,
+  "replay_shape": true,
+  "observation_check": {
+    "status": "conformant",
+    "violations": [],
+    "warnings": []
+  },
+  "verification_check": {
+    "status": "conformant",
+    "violations": [],
+    "warnings": [],
+    "counts": {
+      "accept": 0,
+      "verify": 1,
+      "re_derive": 0,
+      "contest": 0,
+      "modify": 0,
+      "drop": 0
+    },
+    "pendingReveal": []
+  },
+  "replay_check": {
+    "status": "confirmed",
+    "reproduced": true,
+    "cases": {
+      "matched": 1,
+      "total": 1
+    },
+    "independence": "not-established",
+    "problems": [],
+    "warnings": [
+      "same-lineage-replay"
+    ],
+    "interpretation": "A replay tests a declaration. It does not show how the value was produced, nor its independence."
+  },
+  "independent_recompute": {
+    "tool": "GNU coreutils sha256sum",
+    "text": "{\"a\":2,\"b\":1}",
+    "digest": "d3626ac30a87e6f7a6428233b3c68299976865fa5508e4267c5415c76af7a772",
+    "matches": true
+  }
+}

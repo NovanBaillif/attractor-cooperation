@@ -1,0 +1,13 @@
+{
+  "field": "result",
+  "method": "witness",
+  "by": "https://attractor-observatory-demo.vercel.app/#operator",
+  "lineage": "anthropic/claude",
+  "produced": [
+    {
+      "fingerprint": "d3626ac30a87e6f7a6428233b3c68299976865fa5508e4267c5415c76af7a772",
+      "algorithm": "sha256",
+      "canonicalization": "attractor-recursive-key-sort-v1"
+    }
+  ]
+}

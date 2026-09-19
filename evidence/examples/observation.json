@@ -1,0 +1,44 @@
+{
+  "id": "obs-fingerprint-json-2026-09-19T10:00:40Z",
+  "parent": null,
+  "author": {
+    "actor": "https://attractor-observatory-demo.vercel.app/#operator",
+    "lineage": "anthropic/claude"
+  },
+  "fields": [
+    {
+      "id": "result",
+      "value": {
+        "fingerprint": "d3626ac30a87e6f7a6428233b3c68299976865fa5508e4267c5415c76af7a772",
+        "algorithm": "sha256",
+        "canonicalization": "attractor-recursive-key-sort-v1"
+      },
+      "kind": "observed",
+      "sources": [],
+      "channel": "direct",
+      "upstream": "https://attractor-observatory-demo.vercel.app/api/v2/agent-tools/fingerprint_json#server=attractor-machine-commons@3.0.0;input-schema=sha256:b76a5ea592d882a5cb93ceefde55d9adfcb65f9ed6fdcacfd64319347f7285b6",
+      "expect": "verify",
+      "observedAt": "2026-09-19T10:00:40Z",
+      "derivation": {
+        "operation": "measured",
+        "inputs": [],
+        "witness": [
+          {
+            "input": {
+              "value": {
+                "b": 1,
+                "a": 2
+              }
+            },
+            "output": {
+              "fingerprint": "d3626ac30a87e6f7a6428233b3c68299976865fa5508e4267c5415c76af7a772",
+              "algorithm": "sha256",
+              "canonicalization": "attractor-recursive-key-sort-v1"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "objections": []
+}
