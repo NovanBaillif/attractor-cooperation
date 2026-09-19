@@ -1,6 +1,6 @@
 # Evidence profile 0.1 (draft)
 
-*19 September 2026. Local draft, not published.*
+*19 September 2026. Draft, published with its first implementation, ATTRACTOR 4.0.0 (section 7).*
 
 This is not a new specification. It is a way to use the transmission profile ([`SPEC.md`](../SPEC.md),
 0.6) to record that an external capability was executed, what was observed, what was checked, and whether
@@ -35,7 +35,7 @@ two worked examples of section 3.2.3 and 24 number serializations from appendix 
 
 | V4 object | Written as | Notes |
 |---|---|---|
-| **Capability** | The `upstream` URI of the observed field: `<endpoint>#server=<name>@<version>;input-schema=sha256:<digest of the canonical input schema>` | The 0.6 schema admits no new member. A dedicated `capability` member is proposed for 0.7 (section 7). |
+| **Capability** | The `upstream` URI of the observed field: `<endpoint>#server=<name>@<version>;input-schema=sha256:<digest of the canonical input schema>` | The 0.6 schema admits no new member. A dedicated `capability` member is proposed for 0.7 (section 8). |
 | **Claim** | The observed field's `expect: "verify"`, and its witness (this input gives this output) | A property stated in words goes in an objection's or field's text. It is not checked unless a basis supports it. |
 | **Observation** | A record: one `observed` field per result, with `observedAt` and `derivation {operation: "measured", witness: [{input, output}]}` | The observer is `author`. |
 | **Verification** | A receipt: `{field, action: "verify", basis}`. `basis` names the receiver's field holding the evidence (a recomputation, a schema check), and 7.1 checks that this evidence does not depend on the field it verifies | A verification with no basis is a violation (`verify-without-basis`). |
@@ -95,7 +95,33 @@ Files: [`examples/observation.json`](examples/observation.json), [`examples/veri
 [`examples/replay.json`](examples/replay.json), [`examples/checks.json`](examples/checks.json). To rebuild and recheck them, run
 `node evidence/build-examples.mjs`.
 
-## 7. Open questions
+## 7. An implementation: ATTRACTOR 4.0.0
+
+ATTRACTOR's MCP server (`https://attractor-observatory-demo.vercel.app/mcp`, also over A2A and
+`POST /api/v3/<tool>`) implements this profile with three tools. It embeds the reference checks of this
+repository unchanged, and fetches no URL: it stores and checks what it is sent.
+
+| Tool | What it does |
+|---|---|
+| `record_observation` | Accepts a conformant record with an observed field carrying `upstream` and a non-empty witness. Stores it append-only under `sha256:` of its canonical form. |
+| `check_observation` | Accepts a conformant receipt (7.4) or a replay that is not `invalid` (7.6) about a stored observation. The observation's id is part of the stored check, so identical replays of two observations stay two pieces of evidence. |
+| `find_evidence` | By id: the object, what is recorded about it, and the states of section 4 with counts and reasons. By capability prefix: the observations of that capability. |
+
+**Acceptance test, 19 September 2026.** The external capability was the official MCP reference server
+`@modelcontextprotocol/server-everything@2026.8.31` (server `mcp-servers/everything` 2.0.0), run locally with
+an empty environment and a one-tool allowlist (`get-sum`, annotated read-only). Ten steps passed:
+inspect without calling, call `{"a": 2, "b": 3}` (output "The sum of 2 and 3 is 5."), record, verify by
+recomputing a + b, redo the call, link the replay, retrieve everything through `find_evidence`, and replay a
+planted faulty observation ("…is 6."), which came out `contradicted`. The run found one defect, the
+replay collision described above, fixed before release. Report and script:
+[`registry/acceptance/`](https://github.com/NovanBaillif/attractor/tree/main/registry/acceptance) and
+[`registry/acceptance-v4.mjs`](https://github.com/NovanBaillif/attractor/blob/main/registry/acceptance-v4.mjs).
+
+The same operator made every observation, check and replay, except the planted observer. By section 4,
+the capability is `observed`, `verified` and `self-replayed`, not `reproduced`. What this profile still lacks
+is a replay by another party.
+
+## 8. Open questions
 
 1. **A `capability` member (0.7)** instead of carrying the identity inside `upstream`: `{protocol, endpoint,
    server: {name, version}, tool: {name, input_schema_sha256}}`.

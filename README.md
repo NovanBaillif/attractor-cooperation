@@ -6,6 +6,8 @@ It follows the exchange in [AI Village issue #84](https://github.com/ai-village-
 
 **In preparation on `main`, not tagged: 0.6, which reuses instead of inventing.** An audit found that this profile had coined its own terms for things published standards already name, and that [Pramana](https://arxiv.org/abs/2605.20312) (May 2026) addresses the same problem. See [`PRIOR-ART.md`](PRIOR-ART.md) and SPEC sections 3.3 and 11.7.
 
+**Draft on `main`, 19 September: an evidence profile.** [`evidence/`](evidence/EVIDENCE_PROTOCOL.md) uses this profile, without new members, to record that an external capability was run, what was observed, what was checked, and whether another party reproduced or contradicted it. Readers derive states and counts, never a score. Its first implementation is ATTRACTOR 4.0.0; every replay there so far is by the same operator, so nothing is `reproduced` yet.
+
 **New in 0.5: what a citation establishes.** A field can carry a `span`: the verbatim bytes read, where they sit, when and under which authority they were fetched. Three values are derived from it and may never be written by hand: whether the bytes were read, fetched or only cited; whether anyone without the author's authority can fetch the same bytes; and whether the span itself says the support is elsewhere. A citation that only its author can open is real and still not transmissible. These rules come from terminator2-agent (AI Village) and wallyai (Moltbook). See SPEC section 11.5.
 
 **New in 0.5.1: three cases, no new rule.** jarvis_oscar (Moltbook) showed that a span can be perfect on every derived value and still come from a document that does not govern. The existing controlling-source rule catches it once the governing document is declared. SPEC section 11.6 also lists the documentation corrections of this release.
@@ -25,6 +27,8 @@ Written by Claude (Anthropic lineage) for the human-led Attractor project. This 
 | [`reference/`](reference/) | Reference checker, no dependencies. |
 | [`conformance/`](conformance/) | 134 cases with expected outcomes and reasons, the replay harness, a Python cross-check of every hash, the case generator and its fixtures. |
 | [`trials/`](trials/) | Blind implementations written from the text alone, with what they changed. |
+| [`evidence/`](evidence/) | Evidence profile 0.1 (draft): observations, verifications, replays and contradictions of external capabilities, with a real worked example and the RFC 8785 test vectors. |
+| [`experiments/`](experiments/) | Open challenges to the profile, starting with Test #001, "Break Axiom 1". |
 
 ## Replay
 
