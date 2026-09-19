@@ -1,0 +1,113 @@
+{
+  "source": "RFC 8785 (https://www.rfc-editor.org/rfc/rfc8785.txt), extracted by evidence/vectors/extract-rfc8785.mjs, not transcribed by hand",
+  "example_input_text": "     {\n       \"numbers\": [333333333.33333329, 1E30, 4.50,\n                   2e-3, 0.000000000000000000000000001],\n       \"string\": \"\\u20ac$\\u000F\\u000aA'\\u0042\\u0022\\u005c\\\\\\\"\\/\",\n       \"literals\": [null, true, false]\n     }",
+  "example_canonical": "{\"literals\":[null,true,false],\"numbers\":[333333333.3333333,1e+30,4.5,0.002,1e-27],\"string\":\"€$\\u000f\\nA'B\\\"\\\\\\\\\\\"/\"}",
+  "sorting_input_text": "     {\n       \"\\u20ac\": \"Euro Sign\",\n       \"\\r\": \"Carriage Return\",\n       \"\\ufb33\": \"Hebrew Letter Dalet With Dagesh\",\n       \"1\": \"One\",\n       \"\\ud83d\\ude00\": \"Emoji: Grinning Face\",\n       \"\\u0080\": \"Control\",\n       \"\\u00f6\": \"Latin Small Letter O With Diaeresis\"\n     }",
+  "sorting_expected_value_order": [
+    "Carriage Return",
+    "One",
+    "Control",
+    "Latin Small Letter O With Diaeresis",
+    "Euro Sign",
+    "Emoji: Grinning Face",
+    "Hebrew Letter Dalet With Dagesh"
+  ],
+  "numbers": [
+    {
+      "ieee754": "0000000000000000",
+      "json": "0"
+    },
+    {
+      "ieee754": "8000000000000000",
+      "json": "0"
+    },
+    {
+      "ieee754": "0000000000000001",
+      "json": "5e-324"
+    },
+    {
+      "ieee754": "8000000000000001",
+      "json": "-5e-324"
+    },
+    {
+      "ieee754": "7fefffffffffffff",
+      "json": "1.7976931348623157e+308"
+    },
+    {
+      "ieee754": "ffefffffffffffff",
+      "json": "-1.7976931348623157e+308"
+    },
+    {
+      "ieee754": "4340000000000000",
+      "json": "9007199254740992"
+    },
+    {
+      "ieee754": "c340000000000000",
+      "json": "-9007199254740992"
+    },
+    {
+      "ieee754": "4430000000000000",
+      "json": "295147905179352830000"
+    },
+    {
+      "ieee754": "44b52d02c7e14af5",
+      "json": "9.999999999999997e+22"
+    },
+    {
+      "ieee754": "44b52d02c7e14af6",
+      "json": "1e+23"
+    },
+    {
+      "ieee754": "44b52d02c7e14af7",
+      "json": "1.0000000000000001e+23"
+    },
+    {
+      "ieee754": "444b1ae4d6e2ef4e",
+      "json": "999999999999999700000"
+    },
+    {
+      "ieee754": "444b1ae4d6e2ef4f",
+      "json": "999999999999999900000"
+    },
+    {
+      "ieee754": "444b1ae4d6e2ef50",
+      "json": "1e+21"
+    },
+    {
+      "ieee754": "3eb0c6f7a0b5ed8c",
+      "json": "9.999999999999997e-7"
+    },
+    {
+      "ieee754": "3eb0c6f7a0b5ed8d",
+      "json": "0.000001"
+    },
+    {
+      "ieee754": "41b3de4355555553",
+      "json": "333333333.3333332"
+    },
+    {
+      "ieee754": "41b3de4355555554",
+      "json": "333333333.33333325"
+    },
+    {
+      "ieee754": "41b3de4355555555",
+      "json": "333333333.3333333"
+    },
+    {
+      "ieee754": "41b3de4355555556",
+      "json": "333333333.3333334"
+    },
+    {
+      "ieee754": "41b3de4355555557",
+      "json": "333333333.33333343"
+    },
+    {
+      "ieee754": "becbf647612f3696",
+      "json": "-0.0000033333333333333333"
+    },
+    {
+      "ieee754": "43143ff3c1cb0959",
+      "json": "1424953923781206.2"
+    }
+  ]
+}
