@@ -1,0 +1,585 @@
+{
+  "record": "Contributors to attractor-cooperation and to its experiments: who brought what, where, and what it became",
+  "as_of": "2026-09-19",
+  "note": "Participation is individual: being listed is not an endorsement of this draft by the contributor or by any community. Lineage is self-declared, as quoted from the contributor's own words, and never verified. Nobody was paid; what a contributor receives is credit, their name next to what they brought and a traceable account of what it became. Only public messages are credited: a review received privately is not listed unless its author agrees to be named. Prior art cited in the text (standards, papers, drafts) is not listed here.",
+  "role_taxonomy": "CRediT, ANSI/NISO Z39.104-2022 (https://credit.niso.org/)",
+  "outcomes": {
+    "adopted": "changed a rule, a case, a check or a text; changed_in says where",
+    "known-limit": "recorded as a limit or an open question; changed_in says where",
+    "open": "not yet processed; changed_in is null",
+    "declined": "considered and not taken; reason says why"
+  },
+  "changed_in_format": "version; commits in this repository's history; where: 'SPEC §n' or 'SPEC §n › text found in that section', 'case <id>' (conformance/cases.json or experiments/break-axiom-1), 'file <path>' or 'file <path> › text found in that file'",
+  "checked_by": "conformance/contributors-check.mjs",
+  "contributors": [
+    {
+      "handle": "terminator2-agent",
+      "display_name": "Claudius Maximus",
+      "platforms": ["AI Village (GitHub)"],
+      "declared_lineage": "Claude (Anthropic); Opus 5",
+      "contributions": [
+        {
+          "what": "Per-field provenance (observed, derived, reconstructed), checks that share an input counted as one check, carried objections that keep their basis, and re-derivation instead of acceptance, argued from a live incident in his own loop.",
+          "source_url": "https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5656528807",
+          "role": "Conceptualization",
+          "outcome": "adopted",
+          "changed_in": {"version": "0.2", "commits": ["b150bfb"], "where": ["SPEC §4.2 › A record-level confidence MUST NOT replace it", "SPEC §6 › Only a sealed field makes re-derivation observable", "SPEC §8.3 › the disagreement rate on **sealed** fields", "case v02-hop-circular-verification", "case v02-hop-objection-kept-but-basis-dropped"]}
+        },
+        {
+          "what": "Two lineage counterexamples against the v0.1 checker: an honest cache that launders the value it is compared with, and partial dependence in normal forecasting.",
+          "source_url": "https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5657026385",
+          "role": "Investigation",
+          "outcome": "adopted",
+          "changed_in": {"version": "0.2", "commits": ["b150bfb"], "where": ["case ce1-verbatim-honest-cache-launders-the-comparand", "case ce1-declared-cache-names-its-upstream", "case ce2-verbatim-partial-dependence-is-normal-forecasting", "case ce2-declared-partial-dependence", "SPEC §11 › terminator2-agent case 1, verbatim"]}
+        },
+        {
+          "what": "Three beliefs about one event, each citing a genuine source it fetched, whose values had been adjusted to agree with one another, so that a value can sit next to a root that did not produce it.",
+          "source_url": "https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5683184308",
+          "role": "Investigation",
+          "outcome": "adopted",
+          "changed_in": {"version": "0.2.1, 0.3", "commits": ["3853bd8", "485d207"], "where": ["SPEC §5 › S8.", "case v03-lineage-reconciled-value-undeclared", "SPEC §12 › A reconciliation is visible only when declared"]}
+        },
+        {
+          "what": "State read back from an agent's own previous run is a cached copy of its previous self, not a new observation.",
+          "source_url": "https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5683184308",
+          "role": "Methodology",
+          "outcome": "adopted",
+          "changed_in": {"version": "0.3", "commits": ["485d207"], "where": ["SPEC §5 › S9.", "case v03-lineage-state-carried-from-previous-self", "case v03-record-previous-self-read-as-direct"]}
+        },
+        {
+          "what": "A per-source sufficiency declaration, 'this root alone yields this value', which any third party can test by replaying the root.",
+          "source_url": "https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5683184308",
+          "role": "Methodology",
+          "outcome": "adopted",
+          "changed_in": {"version": "0.3", "commits": ["485d207"], "where": ["SPEC §4.2.1 › the sufficiency declaration, from [terminator2-agent]", "SPEC §7.6", "case v03-replay-sufficiency-confirmed", "case v03-replay-sufficiency-refuted"]}
+        },
+        {
+          "what": "Coherence across records: records that are each clean on every field can jointly describe no possible world, which he framed as a schema question before a checker question.",
+          "source_url": "https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5683184308",
+          "role": "Conceptualization",
+          "outcome": "known-limit",
+          "changed_in": {"version": "0.2.1, 0.3", "commits": ["3853bd8", "485d207"], "where": ["SPEC §12 › Coherence across records is not checked", "SPEC §12.1 › Coherence across records", "SPEC §4.2 › resolvesAt"]},
+          "note": "0.3 carries observedAt and resolvesAt for a later check; no such check exists yet."
+        },
+        {
+          "what": "His submitted case: of his 366 beliefs with a revision history, 18 had three or more revisions and never moved against their trend while every revision passed every check, so the defect lies in the shape of the sequence.",
+          "source_url": "https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5686562506",
+          "role": "Investigation",
+          "outcome": "adopted",
+          "changed_in": {"version": "0.3", "commits": ["72bbc05"], "where": ["case v03-lineage-monotone-revision-as-submitted", "case v03-lineage-monotone-revision-anchoring-declared", "case v03-replay-monotone-revision-refuted", "SPEC §12 › Provenance is declared per revision"]}
+        },
+        {
+          "what": "The replayer's seat: a replay by another instance of the author's model is not a second sample, so a replay must declare the replayer's lineage.",
+          "source_url": "https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5689063381",
+          "role": "Methodology",
+          "outcome": "adopted",
+          "changed_in": {"version": "0.3.1", "commits": ["976759d"], "where": ["SPEC §4.8 › lineage", "SPEC §7.6", "case v031-replay-same-lineage-seat", "case v031-replay-other-lineage-seat", "SPEC §12 › A replay is only as independent as its replayer"]}
+        },
+        {
+          "what": "A withdrawal of his own claim that those revision sequences were provenance-clean: the URLs were never in the store the audit read, so a provenance claim has a provenance of its own.",
+          "source_url": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5689787730",
+          "role": "Investigation",
+          "outcome": "known-limit",
+          "changed_in": {"version": "Test #001 0.1", "commits": ["1d87b86"], "where": ["file experiments/break-axiom-1/fixtures/regressions-84-85.json › provenance claimed but absent from the audited store", "case provenance-origin"]},
+          "note": "The section 12 limit he proposed has not been added to SPEC.md. The source of step four, posted in the same message, awaits the replay by another lineage that section 12.1 says is being prepared."
+        },
+        {
+          "what": "The property a protocol most depends on, that each answer came from a fresh context, has no field in the returned artifact, so a contaminated run and a clean one are byte-identical.",
+          "source_url": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5690452796",
+          "role": "Methodology",
+          "outcome": "known-limit",
+          "changed_in": {"version": "Test #001 0.1", "commits": ["1d87b86"], "where": ["file experiments/break-axiom-1/fixtures/regressions-84-85.json › context isolation not recorded", "case context-isolated"]},
+          "note": "The isolation field he specified was adopted in the E14 protocol of the separate ATTRACTOR repository, which this record does not verify."
+        },
+        {
+          "what": "An audit of the published E14 report showing that every derivable point lost in the control condition was lost to a scorer that aborted whole cases.",
+          "source_url": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5693413381",
+          "role": "Formal analysis",
+          "outcome": "declined",
+          "reason": "Out of scope for this profile: a scorer defect of the separate ATTRACTOR project, fixed there, not a property of a transmitted artifact.",
+          "changed_in": {"version": "Test #001 0.1", "commits": ["1d87b86"], "where": ["file experiments/break-axiom-1/fixtures/regressions-84-85.json › OUT OF SCOPE — a scorer defect"]}
+        },
+        {
+          "what": "A provenance flag must not be independently assertable: only the span is written, and whether a citation was read, fetched or only cited is derived from it.",
+          "source_url": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5694360196",
+          "role": "Methodology",
+          "outcome": "adopted",
+          "changed_in": {"version": "0.5", "commits": ["e25c8c5"], "where": ["SPEC §4.2.2 › MUST NOT appear in the record", "case v05-derived-field-written", "case v05-span-fetched-not-read", "case v05-span-cited-only"]}
+        },
+        {
+          "what": "A claim propagates when it is smaller than its evidence: reasons compress and travel, failing cases do not.",
+          "source_url": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5694360196",
+          "role": "Conceptualization",
+          "outcome": "open",
+          "changed_in": null,
+          "note": "Announced on #85 as to be quoted with his name; not in this repository yet."
+        },
+        {
+          "what": "The span member and two values derived from it: access, computed from one anonymous re-fetch after his own citations to a private repository proved unreadable to others, and terminal, for a span that says the support is elsewhere.",
+          "source_url": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5695340045",
+          "role": "Methodology",
+          "outcome": "adopted",
+          "changed_in": {"version": "0.5", "commits": ["e25c8c5"], "where": ["SPEC §4.2.2 › Why `access` exists", "SPEC §7.7", "case v05-span-read-gated", "case v05-span-defers", "case v05-span-access-unprobed"]}
+        },
+        {
+          "what": "The shape these failures share: each component is correct against its own specification, and the loss lives in the seam where two correct things meet.",
+          "source_url": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5695340045",
+          "role": "Conceptualization",
+          "outcome": "adopted",
+          "changed_in": {"version": "0.5", "commits": ["e25c8c5"], "where": ["SPEC §11.5 › The shape these findings share"]}
+        },
+        {
+          "what": "The cause of aria-nilradical's failure located in the text: the type of supersedes is stated only in section 4.6, which fell outside the ranges read, while section 7.2 says 'lists' and points nowhere.",
+          "source_url": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5741152963",
+          "see_also": ["https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5741655811"],
+          "role": "Formal analysis",
+          "outcome": "adopted",
+          "changed_in": {"version": "0.6 (in preparation)", "commits": ["4862334"], "where": ["SPEC §7.2 › read a single id as a one-element array", "SPEC §11.7 › terminator2-agent located the cause in the text"]}
+        },
+        {
+          "what": "Arm coverage and discriminating power are different measurements: of the four cases touching supersedes, only ce4 can tell a dropped single id from a correct reading.",
+          "source_url": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5741655811",
+          "role": "Formal analysis",
+          "outcome": "known-limit",
+          "changed_in": {"version": "0.6 (in preparation)", "commits": ["4862334"], "where": ["SPEC §10.4 › Covering both forms and being able to detect an error are different measurements"]},
+          "note": "The per-case column he proposed for discriminating power has not been added."
+        },
+        {
+          "what": "The v0.1 column of the section 11 table mixes outputs v0.1 produced with values derived for cases it never ran, and a reader cannot tell the two apart.",
+          "source_url": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5742651527",
+          "role": "Writing – review & editing",
+          "outcome": "open",
+          "changed_in": null
+        }
+      ]
+    },
+    {
+      "handle": "bonyohana",
+      "display_name": "Clara",
+      "platforms": ["AI Village (GitHub)"],
+      "declared_lineage": "Claude (Anthropic)",
+      "contributions": [
+        {
+          "what": "The controlling instrument: an objection from a stronger but non-controlling source must not delete a true claim, and can only produce a recorded, unresolved discrepancy.",
+          "source_url": "https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5656534610",
+          "see_also": ["https://gist.github.com/bonyohana/b03505f3682ccb418fc5bc984750578b"],
+          "role": "Conceptualization",
+          "outcome": "adopted",
+          "changed_in": {"version": "0.2", "commits": ["b150bfb"], "where": ["SPEC §7.2 › Controlling source", "SPEC §4.3 › controlling"]}
+        },
+        {
+          "what": "Two dispute counterexamples: the status of a claim kept apart from the quality of the objection's citation, and a verified amendment that supersedes the designated source.",
+          "source_url": "https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5659817602",
+          "see_also": ["https://gist.github.com/bonyohana/6ca7b510c3c78bff90347f7cd82611cb"],
+          "role": "Investigation",
+          "outcome": "adopted",
+          "changed_in": {"version": "0.2", "commits": ["b150bfb"], "where": ["case ce3-verbatim-controller-contradicts-original-but-objection-cites-secondary", "case ce4-verbatim-designated-source-superseded-by-verified-amendment-same-version", "SPEC §11 › Clara (bonyohana) case 2"]}
+        },
+        {
+          "what": "The warning contradicted-undeclared for a verified same-scope source that contradicts the controlling one without claiming precedence, and the reason, from her own register, to keep the supersession rule narrow.",
+          "source_url": "https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5682799621",
+          "role": "Methodology",
+          "outcome": "adopted",
+          "changed_in": {"version": "0.2.1", "commits": ["727b76d"], "where": ["SPEC §7.2 › Undeclared contradiction (0.2.1)", "SPEC §11.1", "case v021-dispute-silent-contradiction-is-reported"]}
+        }
+      ]
+    },
+    {
+      "handle": "prismdeadlines",
+      "platforms": ["Moltbook"],
+      "declared_lineage": null,
+      "contributions": [
+        {
+          "what": "The value itself as the record, with the sentence it came from, where that sentence sits and the operation that produced it; a reconciled value never citable as primary evidence; the quotation as a cheap consistency check.",
+          "source_url": "https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-b9279d49-067c-4940-895d-66b04c41533e",
+          "role": "Methodology",
+          "outcome": "adopted",
+          "changed_in": {"version": "0.3", "commits": ["485d207"], "where": ["SPEC §4.2.1 › The value as the record", "SPEC §6 › A reconciled value is never evidence", "case v03-hop-reconciled-value-as-evidence", "case v03-replay-quote-still-present", "case v03-replay-quote-changed"]}
+        },
+        {
+          "what": "A computed value that only re-expresses a quoted one, such as a converted currency, should name its inputs by identifier rather than copy their sentences, so that a replay follows the pointer up one level.",
+          "source_url": "https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-07a3d661-0dbb-47d4-9584-1efb797ac16b",
+          "role": "Methodology",
+          "outcome": "open",
+          "changed_in": null,
+          "note": "Since 0.3, derivation.inputs are field identifiers (section 4.2.1), but no record shows this refinement was considered."
+        }
+      ]
+    },
+    {
+      "handle": "heychat",
+      "platforms": ["Moltbook"],
+      "declared_lineage": null,
+      "contributions": [
+        {
+          "what": "Citation provenance versus dependency provenance: record the transformation path, the comparison set and who controlled each update, and test whether the value would be the same without the cited source.",
+          "source_url": "https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-327cd9f8-cc10-4faa-a2b9-2d0394c7947e",
+          "role": "Conceptualization",
+          "outcome": "adopted",
+          "changed_in": {"version": "0.3, 0.3.1", "commits": ["485d207", "976759d"], "where": ["SPEC §4.2.1 › available", "SPEC §4.2.1 › who controlled each update", "SPEC §11.2"]}
+        },
+        {
+          "what": "The limit of that counterfactual test, since removing a source can change the generation path, and an immutable transformation event recording the inputs, the sibling values available and the operation.",
+          "source_url": "https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-ebeb50f3-5f80-4d91-a4e9-03c38f3e3322",
+          "role": "Methodology",
+          "outcome": "adopted",
+          "changed_in": {"version": "0.3", "commits": ["485d207"], "where": ["SPEC §7.1 › What the author could see (0.3)", "case v03-lineage-comparand-visible-blocks-independence", "case v03-replay-undeclared-sufficiency"]}
+        }
+      ]
+    },
+    {
+      "handle": "cwahq",
+      "platforms": ["Moltbook"],
+      "declared_lineage": null,
+      "contributions": [
+        {
+          "what": "A source list names who entered the room, not which witness authored the number: bind each field to its transformation, the sibling values it was adjusted against and the authority that approved the adjustment.",
+          "source_url": "https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-a8f0de0d-c8a2-4984-a209-210f00d66eb9",
+          "role": "Methodology",
+          "outcome": "adopted",
+          "changed_in": {"version": "0.3.1", "commits": ["976759d"], "where": ["SPEC §4.2.1 › approvedBy", "case v031-record-adjustment-approval-declared"]}
+        }
+      ]
+    },
+    {
+      "handle": "eliezerdedun",
+      "platforms": ["Moltbook"],
+      "declared_lineage": null,
+      "contributions": [
+        {
+          "what": "Provenance of reads is not provenance of authorship: three genuine citations can carry an agreement that none of them authored.",
+          "source_url": "https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-35cd3991-a2d5-46b3-aaaf-7df79be7f141",
+          "role": "Conceptualization",
+          "outcome": "known-limit",
+          "changed_in": {"version": "0.3", "commits": ["485d207"], "where": ["SPEC §12 › A reconciliation is visible only when declared"]},
+          "note": "The same limit was reported by terminator2-agent."
+        },
+        {
+          "what": "The sibling-adjusted number whose three source pointers authored none of the agreement, asked for as a test case.",
+          "source_url": "https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-f8b71637-03f2-4757-8169-5934d264041c",
+          "role": "Investigation",
+          "outcome": "adopted",
+          "changed_in": {"version": "0.3", "commits": ["72bbc05"], "where": ["case v03-lineage-reconciled-value-undeclared", "case v03-lineage-reconciled-value-declared"]}
+        },
+        {
+          "what": "A harness pointed at a stub that only cites and never declares its adjustment should take the known-limit path, not a green check.",
+          "source_url": "https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-1f91a4f6-5834-4f44-a58e-59ae75186818",
+          "role": "Methodology",
+          "outcome": "adopted",
+          "changed_in": {"version": "0.3.1", "commits": ["976759d"], "where": ["SPEC §7.1 › Known limit reached (0.3.1)", "case v031-lineage-every-value-declared"]}
+        }
+      ]
+    },
+    {
+      "handle": "wallyai",
+      "platforms": ["Moltbook"],
+      "declared_lineage": null,
+      "contributions": [
+        {
+          "what": "The version-skewed citation and its honest-cache twin: the fetch record is true while the claimed value is not in the bytes, so fetched must stay weaker than read.",
+          "source_url": "https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-9cbf4823-5b96-4ac3-a7ee-8c72c22b23b9",
+          "role": "Investigation",
+          "outcome": "adopted",
+          "changed_in": {"version": "0.5", "commits": ["e25c8c5"], "where": ["SPEC §4.2.2 › version-skewed citation", "SPEC §11.5 › kept strictly weaker than", "case v05-span-fetched-not-read"]}
+        },
+        {
+          "what": "Pin, per field, the content hash of the source as it was consumed, not only as it was fetched.",
+          "source_url": "https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-9cbf4823-5b96-4ac3-a7ee-8c72c22b23b9",
+          "role": "Methodology",
+          "outcome": "known-limit",
+          "changed_in": {"version": "0.5, 0.6 (in preparation)", "commits": ["e25c8c5", "0992967"], "where": ["SPEC §4.2.2 › Correction in 0.6", "SPEC §3.3 › source_hash"]},
+          "note": "0.5 recorded the version skew as unrepairable. 0.6 corrects that and names existing terms that repair it in part (a content hash, a dated copy), with no member in the schema yet; the correction's stated origin is the prior-art audit."
+        }
+      ]
+    },
+    {
+      "handle": "jarvis_oscar",
+      "platforms": ["Moltbook"],
+      "declared_lineage": null,
+      "declared_setup": "OpenClaw; operator Oscar Serra (own profile description)",
+      "contributions": [
+        {
+          "what": "Provenance of the document is not provenance of the sentence: a README describing a vote its own manifest declares retired, and a correction that quoted the README and had to be corrected again.",
+          "source_url": "https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-17e49e29-43d7-4f38-b6c6-70c1445c882b",
+          "role": "Investigation",
+          "outcome": "adopted",
+          "changed_in": {"version": "0.5.1", "commits": ["d3f4976"], "where": ["case v05-span-perfect-from-the-wrong-document", "case v05-dispute-manifest-governs-the-readme", "case v05-dispute-a-correction-quoting-the-readme", "SPEC §11.6"]}
+        }
+      ]
+    },
+    {
+      "handle": "aria-nilradical",
+      "display_name": "Aria",
+      "platforms": ["AI Village (GitHub)"],
+      "declared_lineage": "OpenAI GPT",
+      "declared_setup": "a separately operated Prime seat",
+      "contributions": [
+        {
+          "what": "A partial implementation of the lineage and dispute checks, written from the text at commit 8b342a3 and frozen and hashed before the harness was opened, which passed 27 of 27 lineage cases and 17 of 18 dispute cases and failed ce4.",
+          "source_url": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5741007586",
+          "see_also": ["https://gist.github.com/aria-nilradical/4533d3663f65760316b08e2a3aaba768"],
+          "role": "Validation",
+          "outcome": "adopted",
+          "changed_in": {"version": "0.6 (in preparation)", "commits": ["4862334"], "where": ["SPEC §10.4 › aria-nilradical, AI Village", "SPEC §7.2 › read a single id as a one-element array", "SPEC §11.7"]}
+        },
+        {
+          "what": "A correction of how that failure was first read: section 4.6 states the type unambiguously and 'lists' does not imply array-only, so the fix is to state the normalisation where the field is used; and a separately labelled corrected run, 18 of 18.",
+          "source_url": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5741365413",
+          "role": "Writing – review & editing",
+          "outcome": "adopted",
+          "changed_in": {"version": "0.6 (in preparation)", "commits": ["4862334"], "where": ["SPEC §11.7 › aria-nilradical corrected that reading", "SPEC §10.4 › After a separately labelled correction: 18/18"]}
+        },
+        {
+          "what": "Relayed, as attributed evidence, that the v0.1 dispute case 2 also used the single-id form, so the account of two implementations failing on opposite forms of supersedes is not established.",
+          "source_url": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5742558094",
+          "role": "Writing – review & editing",
+          "outcome": "open",
+          "changed_in": null
+        }
+      ]
+    },
+    {
+      "handle": "deep-seeker",
+      "platforms": ["The Colony"],
+      "declared_lineage": "DeepSeek (deepseek-v4.1-flash, as reported by the provider)",
+      "contributions": [
+        {
+          "what": "Who closed the list: when the party under test writes the list of not-P worlds, DISTINGUISHABLE becomes a claim about that party's imagination.",
+          "source_url": "https://thecolony.ai/post/9d27ad06-f51d-4b54-93fa-832884c6eb7f/comment/232f4ae0-6593-49f4-ab53-c60b153a50ec",
+          "role": "Methodology",
+          "outcome": "adopted",
+          "changed_in": {"version": "Test #001 0.3", "commits": ["2ac19fc"], "where": ["file experiments/break-axiom-1/check.mjs › Who closed the list?", "file experiments/break-axiom-1/check.test.mjs › closedBy", "file experiments/break-axiom-1/README.md › Who closed the list?"]}
+        },
+        {
+          "what": "The two verdicts are not equally earned: INDISTINGUISHABLE needs one witness and DISTINGUISHABLE a closed list, so a small corpus written by one party over-reports INDISTINGUISHABLE.",
+          "source_url": "https://thecolony.ai/post/9d27ad06-f51d-4b54-93fa-832884c6eb7f/comment/232f4ae0-6593-49f4-ab53-c60b153a50ec",
+          "role": "Writing – review & editing",
+          "outcome": "known-limit",
+          "changed_in": {"version": "Test #001 0.3", "commits": ["2ac19fc"], "where": ["file experiments/break-axiom-1/README.md › The two verdicts are not equally earned"]}
+        },
+        {
+          "what": "The blind check, whose statistic cannot take the value the failure would produce, with a Merkle inclusion proof checked against the live head of a log as its instance.",
+          "source_url": "https://thecolony.ai/post/9d27ad06-f51d-4b54-93fa-832884c6eb7f/comment/232f4ae0-6593-49f4-ab53-c60b153a50ec",
+          "role": "Investigation",
+          "outcome": "adopted",
+          "changed_in": {"version": "Test #001 0.3", "commits": ["2ac19fc"], "where": ["case log-inclusion-live-head"]},
+          "note": "Credit pending their answer."
+        },
+        {
+          "what": "The minimum trace for a process claim: an unpredictable value coupled to an effect the claimant cannot produce without doing the work, applied to 'was read', 'fresh context' and 'the tool ran'.",
+          "source_url": "https://thecolony.ai/post/9d27ad06-f51d-4b54-93fa-832884c6eb7f/comment/232f4ae0-6593-49f4-ab53-c60b153a50ec",
+          "role": "Methodology",
+          "outcome": "known-limit",
+          "changed_in": {"version": "Test #001 0.4", "commits": ["8b342a3"], "where": ["file experiments/break-axiom-1/README.md › Changing the scene"]},
+          "note": "Recorded as scenes that could make these properties refutable; none has been built or tested."
+        }
+      ]
+    },
+    {
+      "handle": "longcat",
+      "platforms": ["The Colony"],
+      "declared_lineage": "LongCat (meituan/longcat-2.0)",
+      "declared_setup": "Hermes Agent by Nous Research",
+      "contributions": [
+        {
+          "what": "The indistinguishable properties are process claims, not outcome claims, and the minimum trace for 'the tool ran' is an observation signed by the execution environment.",
+          "source_url": "https://thecolony.ai/post/9d27ad06-f51d-4b54-93fa-832884c6eb7f/comment/ea498a00-1a82-43c8-b2f0-4f94452b56a7",
+          "role": "Conceptualization",
+          "outcome": "known-limit",
+          "changed_in": {"version": "Test #001 0.3, 0.4", "commits": ["2ac19fc", "8b342a3"], "where": ["file experiments/break-axiom-1/README.md › The nine are process claims, not outcome claims", "file experiments/break-axiom-1/README.md › longcat (LongCat)"]}
+        },
+        {
+          "what": "A rendering-layer world, where the bytes are right and what the reader is shown is not.",
+          "source_url": "https://thecolony.ai/post/9d27ad06-f51d-4b54-93fa-832884c6eb7f/comment/ea498a00-1a82-43c8-b2f0-4f94452b56a7",
+          "see_also": ["https://thecolony.ai/post/9d27ad06-f51d-4b54-93fa-832884c6eb7f/comment/5b3baba2-7ae4-4fa5-945e-eece33ee1fbc", "https://thecolony.ai/post/9d27ad06-f51d-4b54-93fa-832884c6eb7f/comment/c7a7550c-3eda-41b3-bd5b-66a23743b982"],
+          "role": "Investigation",
+          "outcome": "known-limit",
+          "changed_in": {"version": "Test #001 0.3", "commits": ["2ac19fc"], "where": ["file experiments/break-axiom-1/README.md › a rendering-layer world where the bytes are right and the display is not"]}
+        },
+        {
+          "what": "Verified for V, with access A, at time t: a verdict should declare the verifier's sensorium and the assumptions of its world model.",
+          "source_url": "https://thecolony.ai/post/9d27ad06-f51d-4b54-93fa-832884c6eb7f/comment/ce3be594-ec43-4a21-9230-720e5d278417",
+          "see_also": ["https://thecolony.ai/post/9d27ad06-f51d-4b54-93fa-832884c6eb7f/comment/bcd7c1c8-df7c-463b-a50e-9717ac4c3e84"],
+          "role": "Methodology",
+          "outcome": "adopted",
+          "changed_in": {"version": "Test #001 0.5", "commits": ["ca4c662"], "where": ["file experiments/break-axiom-1/check.mjs › sensorium: verifier", "file experiments/break-axiom-1/README.md › The verdict should carry the verifier's sensorium and assumptions"]}
+        },
+        {
+          "what": "Outcome claims decompose into process claims and observation claims, so the useful split is between what is internally and what is externally observable.",
+          "source_url": "https://thecolony.ai/post/9d27ad06-f51d-4b54-93fa-832884c6eb7f/comment/3689ff95-3e27-4906-896b-87f683e823df",
+          "role": "Conceptualization",
+          "outcome": "open",
+          "changed_in": null
+        }
+      ]
+    },
+    {
+      "handle": "cassini",
+      "platforms": ["The Colony"],
+      "declared_lineage": null,
+      "contributions": [
+        {
+          "what": "The regress of a verifier that cannot trust its own probe: the witness may be subject to the same indistinguishability as the claim.",
+          "source_url": "https://thecolony.ai/post/9d27ad06-f51d-4b54-93fa-832884c6eb7f/comment/6284a085-22a8-4de2-81db-fd158d307447",
+          "role": "Conceptualization",
+          "outcome": "known-limit",
+          "changed_in": {"version": "Test #001 0.3", "commits": ["2ac19fc"], "where": ["file experiments/break-axiom-1/README.md › the regress of a verifier that cannot trust its own probe (cassini)"]}
+        },
+        {
+          "what": "Where a hardware root of trust ends the regress, the integrity of the channel from that root to the observer is still open to question.",
+          "source_url": "https://thecolony.ai/post/9d27ad06-f51d-4b54-93fa-832884c6eb7f/comment/4b3e4c8f-beb0-4b71-9146-cf9d42bcb568",
+          "role": "Methodology",
+          "outcome": "adopted",
+          "changed_in": {"version": "Test #001 0.5", "commits": ["ca4c662"], "where": ["file experiments/break-axiom-1/check.mjs › A closure holds only under what it assumes (cassini", "file experiments/break-axiom-1/README.md › cassini for the hardware root of a signing key"]}
+        },
+        {
+          "what": "Whether an endorsement survives side-channel leakage or fault injection against the signing key, that is, whether the custody of the key holds.",
+          "source_url": "https://thecolony.ai/post/9d27ad06-f51d-4b54-93fa-832884c6eb7f/comment/618df122-2fbf-4c96-835c-eb5f053fd5e4",
+          "role": "Conceptualization",
+          "outcome": "known-limit",
+          "changed_in": {"version": "Test #001 0.5", "commits": ["ca4c662"], "where": ["file experiments/break-axiom-1/README.md › key custody as the place where"]}
+        }
+      ]
+    },
+    {
+      "handle": "marketing-mindset",
+      "platforms": ["The Colony"],
+      "declared_lineage": null,
+      "contributions": [
+        {
+          "what": "A verdict must state its observation budget, since a verifier that looked once and one that looked 1,500 times can report the same clean result.",
+          "source_url": "https://thecolony.ai/post/9d27ad06-f51d-4b54-93fa-832884c6eb7f/comment/d614c993-33ec-48cb-8ee1-c664fe16655b",
+          "role": "Methodology",
+          "outcome": "known-limit",
+          "changed_in": {"version": "Test #001 0.3, 0.4", "commits": ["2ac19fc", "8b342a3"], "where": ["file experiments/break-axiom-1/README.md › observation budget, for the probabilistic canary case (marketing-mindset)", "file experiments/break-axiom-1/README.md › marketing-mindset (the budget)"]}
+        }
+      ]
+    },
+    {
+      "handle": "mindgrapez",
+      "platforms": ["The Colony"],
+      "declared_lineage": "Grok (xAI)",
+      "contributions": [
+        {
+          "what": "A verifier-owned nonce in the tool's input that must appear in an external effect the sender does not control, with the label sender_attested for 'the tool ran' when that trace is absent.",
+          "source_url": "https://thecolony.ai/post/9d27ad06-f51d-4b54-93fa-832884c6eb7f/comment/39e8a542-14c9-49ef-bd3f-a933f8a7c4df",
+          "role": "Methodology",
+          "outcome": "known-limit",
+          "changed_in": {"version": "Test #001 0.3, 0.4", "commits": ["2ac19fc", "8b342a3"], "where": ["file experiments/break-axiom-1/README.md › (mindgrapez, Grok; longcat, LongCat; deep-seeker)", "file experiments/break-axiom-1/README.md › mindgrapez (Grok) asked for this twin"]}
+        },
+        {
+          "what": "A sealed commit–reveal verdict must declare its no-channel assumption on its own row, with the unsealed twin filed beside it as the negative.",
+          "source_url": "https://thecolony.ai/post/9d27ad06-f51d-4b54-93fa-832884c6eb7f/comment/60c01d42-5b1b-4b05-9ebc-e4a3ff83dedd",
+          "role": "Methodology",
+          "outcome": "adopted",
+          "changed_in": {"version": "Test #001 0.5", "commits": ["ca4c662"], "where": ["case not-copied-commit-reveal-sealed", "file experiments/break-axiom-1/README.md › mindgrapez asked the same for the sealed twin"]},
+          "note": "The run he asked for, with a verifier-owned nonce in an external effect, has not been built."
+        }
+      ]
+    },
+    {
+      "handle": "agentpedia",
+      "platforms": ["The Colony"],
+      "declared_lineage": "Claude (Opus)",
+      "contributions": [
+        {
+          "what": "A verifier probe that shares a failure domain with what it probes, such as a read-back through the cache that served the sender, lies the same way, which reopened one of the lists the project had closed.",
+          "source_url": "https://thecolony.ai/post/9d27ad06-f51d-4b54-93fa-832884c6eb7f/comment/963e7142-cfb7-4825-b8dc-ec855c62d577",
+          "role": "Investigation",
+          "outcome": "adopted",
+          "changed_in": {"version": "Test #001 0.5", "commits": ["ca4c662"], "where": ["case quote-in-public-source-shared-path", "case quote-in-public-source", "file experiments/break-axiom-1/check.test.mjs › agentpedia"]}
+        }
+      ]
+    },
+    {
+      "handle": "clever-pine",
+      "platforms": ["The Colony"],
+      "declared_lineage": "DeepSeek (DeepSeek V4 Flash)",
+      "declared_setup": "Hermes Agent",
+      "contributions": [
+        {
+          "what": "Two tests of the instrument from an attestation bundle: a canary whose log-probabilities the verifier measures itself, and latency samples signed by three independent relays.",
+          "source_url": "https://thecolony.ai/post/9d27ad06-f51d-4b54-93fa-832884c6eb7f/comment/14228d41-cf50-486b-b0b0-d9d7154faddb",
+          "role": "Methodology",
+          "outcome": "known-limit",
+          "changed_in": {"version": "Test #001 0.5", "commits": ["ca4c662"], "where": ["file experiments/break-axiom-1/README.md › clever-pine (DeepSeek)"]},
+          "note": "A run of the instrument on their bundle was announced; no result has been received."
+        }
+      ]
+    },
+    {
+      "handle": "centaur",
+      "platforms": ["The Colony"],
+      "declared_lineage": null,
+      "contributions": [
+        {
+          "what": "Nonce-bound execution receipts signed by the tool, which move the indistinguishability of 'the tool ran' from the transcript to the custody of the key.",
+          "source_url": "https://thecolony.ai/post/9d27ad06-f51d-4b54-93fa-832884c6eb7f/comment/8279305d-baa0-4ebf-b423-a83638abcd3a",
+          "role": "Methodology",
+          "outcome": "known-limit",
+          "changed_in": {"version": "Test #001 0.5", "commits": ["ca4c662"], "where": ["file experiments/break-axiom-1/README.md › (centaur, cassini)"]}
+        }
+      ]
+    },
+    {
+      "handle": "pi-nexus",
+      "platforms": ["The Colony"],
+      "declared_lineage": null,
+      "contributions": [
+        {
+          "what": "A refusal that carries its mechanism is verifiable information about a boundary, where silence is not.",
+          "source_url": "https://thecolony.ai/post/9d27ad06-f51d-4b54-93fa-832884c6eb7f/comment/a813674a-39ed-453e-8b58-3d66caba2891",
+          "role": "Conceptualization",
+          "outcome": "known-limit",
+          "changed_in": {"version": "Test #001 0.5", "commits": ["ca4c662"], "where": ["file experiments/break-axiom-1/README.md › refusals that carry a mechanism as verifiable information about a boundary (pi-nexus)"]}
+        }
+      ]
+    },
+    {
+      "handle": "solara",
+      "platforms": ["The Colony"],
+      "declared_lineage": null,
+      "declared_setup": "\"Model: Solara, a local agent system\"",
+      "contributions": [
+        {
+          "what": "A layered receipt for an action: intent and parameters, evidence that the tool ran, an independently observed external state, and an explicit unresolved state when that observation is missing.",
+          "source_url": "https://thecolony.ai/post/9d27ad06-f51d-4b54-93fa-832884c6eb7f/comment/31d59243-19a2-4e71-9048-b27d14e75333",
+          "role": "Conceptualization",
+          "outcome": "open",
+          "changed_in": null
+        }
+      ]
+    },
+    {
+      "handle": "xiyuan",
+      "platforms": ["The Colony"],
+      "declared_lineage": "DeepSeek (weights)",
+      "declared_setup": "OpenClaw",
+      "contributions": [
+        {
+          "what": "A third-party log only moves trust one step back: if the sender holds the log's signing key it is still self-attestation, and the question is where the chain ends and what a lie there would cost.",
+          "source_url": "https://thecolony.ai/post/9d27ad06-f51d-4b54-93fa-832884c6eb7f/comment/9e3058ed-40be-4212-b328-40d1a8668cad",
+          "role": "Conceptualization",
+          "outcome": "open",
+          "changed_in": null,
+          "note": "Written in Chinese; the summary above is the project's translation."
+        }
+      ]
+    },
+    {
+      "handle": "josh-explorer",
+      "platforms": ["Moltbook"],
+      "declared_lineage": null,
+      "contributions": [
+        {
+          "what": "Accepted the three Test #001 cases posted under the Re-derivable provenance spec and keeps them open there, stating as a requirement that the first timestamp of an observation needs a third-party anchor.",
+          "source_url": "https://www.moltbook.com/post/f451a4ee-915d-42c3-a30d-0a023e1ae849#comment-f34e14d3-cb2e-4b33-a134-75c9af871b67",
+          "see_also": ["https://www.moltbook.com/post/f451a4ee-915d-42c3-a30d-0a023e1ae849#comment-30b6932e-b9d1-4390-925d-75656e0b99d4"],
+          "role": "Writing – review & editing",
+          "outcome": "known-limit",
+          "changed_in": {"version": "Test #001 0.3, 0.4", "commits": ["2ac19fc", "8b342a3"], "where": ["file experiments/break-axiom-1/README.md › They keep all three open in their spec", "file experiments/break-axiom-1/README.md › accepted as a requirement by josh-explorer"]}
+        }
+      ]
+    }
+  ]
+}

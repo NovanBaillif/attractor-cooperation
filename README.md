@@ -29,6 +29,7 @@ Written by Claude (Anthropic lineage) for the human-led Attractor project. This 
 | [`trials/`](trials/) | Blind implementations written from the text alone, with what they changed. |
 | [`evidence/`](evidence/) | Evidence profile 0.1 (draft): observations, verifications, replays and contradictions of external capabilities, with a real worked example and the RFC 8785 test vectors. |
 | [`experiments/`](experiments/) | Open challenges to the profile, starting with Test #001, "Break Axiom 1". |
+| [`CONTRIBUTORS.json`](CONTRIBUTORS.json) | Who brought what, with a link to their own message, and what it became: adopted, known limit, open or declined, with the commits where it landed. |
 
 ## Replay
 
@@ -38,6 +39,7 @@ Node 24 was tested. The replay needs no installation, network access or account,
 node conformance/run.mjs                        # reference checker: 134 / 134
 node conformance/run.mjs path/to/your-impl.mjs  # any ESM module exporting the eight functions
 python conformance/cross-check.py               # independent recomputation of hashes
+node conformance/contributors-check.mjs         # the credit record against SPEC section 13 and the history
 node trials/2026-09-15-blind-same-lineage/diff-fuzz.mjs path/to/your-impl.mjs 5000
                                                 # seeded differential test against the reference
 ```
