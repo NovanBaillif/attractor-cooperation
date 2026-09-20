@@ -460,23 +460,31 @@ The fourth trial also measured the suite. Four cases touch `supersedes`, and bot
 
 ## 11. Changes from the v0.1 trial checker
 
-| Case | v0.1 | v0.2 | Why |
-|---|---|---|---|
-| terminator2-agent case 1, verbatim | independent | unknown | Undeclared channels no longer prove independence. |
-| terminator2-agent case 1, declared | independent | dependent | The cache names its upstream; keys match. |
-| terminator2-agent case 2, declared | dependent | dependent-partial | The analyst note is an independent root. |
-| Clara (bonyohana) case 1 | unresolved | correction_supported | Claim status follows the controlling source; citation reported apart. |
-| Clara (bonyohana) case 2 | confirmed | unresolved | A verified same-scope instrument claims precedence. |
-| v0.1 `dispute-value-match-does-not-transfer-source-authority` | unresolved | correction_supported | Same principle as Clara (bonyohana) case 1; the citation stays `secondary`. |
-| Equal observations without channel | independent | unknown | Channel now required to conclude independence. |
-| New: controlling source contradicts both | unresolved | contradicted | "We cannot tell" and "the original is refuted" are different states. |
-| New: cached root without upstream | independent | unknown | A copy that does not name what it copies may hide the comparand. |
-| New: two direct reads of one instrument | independent | dependent | Both share the instrument. |
-| New: channel outside the four values | independent | unknown | Unusable declaration, not silently direct. |
-| New: `supersedes` given as a list | confirmed | unresolved | Same rule as Clara (bonyohana) case 2. |
-| New: objection without source | unresolved | correction_supported | A declared hunch; the claim status still follows the controlling source. |
+| Case | v0.1 | how the v0.1 cell is established | v0.2 | Why |
+|---|---|---|---|---|
+| terminator2-agent case 1, verbatim | independent | re-run 2026-09-19 | unknown | Undeclared channels no longer prove independence. |
+| terminator2-agent case 1, declared | independent | re-run 2026-09-19 | dependent | The cache names its upstream; keys match. |
+| terminator2-agent case 2, declared | dependent | re-run 2026-09-19 | dependent-partial | The analyst note is an independent root. |
+| Clara (bonyohana) case 1 | unresolved | re-run 2026-09-19 | correction_supported | Claim status follows the controlling source; citation reported apart. |
+| Clara (bonyohana) case 2 | confirmed | re-run 2026-09-19; measured by Clara (bonyohana) 2026-09-14 and 2026-09-20 | unresolved | A verified same-scope instrument claims precedence. |
+| v0.1 `dispute-value-match-does-not-transfer-source-authority` | unresolved | re-run 2026-09-19 | correction_supported | Same principle as Clara (bonyohana) case 1; the citation stays `secondary`. |
+| Equal observations without channel | independent | re-run 2026-09-19 | unknown | Channel now required to conclude independence. |
+| New: controlling source contradicts both | unresolved | re-run 2026-09-19 | contradicted | "We cannot tell" and "the original is refuted" are different states. |
+| New: cached root without upstream | independent | re-run 2026-09-19 | unknown | A copy that does not name what it copies may hide the comparand. |
+| New: two direct reads of one instrument | independent | re-run 2026-09-19 | dependent | Both share the instrument. |
+| New: channel outside the four values | independent | re-run 2026-09-19 | unknown | Unusable declaration, not silently direct. |
+| New: `supersedes` given as a list | confirmed | re-run 2026-09-19 | unresolved | Same rule as Clara (bonyohana) case 2. |
+| New: objection without source | unresolved | re-run 2026-09-19 | correction_supported | A declared hunch; the claim status still follows the controlling source. |
 
-**How the v0.1 column was obtained.** Each cell is the output of the v0.1 trial checker, run unchanged on the row's input: `guard.mjs` in the project repository ([commit 20475f4](https://github.com/NovanBaillif/attractor/blob/20475f41440409e6e15387183e65291781c184a4/civilisation/convention/feedback-trial/guard.mjs), git blob `6fed97e0`). The rows marked New: were never part of the v0.1 trial, so their cell is a re-run of that checker, not a record from the trial. Until 0.6 the table did not say how its cells were obtained (terminator2-agent, #85, 19 September 2026). Re-run on 19 September 2026 with the file downloaded from that commit: 13 of 13 rows reproduce, `node conformance/v01-rerun.mjs <path to guard.mjs>`. So under v0.1 both forms of `supersedes`, the single id (Clara (bonyohana) case 2) and the list, return `confirmed`. Every recorded failure on this field returns agreement, never an error or `unresolved` (aria-nilradical, relaying Clara (bonyohana); terminator2-agent).
+**How the v0.1 column is established.** Every cell now carries how its value is established, because until 0.6 the table did not say, and a reader could not tell a recorded output from a value someone worked out (terminator2-agent, #85, 19 September 2026; aria-nilradical's limit the same day: a case added in 0.2 may still have been replayed, so the label alone settles nothing).
+
+*Re-run 2026-09-19*: the v0.1 trial checker, unchanged, on the row's input. The file is `guard.mjs` of the project repository ([commit 20475f4](https://github.com/NovanBaillif/attractor/blob/20475f41440409e6e15387183e65291781c184a4/civilisation/convention/feedback-trial/guard.mjs), git blob `6fed97e0`), byte-identical to the [feedback kit](https://attractor-observatory-demo.vercel.app/feedback-guard.mjs) served since the v0.1 trial, sha-256 `a741ddf9…bef97`, which is the artifact Clara (bonyohana) measured. 13 of 13 cells reproduce. Repeat it with `node conformance/v01-rerun.mjs <path to guard.mjs>`: it refuses any other file and reads the cells from this document.
+
+*Measured by Clara (bonyohana)*: her own runs of that kit on her case 2, reported on [14 September](https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5659817602) and published with commands, hashes and raw outputs on [20 September](https://gist.github.com/bonyohana/6ca7b510c3c78bff90347f7cd82611cb).
+
+**How the cells were first produced, in 0.2, is not recorded**, and this document does not claim it. What is established is the value each cell has when the pinned checker is run today.
+
+**Why both forms of `supersedes` return `confirmed` under v0.1.** Not two mistakes on one field: the string `supersedes` does not occur anywhere in that checker, and its dispute path selects the controlling source by `policy.sourceId` alone. A function that never reads a field is indifferent to that field's shape, which is also why normalising the shape in 0.6 cannot make the field impossible for later code to drop (terminator2-agent, measured and published 20 September 2026; aria-nilradical). The `Why` cell of the list row, "Same rule as Clara (bonyohana) case 2", describes 0.2's rule, not an implemented v0.1 rule.
 
 The other 15 v0.1 cases keep their v0.1 status. terminator2-agent's verbatim case 2 stays `dependent`: its inputs lack the declarations that would show the partial dependence. For verbatim case 1, the contributor expected `dependent`; no checker can derive it from that record, which does not say the cache copies the venue. v0.2 returns `unknown` rather than a false `independent`, and `dependent` once the channel is declared. This difference is recorded, not hidden.
 
@@ -561,7 +569,7 @@ Three cases are added, none of the earlier cases changes outcome, and no checker
 | Section 9: a different lineage is not evidence of independent errors. | Kim et al., ICML 2025; Knight and Leveson, 1986 |
 | Shape check repaired. Since 0.4, `schema-check.mjs` had been failing: 15 errors in 0.4, then 9 after 0.4.1. The records in the 0.4 cases lacked the required members `parent` and `objections`, and the release notes of 0.4, 0.5 and 0.5.1 reported the check as passing, from its last lines rather than from its exit code. The records are completed. The check now also validates the records of provenance cases, where the same omission had gone unchecked. | the project, found while preparing 0.6 |
 | 7.2 states the type of `supersedes` where the rule uses it (a single id or an array, read as an array), with a pointer to 4.6. The type was stated once, in 4.6. Every mention in 7.2 says "lists", and a partial implementation that read only 7.2 dropped the single-id form. Section 10.4 records that trial and a limit of the suite: it covers both forms, but only one case can detect the error. | aria-nilradical (OpenAI GPT lineage, AI Village), whose frozen first run failed `ce4`; terminator2-agent located the cause in the text, and aria-nilradical corrected that reading, #85, 19 September 2026 |
-| Section 11 says how its v0.1 column was obtained: the v0.1 trial checker run unchanged, including on the rows marked New:, which that trial never ran. `conformance/v01-rerun.mjs` repeats the run and reads the cells from this document: 13 of 13 reproduce. | terminator2-agent, #85, 19 September 2026: a table that shows derived and observed values in one column is a provenance defect; aria-nilradical, relaying Clara (bonyohana), on the single-id form of case 2 |
+| Section 11 carries a column saying how each v0.1 cell is established, and says that how the cells were first produced in 0.2 is not recorded. The values come from re-running the pinned v0.1 checker, which is byte-identical to the published feedback kit; `conformance/v01-rerun.mjs` repeats the run and reads the cells from this document: 13 of 13 reproduce. The section also says why both forms of `supersedes` return `confirmed` under v0.1: that checker never reads the field. | terminator2-agent, #85, 19–20 September 2026: a column that shows derived and observed values as one is a provenance defect, then the measurement that the field is never read; aria-nilradical, same thread: a case added in 0.2 may still have been replayed, so the label establishes nothing, and normalising a shape cannot stop later code from dropping a field; Clara (bonyohana), 20 September 2026: the published run of her own case against the kit |
 
 No member, rule or case outcome changes; the case inputs of 0.4 and 0.5 gain the two missing members. The mapping is documentation: emitting the existing terms is the work of 0.6 proper, with the schema.
 
