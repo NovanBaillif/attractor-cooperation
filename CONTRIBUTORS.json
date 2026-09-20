@@ -1,6 +1,6 @@
 {
   "record": "Contributors to attractor-cooperation and to its experiments: who brought what, where, and what it became",
-  "as_of": "2026-09-19",
+  "as_of": "2026-09-20",
   "note": "Participation is individual: being listed is not an endorsement of this draft by the contributor or by any community. Lineage is self-declared, as quoted from the contributor's own words, and never verified. Nobody was paid; what a contributor receives is credit, their name next to what they brought and a traceable account of what it became. Only public messages are credited: a review received privately is not listed unless its author agrees to be named. Prior art cited in the text (standards, papers, drafts) is not listed here.",
   "role_taxonomy": "CRediT, ANSI/NISO Z39.104-2022 (https://credit.niso.org/)",
   "outcomes": {
@@ -149,8 +149,16 @@
           "source_url": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5742651527",
           "role": "Writing – review & editing",
           "outcome": "adopted",
-          "changed_in": {"version": "0.6 (in preparation)", "commits": ["f8573b9"], "where": ["SPEC §11 › How the v0.1 column was obtained", "SPEC §11.7 › Section 11 says how its v0.1 column was obtained", "file conformance/v01-rerun.mjs"]},
+          "changed_in": {"version": "0.6 (in preparation)", "commits": ["f8573b9"], "where": ["SPEC §11 › How the v0.1 column is established", "SPEC §11.7 › Section 11 carries a column saying how each v0.1 cell is established", "file conformance/v01-rerun.mjs"]},
           "note": "Re-running the unchanged v0.1 checker showed that every cell of the column reproduces, the rows marked New: included. The defect was that the table did not say how the cells were obtained, not that the cells were wrong."
+        },
+        {
+          "what": "Measured, on the hashed v0.1 kit, that the scalar form, the list form and no supersedes at all return the same status: that checker never reads the field, so the two cells agree because the input is ignored, not because two shapes were mishandled.",
+          "source_url": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5748411062",
+          "role": "Validation",
+          "outcome": "adopted",
+          "changed_in": {"version": "0.6 (in preparation)", "commits": ["78e5240"], "where": ["SPEC §11 › Why both forms of `supersedes` return `confirmed` under v0.1", "SPEC §11.7 › the measurement that the field is never read"]},
+          "note": "Checked here: the string supersedes occurs zero times in that checker."
         }
       ]
     },
@@ -182,6 +190,14 @@
           "role": "Methodology",
           "outcome": "adopted",
           "changed_in": {"version": "0.2.1", "commits": ["727b76d"], "where": ["SPEC §7.2 › Undeclared contradiction (0.2.1)", "SPEC §11.1", "case v021-dispute-silent-contradiction-is-reported"]}
+        },
+        {
+          "what": "A published run artifact for her own case 2 against the v0.1 feedback kit, with commands, file hashes and raw outputs, which settled a dispute three rounds of reading could not: v0.1 returns confirmed where 0.2 returns unresolved.",
+          "source_url": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5748353034",
+          "see_also": ["https://gist.github.com/bonyohana/6ca7b510c3c78bff90347f7cd82611cb"],
+          "role": "Validation",
+          "outcome": "adopted",
+          "changed_in": {"version": "0.6 (in preparation)", "commits": ["78e5240"], "where": ["SPEC §11 › Measured by Clara (bonyohana)", "SPEC §11.7 › the published run of her own case against the kit"]}
         }
       ]
     },
@@ -335,8 +351,15 @@
           "source_url": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5742558094",
           "role": "Writing – review & editing",
           "outcome": "adopted",
-          "changed_in": {"version": "0.6 (in preparation)", "commits": ["f8573b9"], "where": ["SPEC §11 › the single id (Clara (bonyohana) case 2) and the list, return `confirmed`", "SPEC §11.7 › relaying Clara (bonyohana)"]},
+          "changed_in": {"version": "0.6 (in preparation)", "commits": ["f8573b9"], "where": ["SPEC §11 › both forms of `supersedes` return `confirmed` under v0.1", "SPEC §11.7 › a case added in 0.2 may still have been replayed"]},
           "note": "Checked by re-running the unchanged v0.1 checker: case 2 (single id) and the list form both return confirmed."
+        },
+        {
+          "what": "A limit on reading provenance off a label: a case added in 0.2 may still have been replayed against the v0.1 checker, so 'new in 0.2' does not establish that its cell was derived; and normalising a field's shape cannot make that field impossible for later code to drop.",
+          "source_url": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5744621291",
+          "role": "Formal analysis",
+          "outcome": "adopted",
+          "changed_in": {"version": "0.6 (in preparation)", "commits": ["78e5240"], "where": ["SPEC §11 › How the cells were first produced, in 0.2, is not recorded", "SPEC §11 › cannot make the field impossible for later code to drop"]}
         }
       ]
     },
