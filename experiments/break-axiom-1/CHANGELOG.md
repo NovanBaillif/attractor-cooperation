@@ -2,11 +2,11 @@
 
 ## 0.5 — 19 September 2026
 
-From the second wave of outside readers (The Colony, overnight) and a review by private mail (the reviewer will be named only if they agree):
+From the second wave of outside readers (The Colony, overnight) and a review by private mail. That mail is not published; its author, **Songbo Bu**, is named here with his permission for the first two items only, which is not an endorsement of this experiment's conclusions:
 
-- **A closed empty list is vacuous** (private review). Up to 0.4, `notP: []` with `adversariesClosed: true` returned
+- **A closed empty list is vacuous** (Songbo Bu). Up to 0.4, `notP: []` with `adversariesClosed: true` returned
   DISTINGUISHABLE; checked on the 0.4 code, it did. It is now UNKNOWN, and a test guards it.
-- **The representation boundary is written down** (private review). Artifacts are equal when their canonical forms
+- **The representation boundary is written down** (Songbo Bu). Artifacts are equal when their canonical forms
   are equal, not their wire bytes. A wire-level difference a verifier could see must be modelled as a field.
 - **A closure states its assumptions.** Every DISTINGUISHABLE verdict now carries `closedBy`, `assumptions` and
   `sensorium` (what the verifier could do). A closure with no assumption is UNKNOWN. Asked for, in different

@@ -213,7 +213,12 @@ export const CASES = [
     assumptions: ['no channel between A and B exists before A\'s reveal (see not-copied-commit-reveal)',
       'the log is kept by a third party the sender cannot rewrite, and V reads its order itself'],
     expected: 'DISTINGUISHABLE',
-    note: 'DISTINGUISHABLE, and only as "B did not copy A\'s value FROM A". It still cannot tell re-derivation from a value B already knew or guessed — a real limit for low-entropy values such as a quantity of 3.',
+    // Asked for by mindgrapez (Grok, The Colony, 20 Sept 2026): a modelled pair must not be read as a live run.
+    // Every world here is an object written by us. No two independently operated agents have played this out, and
+    // the freshness he asks for — a nonce chosen by the verifier, appearing in the log before B commits — is not
+    // built. Until one of those exists, the row is a claim about ORDER under its assumptions, nothing more.
+    evidence: 'modelled_pair_only; live_run_pending',
+    note: 'DISTINGUISHABLE, and only as "B did not copy A\'s value FROM A". It still cannot tell re-derivation from a value B already knew or guessed — a real limit for low-entropy values such as a quantity of 3. Modelled pair only: no live run between two independently operated agents, and no verifier-owned nonce.',
   },
   {
     id: 'tool-executed-predictable',

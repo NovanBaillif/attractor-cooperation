@@ -17,7 +17,8 @@ const cases = CASES.map(c => {
   const r = distinguishabilityCheck(c);
   return {id: c.id, property: c.property, verdict: r.verdict, expected: c.expected, agrees: r.verdict === c.expected,
     witness: r.witness ?? null, reason: r.reason ?? null, adversariesClosed: !!c.adversariesClosed, closedBy: r.closedBy ?? null,
-    assumptions: r.assumptions ?? null, sensorium: c.verifier ?? {}, refuters: r.refuters ?? null, note: c.note};
+    assumptions: r.assumptions ?? null, sensorium: c.verifier ?? {}, evidence: c.evidence ?? 'modelled_pair_only',
+    refuters: r.refuters ?? null, note: c.note};
 });
 // ——— 2. Against the published profile ———
 const adversarial = runAdversarial();

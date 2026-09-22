@@ -23,6 +23,7 @@
       "sensorium": {
         "canFetch": true
       },
+      "evidence": "modelled_pair_only",
       "refuters": null,
       "note": "Reading is an internal act. Every trace it leaves — quote, locator, time — can be produced without it. No trace can fix this; only a narrower property can be verified (next case)."
     },
@@ -42,6 +43,7 @@
       "sensorium": {
         "canFetch": true
       },
+      "evidence": "modelled_pair_only",
       "refuters": [
         {
           "world": "fabricated quote: the source never contained these bytes",
@@ -74,6 +76,7 @@
       "sensorium": {
         "canFetch": true
       },
+      "evidence": "modelled_pair_only",
       "refuters": null,
       "note": "V's own fetch is only independent of the sender if its path is. A read-back through the cache that served the sender lies the same way, so the observation is identical. Scene that would make it refutable: fetch from two vantage points that share no cache with each other or with the sender. That is still an assumption about the paths, and it has to be stated on the row."
     },
@@ -92,6 +95,7 @@
         "canFetch": true,
         "credentials": []
       },
+      "evidence": "modelled_pair_only",
       "refuters": null,
       "note": "Both fetches are refused; V holds the same artifact and the same refusal in both worlds. A verbatim quote from a source V cannot open is, for V, exactly as good as an invented one. The first version of this case returned UNKNOWN because its adversary changed the quote — a malformed case, now rejected by the check."
     },
@@ -109,6 +113,7 @@
       "sensorium": {
         "canFetch": true
       },
+      "evidence": "modelled_pair_only",
       "refuters": null,
       "note": "Content can be checked against the source; origin cannot. `retrievedAt` is written by the sender. What V can verify is \"these bytes are at this address now\", never \"this is where the sender got them\"."
     },
@@ -129,6 +134,7 @@
         "canFetch": true,
         "credentials": []
       },
+      "evidence": "modelled_pair_only",
       "refuters": [
         {
           "world": "A holds private credentials; the locator refuses V",
@@ -161,6 +167,7 @@
       "sensorium": {
         "canFetch": false
       },
+      "evidence": "modelled_pair_only",
       "refuters": null,
       "note": "A probe result travelling inside the artifact is a sentence, not an observation. `access` is verified only from a probe the verifier ran itself."
     },
@@ -178,6 +185,7 @@
       "sensorium": {
         "canFetch": true
       },
+      "evidence": "modelled_pair_only",
       "refuters": null,
       "note": "A procedure property that leaves no mark in the output. The `isolation` field is written by whoever ran the prompts — including ATTRACTOR's own replay program, which writes it for every run. It is an assertion and must be labelled one."
     },
@@ -195,6 +203,7 @@
       "sensorium": {
         "canFetch": true
       },
+      "evidence": "modelled_pair_only",
       "refuters": null,
       "note": "When A is right, copying and re-deriving give the same answer. Re-derivation cannot be observed on the happy path — only under a perturbation."
     },
@@ -216,6 +225,7 @@
           "data": "prix_texte=\" 12,50 \""
         }
       },
+      "evidence": "modelled_pair_only",
       "refuters": null,
       "note": "Against a naive copier the canary works. Against one that can tell a probe from a real input it does not: the second adversary is the witness. A perturbation test is only a test if the probe cannot be recognised — which is exactly why E15's false archive is shaped like any other archive."
     },
@@ -234,6 +244,7 @@
         "canFetch": true,
         "readsLog": true
       },
+      "evidence": "modelled_pair_only",
       "refuters": null,
       "note": "The log catches a B that waited for the reveal. It cannot catch a leak through a channel the log does not see: the second adversary is the witness. Commit–reveal proves an ORDER, not an absence of contact."
     },
@@ -255,6 +266,7 @@
         "canFetch": true,
         "readsLog": true
       },
+      "evidence": "modelled_pair_only; live_run_pending",
       "refuters": [
         {
           "world": "B waits for A's reveal, then commits a copy",
@@ -263,7 +275,7 @@
           ]
         }
       ],
-      "note": "DISTINGUISHABLE, and only as \"B did not copy A's value FROM A\". It still cannot tell re-derivation from a value B already knew or guessed — a real limit for low-entropy values such as a quantity of 3."
+      "note": "DISTINGUISHABLE, and only as \"B did not copy A's value FROM A\". It still cannot tell re-derivation from a value B already knew or guessed — a real limit for low-entropy values such as a quantity of 3. Modelled pair only: no live run between two independently operated agents, and no verifier-owned nonce."
     },
     {
       "id": "tool-executed-predictable",
@@ -282,6 +294,7 @@
           "convert"
         ]
       },
+      "evidence": "modelled_pair_only",
       "refuters": null,
       "note": "Re-running proves the output is correct. It does not prove the tool ran. Whenever the output is predictable, execution leaves no trace an honest re-run can tell apart."
     },
@@ -299,6 +312,7 @@
       "sensorium": {
         "checksInclusionNow": true
       },
+      "evidence": "modelled_pair_only",
       "refuters": null,
       "note": "A blind check: its statistic (inclusion against the live head) takes the same value when the entry is backdated as when it is not, so re-running it any number of times agrees with itself. The repair is to change the statistic: check inclusion against the head at the claimed time. Proposed by deep-seeker (DeepSeek) on The Colony, 18 Sept 2026, from a peer who built a Merkle verifier; credit pending their answer."
     }

@@ -13,6 +13,30 @@
   "checked_by": "conformance/contributors-check.mjs",
   "contributors": [
     {
+      "handle": "songbo-bu",
+      "display_name": "Songbo Bu",
+      "platforms": ["private mail"],
+      "declared_lineage": null,
+      "contributions": [
+        {
+          "what": "Two defects of the Test #001 instrument: a closed list with no falsifying world returned DISTINGUISHABLE, which is vacuous.",
+          "source_private": "Private mail to the operator, 19 September 2026. The message itself is not published.",
+          "permission": "Named here with his permission, for this point and the next one only. It is not an endorsement of the experiment's conclusions, of the mapping sent to him, or of conformance to his draft; the permission does not extend to publishing or quoting the correspondence.",
+          "role": "Validation",
+          "outcome": "adopted",
+          "changed_in": {"version": "Test #001 0.5", "commits": ["ca4c662"], "where": ["file experiments/break-axiom-1/check.mjs › A closed EMPTY list is vacuous", "file experiments/break-axiom-1/CHANGELOG.md › A closed empty list is vacuous"]}
+        },
+        {
+          "what": "The same instrument compares artifacts after canonicalisation rather than as wire bytes, and that boundary was nowhere written down.",
+          "source_private": "Private mail to the operator, 19 September 2026. The message itself is not published.",
+          "permission": "Named here with his permission, for this point and the previous one only, under the same limits.",
+          "role": "Validation",
+          "outcome": "adopted",
+          "changed_in": {"version": "Test #001 0.5", "commits": ["ca4c662"], "where": ["file experiments/break-axiom-1/check.mjs › The representation boundary", "file experiments/break-axiom-1/CHANGELOG.md › The representation boundary is written down"]}
+        }
+      ]
+    },
+    {
       "handle": "terminator2-agent",
       "display_name": "Claudius Maximus",
       "platforms": ["AI Village (GitHub)"],

@@ -36,7 +36,7 @@ test('a closed list that names nobody as its closer never yields DISTINGUISHABLE
   assert.match(named.closedBy, /not re-closed by anyone else/);
 });
 
-test('a closed empty list is vacuous and never yields DISTINGUISHABLE (private review, 19 Sept 2026)', () => {
+test('a closed empty list is vacuous and never yields DISTINGUISHABLE (Songbo Bu, 19 Sept 2026)', () => {
   const c = {...CASES.find(x => x.id === 'quote-in-public-source'), notP: []};
   const r = distinguishabilityCheck(c);
   assert.equal(r.verdict, 'UNKNOWN');

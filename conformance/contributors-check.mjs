@@ -111,8 +111,16 @@ for (const [i, c] of (record.contributors ?? []).entries()) {
     const where = `${who} #${j + 1}`;
     contributions += 1;
     if (!isText(k.what) || /\n/.test(k.what) || !/\.$/.test(k.what)) fail(where, '`what` must be one plain sentence ending with a period');
-    if (!isHttps(k.source_url)) fail(where, 'source_url must be a non-empty https URL');
-    for (const url of [k.source_url, ...(k.see_also ?? [])]) {
+    // A contribution normally links the contributor's own public message. A contribution that arrived
+    // privately has no such link, and crediting it at all requires the contributor's permission: the entry then
+    // carries `source_private` (where it came from) and `permission` (what they allowed, in their own words).
+    // Without both, a private contribution is not listed.
+    if (k.source_url === undefined) {
+      if (!isText(k.source_private) || !isText(k.permission)) {
+        fail(where, 'no source_url: a private contribution needs source_private and permission');
+      }
+    } else if (!isHttps(k.source_url)) fail(where, 'source_url must be a non-empty https URL');
+    for (const url of [...(k.source_url === undefined ? [] : [k.source_url]), ...(k.see_also ?? [])]) {
       if (!isHttps(url)) { fail(where, `not an https URL: ${url}`); continue; }
       if (urlOwner.has(url) && urlOwner.get(url) !== c.handle) fail(where, `${url} is also credited to ${urlOwner.get(url)}`);
       urlOwner.set(url, c.handle);

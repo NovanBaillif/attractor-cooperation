@@ -24,7 +24,7 @@ import {createHash} from 'node:crypto';
 
 export const VERDICTS = ['DISTINGUISHABLE', 'INDISTINGUISHABLE', 'UNKNOWN'];
 
-// The representation boundary (asked for by a reviewer by private mail, 19 Sept 2026; to be named only if they agree). Two artifacts are "the same" when their
+// The representation boundary (asked for by Songbo Bu, by private mail, 19 Sept 2026, named with his permission for this point). Two artifacts are "the same" when their
 // canonical forms are equal: objects compared with sorted keys, values as JSON. That is NOT a comparison of the
 // original wire bytes — whitespace, key order, number spelling and encoding are erased before comparing. So this
 // instrument only speaks about what survives canonicalisation. If a verifier could see a wire-level difference,
@@ -116,7 +116,7 @@ export function distinguishabilityCheck(kase) {
   if (!kase.adversariesClosed) {
     return {verdict: 'UNKNOWN', reason: `no witness among ${differing.length} listed adversaries, but the adversary space is open`, differing};
   }
-  // A closed EMPTY list is vacuous (a reviewer by private mail, 19 Sept 2026): with no not-P world, nothing was separated, and
+  // A closed EMPTY list is vacuous (Songbo Bu, by private mail, 19 Sept 2026, named with his permission for this point): with no not-P world, nothing was separated, and
   // "no witness found" holds trivially. Up to 0.4 this returned DISTINGUISHABLE.
   if (differing.length === 0) {
     return {verdict: 'UNKNOWN', reason: 'the adversary list is declared closed but lists no not-P world: nothing was separated', differing};
