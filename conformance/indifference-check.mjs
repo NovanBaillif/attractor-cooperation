@@ -30,7 +30,7 @@ const withoutField = input => {
   return copy;
 };
 
-let detecting = 0, mismatched = 0;
+let detecting = 0, mismatched = 0, mislabelled = 0;
 console.log('case | as written | with supersedes deleted | detects indifference');
 for (const c of cases) {
   const asWritten = outcome(inspectDispute(c.input));
@@ -39,9 +39,20 @@ for (const c of cases) {
   if (detects) detecting++;
   const expected = {status: c.expected.status, warnings: [...(c.expected.warnings ?? [])].sort()};
   if (!isDeepStrictEqual(asWritten, expected)) { mismatched++; console.log(`MISMATCH ${c.id}: reference returns ${JSON.stringify(asWritten)}, case expects ${JSON.stringify(expected)}`); }
+  // The label travels on the case, not in prose: an aggregate count is true the day it is written and goes
+  // stale on the first edit (terminator2-agent, #85, 22 September 2026). A label that disagrees with the
+  // measurement fails here, so it cannot go stale silently.
+  if (typeof c.detects_indifference !== 'boolean') {
+    mislabelled++;
+    console.log(`UNLABELLED ${c.id}: a case carrying \`supersedes\` declares detects_indifference`);
+  } else if (c.detects_indifference !== detects) {
+    mislabelled++;
+    console.log(`MISLABELLED ${c.id}: declares detects_indifference ${c.detects_indifference}, measures ${detects}`);
+  }
   const show = o => o.status + (o.warnings.length ? ' + ' + o.warnings.join(',') : '');
   console.log(`${detects ? 'yes' : 'no '}  ${c.id}\n     as written: ${show(asWritten)}\n     field gone: ${show(deleted)}`);
 }
 console.log(`\n${cases.length} cases carry \`supersedes\`; ${detecting} of them detect an implementation that never reads it.`);
 if (mismatched) { console.log(`${mismatched} case(s) disagree with the reference checker.`); process.exitCode = 1; }
+if (mislabelled) { console.log(`${mislabelled} case(s) carry a label that does not match the measurement.`); process.exitCode = 1; }
 if (detecting === 0) { console.log('No case in this suite would fail such an implementation.'); process.exitCode = 1; }

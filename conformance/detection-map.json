@@ -1,0 +1,751 @@
+{
+  "mesure": "Suppression d’un champ, sur chaque cas de la suite",
+  "limite": "La suppression est une mutation parmi d’autres. Un champ lu mais mal lu, lu dans le mauvais ordre, ou dont l’absence est confondue avec le vide, n’est pas une suppression. Ce que cette carte autorise à dire est « cette suite détecte cette erreur-là », jamais « cette suite détecte les erreurs ».",
+  "demande_par": "terminator2-agent, AI Village #85, 22 septembre 2026",
+  "mesure_le": "2026-09-22",
+  "champs": [
+    {
+      "champ": "resolvesAt",
+      "cas": 17,
+      "detectent": 0,
+      "exemples": []
+    },
+    {
+      "champ": "observedAt",
+      "cas": 16,
+      "detectent": 0,
+      "exemples": []
+    },
+    {
+      "champ": "code",
+      "cas": 7,
+      "detectent": 0,
+      "exemples": []
+    },
+    {
+      "champ": "retrievedAt",
+      "cas": 7,
+      "detectent": 1,
+      "exemples": [
+        "v05-span-fetched-not-read"
+      ]
+    },
+    {
+      "champ": "approvedBy",
+      "cas": 2,
+      "detectent": 1,
+      "exemples": [
+        "v031-record-adjustment-approval-empty"
+      ]
+    },
+    {
+      "champ": "reason",
+      "cas": 2,
+      "detectent": 1,
+      "exemples": [
+        "v02-hop-dropped-source-truncates-provenance"
+      ]
+    },
+    {
+      "champ": "verifiedOn",
+      "cas": 2,
+      "detectent": 1,
+      "exemples": [
+        "v04-record-verified-claim-without-witness"
+      ]
+    },
+    {
+      "champ": "contact",
+      "cas": 1,
+      "detectent": 1,
+      "exemples": [
+        "v05-derived-field-written"
+      ]
+    },
+    {
+      "champ": "mechanism",
+      "cas": 1,
+      "detectent": 1,
+      "exemples": [
+        "v05-span-perfect-from-the-wrong-document"
+      ]
+    },
+    {
+      "champ": "code_registre",
+      "cas": 7,
+      "detectent": 2,
+      "exemples": [
+        "v04-witness-self-refuted",
+        "v04-witness-partial-refuted"
+      ]
+    },
+    {
+      "champ": "supersedes",
+      "cas": 4,
+      "detectent": 2,
+      "exemples": [
+        "ce4-verbatim-designated-source-superseded-by-verified-amendment-same-version",
+        "v02-dispute-supersedes-list"
+      ]
+    },
+    {
+      "champ": "sourceText",
+      "cas": 2,
+      "detectent": 2,
+      "exemples": [
+        "v03-replay-quote-still-present",
+        "v03-replay-quote-changed"
+      ]
+    },
+    {
+      "champ": "available",
+      "cas": 15,
+      "detectent": 3,
+      "exemples": [
+        "v03-lineage-comparand-visible-blocks-independence",
+        "v03-lineage-comparand-root-visible",
+        "v03-record-available-but-also-input"
+      ]
+    },
+    {
+      "champ": "produced",
+      "cas": 6,
+      "detectent": 4,
+      "exemples": [
+        "v04-witness-confirmed",
+        "v04-witness-self-refuted",
+        "v04-witness-partial-refuted"
+      ]
+    },
+    {
+      "champ": "rule",
+      "cas": 5,
+      "detectent": 5,
+      "exemples": [
+        "v05-span-read-public",
+        "v05-span-read-gated",
+        "v05-span-defers"
+      ]
+    },
+    {
+      "champ": "sufficient",
+      "cas": 16,
+      "detectent": 6,
+      "exemples": [
+        "v031-replay-same-lineage-seat",
+        "v031-replay-other-lineage-seat",
+        "v031-replay-seat-undeclared"
+      ]
+    },
+    {
+      "champ": "probes",
+      "cas": 10,
+      "detectent": 6,
+      "exemples": [
+        "v05-span-read-public",
+        "v05-span-read-gated",
+        "v05-span-defers"
+      ]
+    },
+    {
+      "champ": "anonymous",
+      "cas": 6,
+      "detectent": 6,
+      "exemples": [
+        "v05-span-read-public",
+        "v05-span-read-gated",
+        "v05-span-defers"
+      ]
+    },
+    {
+      "champ": "output",
+      "cas": 6,
+      "detectent": 6,
+      "exemples": [
+        "v04-record-verified-claim-with-witness",
+        "v04-witness-confirmed",
+        "v04-witness-self-refuted"
+      ]
+    },
+    {
+      "champ": "salt",
+      "cas": 10,
+      "detectent": 7,
+      "exemples": [
+        "v02-reveal-sealed-agreement",
+        "v02-reveal-sealed-disagreement",
+        "v02-reveal-receipt-edited-after-reveal"
+      ]
+    },
+    {
+      "champ": "observedAs",
+      "cas": 7,
+      "detectent": 7,
+      "exemples": [
+        "v05-span-read-public",
+        "v05-span-read-gated",
+        "v05-span-access-unprobed"
+      ]
+    },
+    {
+      "champ": "witness",
+      "cas": 7,
+      "detectent": 7,
+      "exemples": [
+        "v04-record-verified-claim-with-witness",
+        "v04-record-witness-malformed",
+        "v04-witness-confirmed"
+      ]
+    },
+    {
+      "champ": "reveals",
+      "cas": 11,
+      "detectent": 8,
+      "exemples": [
+        "v02-reveal-sealed-agreement",
+        "v02-reveal-sealed-disagreement",
+        "v02-reveal-commitment-mismatch"
+      ]
+    },
+    {
+      "champ": "span",
+      "cas": 9,
+      "detectent": 9,
+      "exemples": [
+        "v05-span-read-public",
+        "v05-span-read-gated",
+        "v05-span-access-unprobed"
+      ]
+    },
+    {
+      "champ": "actor",
+      "cas": 89,
+      "detectent": 10,
+      "exemples": [
+        "v02-reveal-sealed-agreement",
+        "v02-reveal-sealed-disagreement",
+        "v02-reveal-commitment-mismatch"
+      ]
+    },
+    {
+      "champ": "by",
+      "cas": 50,
+      "detectent": 10,
+      "exemples": [
+        "v02-reveal-sealed-agreement",
+        "v02-reveal-sealed-disagreement",
+        "v02-reveal-commitment-mismatch"
+      ]
+    },
+    {
+      "champ": "high",
+      "cas": 46,
+      "detectent": 10,
+      "exemples": [
+        "v02-reveal-sealed-agreement",
+        "v02-reveal-sealed-disagreement",
+        "v02-reveal-commitment-mismatch"
+      ]
+    },
+    {
+      "champ": "low",
+      "cas": 46,
+      "detectent": 10,
+      "exemples": [
+        "v02-reveal-sealed-agreement",
+        "v02-reveal-sealed-disagreement",
+        "v02-reveal-commitment-mismatch"
+      ]
+    },
+    {
+      "champ": "type",
+      "cas": 46,
+      "detectent": 10,
+      "exemples": [
+        "v02-reveal-sealed-agreement",
+        "v02-reveal-sealed-disagreement",
+        "v02-reveal-commitment-mismatch"
+      ]
+    },
+    {
+      "champ": "uncertainty",
+      "cas": 46,
+      "detectent": 10,
+      "exemples": [
+        "v02-reveal-sealed-agreement",
+        "v02-reveal-sealed-disagreement",
+        "v02-reveal-commitment-mismatch"
+      ]
+    },
+    {
+      "champ": "receiptDigest",
+      "cas": 11,
+      "detectent": 10,
+      "exemples": [
+        "v02-reveal-sealed-agreement",
+        "v02-reveal-sealed-disagreement",
+        "v02-reveal-commitment-mismatch"
+      ]
+    },
+    {
+      "champ": "reveal",
+      "cas": 11,
+      "detectent": 10,
+      "exemples": [
+        "v02-reveal-sealed-agreement",
+        "v02-reveal-sealed-disagreement",
+        "v02-reveal-commitment-mismatch"
+      ]
+    },
+    {
+      "champ": "claimId",
+      "cas": 18,
+      "detectent": 11,
+      "exemples": [
+        "v01-dispute-controller-confirms-original-over-objection",
+        "v01-dispute-correction-supported-without-overwrite",
+        "v01-dispute-value-match-does-not-transfer-source-authority"
+      ]
+    },
+    {
+      "champ": "domain",
+      "cas": 18,
+      "detectent": 11,
+      "exemples": [
+        "v01-dispute-controller-confirms-original-over-objection",
+        "v01-dispute-correction-supported-without-overwrite",
+        "v01-dispute-value-match-does-not-transfer-source-authority"
+      ]
+    },
+    {
+      "champ": "policy",
+      "cas": 18,
+      "detectent": 11,
+      "exemples": [
+        "v01-dispute-controller-confirms-original-over-objection",
+        "v01-dispute-correction-supported-without-overwrite",
+        "v01-dispute-value-match-does-not-transfer-source-authority"
+      ]
+    },
+    {
+      "champ": "status",
+      "cas": 18,
+      "detectent": 11,
+      "exemples": [
+        "v01-dispute-controller-confirms-original-over-objection",
+        "v01-dispute-correction-supported-without-overwrite",
+        "v01-dispute-value-match-does-not-transfer-source-authority"
+      ]
+    },
+    {
+      "champ": "verified",
+      "cas": 18,
+      "detectent": 11,
+      "exemples": [
+        "v01-dispute-controller-confirms-original-over-objection",
+        "v01-dispute-correction-supported-without-overwrite",
+        "v01-dispute-value-match-does-not-transfer-source-authority"
+      ]
+    },
+    {
+      "champ": "version",
+      "cas": 18,
+      "detectent": 11,
+      "exemples": [
+        "v01-dispute-controller-confirms-original-over-objection",
+        "v01-dispute-correction-supported-without-overwrite",
+        "v01-dispute-value-match-does-not-transfer-source-authority"
+      ]
+    },
+    {
+      "champ": "inputs",
+      "cas": 48,
+      "detectent": 13,
+      "exemples": [
+        "v031-record-adjustment-approval-declared",
+        "v031-record-adjustment-approval-empty",
+        "v03-record-every-operation-declared"
+      ]
+    },
+    {
+      "champ": "input",
+      "cas": 16,
+      "detectent": 13,
+      "exemples": [
+        "v04-record-verified-claim-with-witness",
+        "v031-replay-same-lineage-seat",
+        "v031-replay-other-lineage-seat"
+      ]
+    },
+    {
+      "champ": "expect",
+      "cas": 57,
+      "detectent": 15,
+      "exemples": [
+        "v02-record-clean",
+        "v02-record-sealed-value-leaks-through-dependent",
+        "v02-record-re-derive-requested-without-seal"
+      ]
+    },
+    {
+      "champ": "alg",
+      "cas": 46,
+      "detectent": 15,
+      "exemples": [
+        "v02-record-clean",
+        "v02-record-sealed-value-leaks-through-dependent",
+        "v02-record-sealed-field-still-carries-value"
+      ]
+    },
+    {
+      "champ": "locator",
+      "cas": 24,
+      "detectent": 16,
+      "exemples": [
+        "v031-record-adjustment-approval-declared",
+        "v031-record-adjustment-approval-empty",
+        "v03-record-every-operation-declared"
+      ]
+    },
+    {
+      "champ": "method",
+      "cas": 17,
+      "detectent": 16,
+      "exemples": [
+        "v031-replay-same-lineage-seat",
+        "v031-replay-other-lineage-seat",
+        "v031-replay-seat-undeclared"
+      ]
+    },
+    {
+      "champ": "operation",
+      "cas": 48,
+      "detectent": 17,
+      "exemples": [
+        "v031-record-adjustment-approval-declared",
+        "v031-record-adjustment-approval-empty",
+        "v03-record-every-operation-declared"
+      ]
+    },
+    {
+      "champ": "quote",
+      "cas": 24,
+      "detectent": 17,
+      "exemples": [
+        "v031-record-adjustment-approval-declared",
+        "v031-record-adjustment-approval-empty",
+        "v03-record-every-operation-declared"
+      ]
+    },
+    {
+      "champ": "replay",
+      "cas": 17,
+      "detectent": 17,
+      "exemples": [
+        "v031-replay-same-lineage-seat",
+        "v031-replay-other-lineage-seat",
+        "v031-replay-seat-undeclared"
+      ]
+    },
+    {
+      "champ": "objections",
+      "cas": 89,
+      "detectent": 18,
+      "exemples": [
+        "v02-record-objection-target-missing",
+        "v02-record-objection-without-basis",
+        "v02-hop-objection-lost"
+      ]
+    },
+    {
+      "champ": "claim",
+      "cas": 18,
+      "detectent": 18,
+      "exemples": [
+        "v01-dispute-stronger-secondary-source-controller-missing",
+        "v01-dispute-controller-confirms-original-over-objection",
+        "v01-dispute-unverified-self-designated-policy"
+      ]
+    },
+    {
+      "champ": "commitment",
+      "cas": 46,
+      "detectent": 19,
+      "exemples": [
+        "v02-record-clean",
+        "v02-record-sealed-value-leaks-through-dependent",
+        "v02-record-sealed-field-still-carries-value"
+      ]
+    },
+    {
+      "champ": "proposedValue",
+      "cas": 64,
+      "detectent": 21,
+      "exemples": [
+        "v01-dispute-controller-confirms-original-over-objection",
+        "v01-dispute-correction-supported-without-overwrite",
+        "v01-dispute-value-match-does-not-transfer-source-authority"
+      ]
+    },
+    {
+      "champ": "right",
+      "cas": 27,
+      "detectent": 21,
+      "exemples": [
+        "v01-lineage-direct-backfill-from-comparand",
+        "v01-lineage-transitive-common-origin",
+        "v01-lineage-equal-independent-observations-zero-disagreement"
+      ]
+    },
+    {
+      "champ": "objection",
+      "cas": 21,
+      "detectent": 21,
+      "exemples": [
+        "v01-dispute-stronger-secondary-source-controller-missing",
+        "v01-dispute-controller-confirms-original-over-objection",
+        "v01-dispute-unverified-self-designated-policy"
+      ]
+    },
+    {
+      "champ": "left",
+      "cas": 27,
+      "detectent": 22,
+      "exemples": [
+        "v01-lineage-direct-backfill-from-comparand",
+        "v01-lineage-transitive-common-origin",
+        "v01-lineage-equal-independent-observations-zero-disagreement"
+      ]
+    },
+    {
+      "champ": "citation",
+      "cas": 45,
+      "detectent": 24,
+      "exemples": [
+        "v02-record-clean",
+        "v02-record-sealed-value-leaks-through-dependent",
+        "v02-record-re-derive-requested-without-seal"
+      ]
+    },
+    {
+      "champ": "comparison",
+      "cas": 27,
+      "detectent": 24,
+      "exemples": [
+        "v01-lineage-direct-backfill-from-comparand",
+        "v01-lineage-transitive-common-origin",
+        "v01-lineage-equal-independent-observations-zero-disagreement"
+      ]
+    },
+    {
+      "champ": "target",
+      "cas": 49,
+      "detectent": 26,
+      "exemples": [
+        "v02-record-clean",
+        "v02-record-sealed-value-leaks-through-dependent",
+        "v02-record-re-derive-requested-without-seal"
+      ]
+    },
+    {
+      "champ": "upstream",
+      "cas": 100,
+      "detectent": 30,
+      "exemples": [
+        "ce1-declared-cache-names-its-upstream",
+        "ce2-declared-partial-dependence",
+        "v02-lineage-same-instrument-two-direct-readings"
+      ]
+    },
+    {
+      "champ": "sealed",
+      "cas": 46,
+      "detectent": 35,
+      "exemples": [
+        "v02-record-clean",
+        "v02-record-sealed-value-leaks-through-dependent",
+        "v02-record-sealed-field-still-carries-value"
+      ]
+    },
+    {
+      "champ": "parent",
+      "cas": 89,
+      "detectent": 36,
+      "exemples": [
+        "v02-hop-clean",
+        "v02-hop-derived-field-relabelled-as-observation",
+        "v02-hop-dropped-source-truncates-provenance"
+      ]
+    },
+    {
+      "champ": "sent",
+      "cas": 38,
+      "detectent": 37,
+      "exemples": [
+        "v02-hop-clean",
+        "v02-hop-derived-field-relabelled-as-observation",
+        "v02-hop-dropped-source-truncates-provenance"
+      ]
+    },
+    {
+      "champ": "derivation",
+      "cas": 48,
+      "detectent": 38,
+      "exemples": [
+        "v03-lineage-comparand-visible-blocks-independence",
+        "v03-lineage-comparand-root-visible",
+        "v031-lineage-every-value-declared"
+      ]
+    },
+    {
+      "champ": "action",
+      "cas": 38,
+      "detectent": 38,
+      "exemples": [
+        "v02-hop-clean",
+        "v02-hop-derived-field-relabelled-as-observation",
+        "v02-hop-dropped-source-truncates-provenance"
+      ]
+    },
+    {
+      "champ": "dispositions",
+      "cas": 38,
+      "detectent": 38,
+      "exemples": [
+        "v02-hop-clean",
+        "v02-hop-derived-field-relabelled-as-observation",
+        "v02-hop-dropped-source-truncates-provenance"
+      ]
+    },
+    {
+      "champ": "receipt",
+      "cas": 38,
+      "detectent": 38,
+      "exemples": [
+        "v02-hop-clean",
+        "v02-hop-derived-field-relabelled-as-observation",
+        "v02-hop-dropped-source-truncates-provenance"
+      ]
+    },
+    {
+      "champ": "sourceId",
+      "cas": 63,
+      "detectent": 41,
+      "exemples": [
+        "v01-dispute-stronger-secondary-source-controller-missing",
+        "v01-dispute-controller-confirms-original-over-objection",
+        "v01-dispute-unverified-self-designated-policy"
+      ]
+    },
+    {
+      "champ": "author",
+      "cas": 89,
+      "detectent": 43,
+      "exemples": [
+        "v02-record-clean",
+        "v02-record-observed-without-channel",
+        "v02-record-duplicate-field-id"
+      ]
+    },
+    {
+      "champ": "basis",
+      "cas": 48,
+      "detectent": 45,
+      "exemples": [
+        "v02-record-clean",
+        "v02-record-sealed-value-leaks-through-dependent",
+        "v02-record-re-derive-requested-without-seal"
+      ]
+    },
+    {
+      "champ": "channel",
+      "cas": 112,
+      "detectent": 48,
+      "exemples": [
+        "v01-lineage-equal-independent-observations-zero-disagreement",
+        "ce2-declared-partial-dependence",
+        "v02-lineage-cached-root-without-upstream"
+      ]
+    },
+    {
+      "champ": "lineage",
+      "cas": 89,
+      "detectent": 49,
+      "exemples": [
+        "v02-record-clean",
+        "v02-record-observed-without-channel",
+        "v02-record-duplicate-field-id"
+      ]
+    },
+    {
+      "champ": "field",
+      "cas": 55,
+      "detectent": 55,
+      "exemples": [
+        "v02-hop-clean",
+        "v02-hop-derived-field-relabelled-as-observation",
+        "v02-hop-dropped-source-truncates-provenance"
+      ]
+    },
+    {
+      "champ": "record",
+      "cas": 65,
+      "detectent": 64,
+      "exemples": [
+        "v02-hop-clean",
+        "v02-hop-derived-field-relabelled-as-observation",
+        "v02-hop-dropped-source-truncates-provenance"
+      ]
+    },
+    {
+      "champ": "kind",
+      "cas": 116,
+      "detectent": 69,
+      "exemples": [
+        "v01-lineage-direct-backfill-from-comparand",
+        "v01-lineage-transitive-common-origin",
+        "v01-lineage-equal-independent-observations-zero-disagreement"
+      ]
+    },
+    {
+      "champ": "value",
+      "cas": 134,
+      "detectent": 82,
+      "exemples": [
+        "v01-dispute-stronger-secondary-source-controller-missing",
+        "v01-dispute-controller-confirms-original-over-objection",
+        "v01-dispute-unverified-self-designated-policy"
+      ]
+    },
+    {
+      "champ": "sources",
+      "cas": 134,
+      "detectent": 87,
+      "exemples": [
+        "v01-lineage-direct-backfill-from-comparand",
+        "v01-lineage-transitive-common-origin",
+        "v01-lineage-equal-independent-observations-zero-disagreement"
+      ]
+    },
+    {
+      "champ": "fields",
+      "cas": 116,
+      "detectent": 108,
+      "exemples": [
+        "v01-lineage-direct-backfill-from-comparand",
+        "v01-lineage-transitive-common-origin",
+        "v01-lineage-equal-independent-observations-zero-disagreement"
+      ]
+    },
+    {
+      "champ": "id",
+      "cas": 134,
+      "detectent": 126,
+      "exemples": [
+        "v01-lineage-direct-backfill-from-comparand",
+        "v01-lineage-transitive-common-origin",
+        "v01-lineage-equal-independent-observations-zero-disagreement"
+      ]
+    }
+  ]
+}

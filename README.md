@@ -42,6 +42,7 @@ node conformance/run.mjs path/to/your-impl.mjs  # any ESM module exporting the e
 python conformance/cross-check.py               # independent recomputation of hashes
 node conformance/contributors-check.mjs         # the credit record against SPEC section 13 and the history
 node conformance/indifference-check.mjs         # does the suite catch an implementation that never reads `supersedes`?
+node conformance/detection-map.mjs              # per field: how many cases would catch an implementation ignoring it
 node conformance/report.mjs path/to/your-impl.mjs # what it demonstrably does: checks passed, level derived (0.7 proposal)
 node trials/2026-09-15-blind-same-lineage/diff-fuzz.mjs path/to/your-impl.mjs 5000
                                                 # seeded differential test against the reference

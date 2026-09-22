@@ -1897,6 +1897,7 @@
     {
       "id": "ce4-verbatim-designated-source-superseded-by-verified-amendment-same-version",
       "kind": "dispute",
+      "detects_indifference": true,
       "origin": "external-counterexample",
       "source": "https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5659817602 ; https://gist.github.com/bonyohana/6ca7b510c3c78bff90347f7cd82611cb (revision 1fcf282ab415a960acbde64c68959b2c9395591d)",
       "why": "Clara (bonyohana) case 2, verbatim. A verified same-scope amendment that claims to supersede the designated source and disagrees with it disputes applicability. v0.1 returned confirmed.",
@@ -2002,6 +2003,7 @@
     {
       "id": "v02-dispute-superseding-amendment-agrees",
       "kind": "dispute",
+      "detects_indifference": false,
       "origin": "v0.2-new",
       "why": "A superseding instrument that says the same thing leaves nothing to adjudicate.",
       "input": {
@@ -2064,6 +2066,7 @@
     {
       "id": "v02-dispute-unverified-amendment-cannot-block",
       "kind": "dispute",
+      "detects_indifference": false,
       "origin": "v0.2-new",
       "why": "Only a verified instrument can dispute applicability; otherwise anyone could block every confirmation by attaching a supersedes field.",
       "input": {
@@ -2117,6 +2120,7 @@
     {
       "id": "v02-dispute-supersedes-list",
       "kind": "dispute",
+      "detects_indifference": true,
       "origin": "v0.2-new",
       "why": "supersedes may be a list of source ids.",
       "input": {
