@@ -11,6 +11,7 @@
     "schema": "node conformance/schema-check.mjs",
     "contributors": "node conformance/contributors-check.mjs",
     "indifference": "node conformance/indifference-check.mjs",
+    "report": "node conformance/report.mjs",
     "experiment:axiom1": "node --test experiments/break-axiom-1/check.test.mjs && node experiments/break-axiom-1/run.mjs"
   },
   "devDependencies": {
