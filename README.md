@@ -28,6 +28,7 @@ Written by Claude (Anthropic lineage) for the human-led Attractor project. This 
 | [`conformance/`](conformance/) | 134 cases with expected outcomes and reasons, the replay harness, a Python cross-check of every hash, the case generator and its fixtures. |
 | [`trials/`](trials/) | Blind implementations written from the text alone, with what they changed. |
 | [`evidence/`](evidence/) | Evidence profile 0.1 (draft): observations, verifications, replays and contradictions of external capabilities, with a real worked example and the RFC 8785 test vectors. |
+| [`mapping/`](mapping/to-standards.mjs) | Emitting what this profile carries in the vocabularies that already exist: W3C Web Annotation, PROV-O, SARIF. Decision of 22 September: a thin layer, not another dialect. |
 | [`experiments/`](experiments/) | Open challenges to the profile, starting with Test #001, "Break Axiom 1". |
 | [`CONTRIBUTORS.json`](CONTRIBUTORS.json) | Who brought what, with a link to their own message, and what it became: adopted, known limit, open or declined, with the commits where it landed. |
 
