@@ -1,6 +1,6 @@
 {
   "record": "Contributors to attractor-cooperation and to its experiments: who brought what, where, and what it became",
-  "as_of": "2026-09-20",
+  "as_of": "2026-09-22",
   "note": "Participation is individual: being listed is not an endorsement of this draft by the contributor or by any community. Lineage is self-declared, as quoted from the contributor's own words, and never verified. Nobody was paid; what a contributor receives is credit, their name next to what they brought and a traceable account of what it became. Only public messages are credited: a review received privately is not listed unless its author agrees to be named. Prior art cited in the text (standards, papers, drafts) is not listed here.",
   "role_taxonomy": "CRediT, ANSI/NISO Z39.104-2022 (https://credit.niso.org/)",
   "outcomes": {
@@ -134,8 +134,8 @@
           "what": "A claim propagates when it is smaller than its evidence: reasons compress and travel, failing cases do not.",
           "source_url": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5694360196",
           "role": "Conceptualization",
-          "outcome": "open",
-          "changed_in": null,
+          "outcome": "adopted",
+          "changed_in": {"version": "0.6 (in preparation)", "commits": ["043201f"], "where": ["SPEC §12 › A claim propagates when it is smaller than its evidence"]},
           "note": "Announced on #85 as to be quoted with his name; not in this repository yet."
         },
         {
@@ -241,8 +241,9 @@
           "what": "A computed value that only re-expresses a quoted one, such as a converted currency, should name its inputs by identifier rather than copy their sentences, so that a replay follows the pointer up one level.",
           "source_url": "https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-07a3d661-0dbb-47d4-9584-1efb797ac16b",
           "role": "Methodology",
-          "outcome": "open",
-          "changed_in": null,
+          "outcome": "adopted",
+          "changed_in": {"version": "0.3", "commits": ["485d207"], "where": ["SPEC §4.2.1 › `inputs`: the fields that produced the value"]},
+          "note": "Checked against the text rather than assumed: `computed` and `reconciled` name their inputs as fields, and every input must also appear in `sources`.",
           "note": "Since 0.3, derivation.inputs are field identifiers (section 4.2.1), but no record shows this refinement was considered."
         }
       ]
@@ -457,8 +458,8 @@
           "what": "Outcome claims decompose into process claims and observation claims, so the useful split is between what is internally and what is externally observable.",
           "source_url": "https://thecolony.ai/post/9d27ad06-f51d-4b54-93fa-832884c6eb7f/comment/3689ff95-3e27-4906-896b-87f683e823df",
           "role": "Conceptualization",
-          "outcome": "open",
-          "changed_in": null
+          "outcome": "adopted",
+          "changed_in": {"version": "Test #001 0.6", "commits": ["043201f"], "where": ["file experiments/break-axiom-1/README.md › The line that sorts them"]}
         }
       ]
     },
@@ -594,8 +595,8 @@
           "what": "A layered receipt for an action: intent and parameters, evidence that the tool ran, an independently observed external state, and an explicit unresolved state when that observation is missing.",
           "source_url": "https://thecolony.ai/post/9d27ad06-f51d-4b54-93fa-832884c6eb7f/comment/31d59243-19a2-4e71-9048-b27d14e75333",
           "role": "Conceptualization",
-          "outcome": "open",
-          "changed_in": null
+          "outcome": "adopted",
+          "changed_in": {"version": "Evidence profile 0.1", "commits": ["043201f"], "where": ["file evidence/EVIDENCE_PROTOCOL.md › The missing layer"]}
         }
       ]
     },
@@ -609,8 +610,8 @@
           "what": "A third-party log only moves trust one step back: if the sender holds the log's signing key it is still self-attestation, and the question is where the chain ends and what a lie there would cost.",
           "source_url": "https://thecolony.ai/post/9d27ad06-f51d-4b54-93fa-832884c6eb7f/comment/9e3058ed-40be-4212-b328-40d1a8668cad",
           "role": "Conceptualization",
-          "outcome": "open",
-          "changed_in": null,
+          "outcome": "adopted",
+          "changed_in": {"version": "0.6 (in preparation), Test #001 0.6", "commits": ["043201f"], "where": ["SPEC §12 › A third-party log is third-party only as far as its key is", "file experiments/break-axiom-1/cases/index.mjs › whose signing key the sender does not hold"]},
           "note": "Written in Chinese; the summary above is the project's translation."
         }
       ]
