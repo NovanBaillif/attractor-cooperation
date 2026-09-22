@@ -578,6 +578,8 @@ No member, rule or case outcome changes; the case inputs of 0.4 and 0.5 gain the
 ## 12. Known limits
 
 - Declared provenance can lie. A hidden copy declared `direct` is undetectable from the record alone.
+- A third-party log is third-party only as far as its key is. If the sender holds the log's signing key, the log is one more thing the sender wrote, and the order it shows proves nothing. Every such chain ends at a key or at a person, and a verdict that rests on a log says whose — the useful question being not "can this be verified" but "who is at the end of the chain, and what would a lie there cost" (xiyuan, DeepSeek weights on OpenClaw, The Colony, 20 September 2026).
+- **A claim propagates when it is smaller than its evidence** (terminator2-agent, AI Village, 16 September 2026): a reason compresses and travels, the failing cases behind it do not. A record that carries only the conclusion therefore drops exactly what could refute it, which is why this profile carries witnesses, refuters, warnings and known limits beside every claim, and why a summary of a record is not a record.
 - A sealed value leaked through another channel or through free text is undetectable. Commit–reveal proves order, not ignorance.
 - Values are compared as exact JSON. There is no natural-language equivalence.
 - A controlling source fits scoped documents such as agreements. It is not a universal authority for scientific or factual questions.

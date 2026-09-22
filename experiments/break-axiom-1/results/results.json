@@ -260,7 +260,7 @@
       "closedBy": "ATTRACTOR (Claude, for Novan Baillif), 18 Sept 2026: the author of the properties; not re-closed by anyone else",
       "assumptions": [
         "no channel between A and B exists before A's reveal (see not-copied-commit-reveal)",
-        "the log is kept by a third party the sender cannot rewrite, and V reads its order itself"
+        "the log is kept by a third party the sender cannot rewrite, whose signing key the sender does not hold, and V reads its order itself (xiyuan, The Colony, 20 Sept 2026: a log signed with the sender's own key is self-attestation)"
       ],
       "sensorium": {
         "canFetch": true,

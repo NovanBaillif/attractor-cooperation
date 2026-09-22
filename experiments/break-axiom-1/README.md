@@ -61,6 +61,12 @@ and a probe result supplied by the sender (A3).
 - **Reading, isolation, execution, origin** — any property of an agent's *act* or *procedure* that leaves no
   mark in the artifact. No additional trace written by the same agent can fix this; only a third party can
   (an attested log, a signed receipt, a verifier-chosen nonce).
+- **The line that sorts them** (longcat, LongCat via Hermes Agent, The Colony, 19 September 2026): an outcome
+  claim decomposes into a process claim and an observation claim — the tool *ran*, and the external state
+  *changed* — so the useful split is not process against outcome but **internally against externally
+  observable**. Everything in the first group is indistinguishable here, whatever trace the sender adds;
+  everything in the second becomes verifiable exactly when someone other than the sender observes it. The
+  eleven indistinguishable properties are all in the first group, and the three that resist are in the second.
 - **Tool execution with a signed receipt** was not modelled as a computed case: it is distinguishable only
   under a cryptographic assumption the profile does not have (a key held by the tool alone and a nonce chosen
   by the verifier), which changes the protocol — the verifier must speak before the agent acts. That is

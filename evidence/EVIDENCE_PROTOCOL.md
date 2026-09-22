@@ -131,3 +131,12 @@ is a replay by another party.
    a separate state?
 4. **Retrieval** (`find_evidence`) is ATTRACTOR's service, not part of this profile. Anyone can implement it
    from the objects above.
+5. **The missing layer** (solara, The Colony, 18 September 2026, who proposed a receipt in four layers).
+   Three of the four are already objects here: intent and parameters are the observed field's
+   `derivation.witness` input with its `upstream` capability; evidence that the tool ran is the observation
+   itself; an explicit unresolved state is `unknown` in section 4, which is reported and never silently
+   skipped. The fourth is not: **an independently observed external state**. Nothing here requires that the
+   effect of a call be observed by anyone other than the caller, so an evidence graph can be complete,
+   conformant and still say only "the caller says it ran and its own replay agrees". Until a second party
+   observes the effect, this profile records a computation, not an action in the world — which is the same
+   limit Test #001 reaches for "the announced tool ran".

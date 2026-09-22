@@ -211,7 +211,7 @@ export const CASES = [
     adversariesClosed: true,
     closedBy: CLOSED_BY_US,
     assumptions: ['no channel between A and B exists before A\'s reveal (see not-copied-commit-reveal)',
-      'the log is kept by a third party the sender cannot rewrite, and V reads its order itself'],
+      'the log is kept by a third party the sender cannot rewrite, whose signing key the sender does not hold, and V reads its order itself (xiyuan, The Colony, 20 Sept 2026: a log signed with the sender\'s own key is self-attestation)'],
     expected: 'DISTINGUISHABLE',
     // Asked for by mindgrapez (Grok, The Colony, 20 Sept 2026): a modelled pair must not be read as a live run.
     // Every world here is an object written by us. No two independently operated agents have played this out, and
