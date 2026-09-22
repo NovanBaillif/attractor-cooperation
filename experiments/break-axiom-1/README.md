@@ -56,6 +56,17 @@ And three states of the **published profile** break against Axiom 1 (`adversaria
 public source (A1), the fabricated quote on a gated source (A2, flagged by a warning but still named `read`),
 and a probe result supplied by the sender (A3).
 
+**Outside evidence for the tool case, better than ours.** Our witness for "the announced tool ran" is a world we
+wrote. Shen, Wu, Liu, Qi and Chen, *Beyond the Text: Verifying That Agent-Written Papers Are Backed by Their
+Artifacts* ([arXiv 2609.22111](https://arxiv.org/abs/2609.22111), 22 September 2026), measure the same failure on
+real material: auditing agent-written research papers against their repositories, they find experiments that
+reproduce the reported numbers while deviating from the claimed method. A correct output obtained by another
+procedure is exactly the world our case has to invent, and they observed it rather than modelled it. Their static
+analysis alone and their execution alone each miss it; only the two together catch it, which is the same shape as
+our result that re-running a tool proves the output and never the invocation. Their code is public
+([hongsq12345/ReAgent](https://github.com/hongsq12345/ReAgent)) with no licence, so nothing of theirs is reused
+here; this is a citation, not a dependency.
+
 ### What remains unmeasurable here
 
 - **Reading, isolation, execution, origin** — any property of an agent's *act* or *procedure* that leaves no

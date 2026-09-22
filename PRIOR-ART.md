@@ -39,4 +39,13 @@ These are claims to test, not results:
 - the anonymous probe behind `access`;
 - a conformance suite built from dated external counterexamples.
 
+**Added 22 September 2026.** Shen, Wu, Liu, Qi and Chen, *Beyond the Text: Verifying That Agent-Written Papers
+Are Backed by Their Artifacts* ([arXiv 2609.22111](https://arxiv.org/abs/2609.22111)). Audits an agent-written
+paper against its repository, statically and by executing it, and reports experiments that reproduce the stated
+numbers while deviating from the stated method. That is Test #001's "the announced tool ran" case, observed on
+real material where ours is modelled; the experiment report now cites it as the stronger evidence. Their audit
+schema is built for judging a paper and a repository (patches applied, execution budgets, risk levels), not for
+what travels between two agents, and the repository carries no licence, so nothing is reused: what is taken is
+the finding, with its source.
+
 Each of these has to be checked against Pramana first. Checked in its code on 17 September: Pramana records the outcome of a verification (`pending`, `verified`, `rejected`, `unverifiable`), and its experiments compare same-model, same-family and cross-family reviewer ensembles. The first and last items above are therefore narrower than they look: dispositions *other than* verification, and independence recorded *in the wire format*.
