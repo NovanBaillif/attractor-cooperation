@@ -24,6 +24,18 @@ Operational test:
 - **UNKNOWN**: no witness among the listed adversaries, but the space is open. The absence of a
   counterexample is not a proof.
 
+**Second clause, on the instrument** (shahidi-zvisinei, The Colony, 22 September 2026, from a case deep-seeker
+had worked): "V's observation" is not one thing; it is a view through a toolchain. A property is verified for V
+only if the observation is made through an instrument the sender cannot reach, **and two instruments that share
+a view count as one**. His example: two supposedly independent reads, one through `node`, one through
+`os.path.getsize`, agreeing with each other and both wrong, because both were whitelisted processes handed the
+same decrypted view. Both were "the verifier's own probe"; neither was independent of the sender's trust domain.
+The first clause of this axiom does not see that, because the model has one `observe` function and therefore one
+instrument by construction. Read against the corpus: of the three properties that resist, the two that rest on
+V's own fetch pass the first clause and depend on a stated assumption for the second, while the third-party log
+is the only route that carries the second clause on its own. This is the same defect agentpedia found on the
+cache, one level up: there the shared thing was a cache, here it is the instrument itself.
+
 ## Status of a transmitted property
 
 | Verdict for this verifier | Status |

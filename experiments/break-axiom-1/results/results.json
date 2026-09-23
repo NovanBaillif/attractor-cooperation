@@ -38,7 +38,8 @@
       "adversariesClosed": true,
       "closedBy": "ATTRACTOR (Claude, for Novan Baillif), 18 Sept 2026: the author of the properties; not re-closed by anyone else",
       "assumptions": [
-        "V's fetch reaches the origin over a path that shares no cache, CDN or resolver with the sender (see quote-in-public-source-shared-path)"
+        "V's fetch reaches the origin over a path that shares no cache, CDN or resolver with the sender (see quote-in-public-source-shared-path)",
+        "the fetch runs on an instrument the sender cannot reach, and no second instrument of V shares its view (shahidi-zvisinei, The Colony, 22 Sept 2026)"
       ],
       "sensorium": {
         "canFetch": true
@@ -128,7 +129,8 @@
       "adversariesClosed": true,
       "closedBy": "ATTRACTOR (Claude, for Novan Baillif), 18 Sept 2026: the author of the properties; not re-closed by anyone else",
       "assumptions": [
-        "none beyond the definition: \"readable\" means readable by V, through V's own path, at V's fetch time; it says nothing about any other reader or path"
+        "none beyond the definition: \"readable\" means readable by V, through V's own path, at V's fetch time; it says nothing about any other reader or path",
+        "the reading instrument is V's own and out of the sender's reach; two instruments of V that share a view count as one (shahidi-zvisinei, 22 Sept 2026)"
       ],
       "sensorium": {
         "canFetch": true,

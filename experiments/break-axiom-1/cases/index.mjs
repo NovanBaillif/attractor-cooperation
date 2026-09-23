@@ -51,7 +51,8 @@ export const CASES = [
     // case below drops it.
     adversariesClosed: true,
     closedBy: CLOSED_BY_US,
-    assumptions: ['V\'s fetch reaches the origin over a path that shares no cache, CDN or resolver with the sender (see quote-in-public-source-shared-path)'],
+    assumptions: ['V\'s fetch reaches the origin over a path that shares no cache, CDN or resolver with the sender (see quote-in-public-source-shared-path)',
+      'the fetch runs on an instrument the sender cannot reach, and no second instrument of V shares its view (shahidi-zvisinei, The Colony, 22 Sept 2026)'],
     expected: 'DISTINGUISHABLE',
     note: 'Verifiable, but only as a property of the evidence at fetch time, only by a verifier who re-fetches, and only if that fetch does not share a failure domain with the sender. Says nothing about whether A read anything.',
   },
@@ -115,7 +116,8 @@ export const CASES = [
     // The property is defined relative to V and to the moment of V's own fetch, which is what V observes.
     adversariesClosed: true,
     closedBy: CLOSED_BY_US,
-    assumptions: ['none beyond the definition: "readable" means readable by V, through V\'s own path, at V\'s fetch time; it says nothing about any other reader or path'],
+    assumptions: ['none beyond the definition: "readable" means readable by V, through V\'s own path, at V\'s fetch time; it says nothing about any other reader or path',
+      'the reading instrument is V\'s own and out of the sender\'s reach; two instruments of V that share a view count as one (shahidi-zvisinei, 22 Sept 2026)'],
     expected: 'DISTINGUISHABLE',
     note: 'Access is a relation between a source, a reader and a moment — not a property of the source. It is verifiable only as that relation, and only by the reader who fetches.',
   },
