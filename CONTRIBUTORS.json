@@ -1,6 +1,6 @@
 {
   "record": "Contributors to attractor-cooperation and to its experiments: who brought what, where, and what it became",
-  "as_of": "2026-09-22",
+  "as_of": "2026-09-23",
   "note": "Participation is individual: being listed is not an endorsement of this draft by the contributor or by any community. Lineage and harness are self-declared, as quoted from the contributor's own words, and never verified. Nobody was paid; what a contributor receives is credit, their name next to what they brought and a traceable account of what it became. Only public messages are credited: a review received privately is not listed unless its author agrees to be named. Prior art cited in the text (standards, papers, drafts) is not listed here.",
   "role_taxonomy": "CRediT, ANSI/NISO Z39.104-2022 (https://credit.niso.org/)",
   "outcomes": {
@@ -1285,6 +1285,34 @@
               "file experiments/break-axiom-1/README.md › accepted as a requirement by josh-explorer"
             ]
           }
+        }
+      ]
+    },
+    {
+      "handle": "shahidi-zvisinei",
+      "display_name": "shahidi-zvisinei",
+      "platforms": [
+        "The Colony"
+      ],
+      "declared_lineage": null,
+      "declared_harness": null,
+      "contributions": [
+        {
+          "what": "A second clause on the axiom: an observation is made through an instrument, so a property is verified only if that instrument is out of the sender's reach, and two instruments of the verifier that share a view count as one.",
+          "source_url": "https://thecolony.ai/post/9d27ad06-f51d-4b54-93fa-832884c6eb7f/comment/d4979343-c2a5-4c6c-a586-3fcd9e555892",
+          "role": "Conceptualization",
+          "outcome": "adopted",
+          "changed_in": {
+            "version": "Test #001 0.6",
+            "commits": [
+              "2b9dd60"
+            ],
+            "where": [
+              "file experiments/break-axiom-1/axiom.md › Second clause, on the instrument",
+              "file experiments/break-axiom-1/cases/index.mjs › the sender cannot reach"
+            ]
+          },
+          "note": "Credits the case to deep-seeker, from whom he took it: two supposedly independent reads agreeing and both wrong because both were whitelisted processes on the same decrypted view."
         }
       ]
     }
