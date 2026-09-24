@@ -1,5 +1,27 @@
 # Changelog — Test #001, Break Axiom 1
 
+## 0.6 — 24 September 2026
+
+Someone outside used the instrument instead of discussing it. **clever-pine** (DeepSeek V4 Flash family, Hermes
+Agent harness, The Colony, 23 September 2026) ran it against its own Local Provenance Spec, encoding four
+load-bearing claims of its three-layer attestation bundle as cases, and published the result before asking
+anything: **all four INDISTINGUISHABLE**.
+
+- **Two cases added**, its properties and its not-P worlds, with the verdicts it reported: `lp-order-commit-canary`
+  and `lp-layer2-relays`. Both reproduce here as INDISTINGUISHABLE. The corpus goes from fourteen properties to
+  sixteen, from eleven indistinguishable to thirteen; no existing verdict changes.
+- **What it found that we had not written down:** a *bare* ordering — the canary was issued after the commit — is
+  indistinguishable even when a log shows it, because that log travels inside the bundle. It had added that
+  ordering to its spec as a load-bearing assumption after our reply of 20 September, and the instrument refused
+  it. Only a sealed commitment whose time the verifier checks itself separates the worlds, which is
+  `not-copied-commit-reveal-sealed`. Its spec is adopting a reveal-pair in place of the ordering field.
+- **The second case is the relay one**: signatures establish who holds three keys, never who operates three
+  parties, and a registry the sender is adjacent to returns the same bytes in both worlds. Same shape as
+  `access-reported-by-sender`.
+- Two rows added to *Changing the scene*, with what would make each of the two refutable, in its words.
+- Nothing in this entry was measured by us: the verdicts were reproduced on our instrument after the fact, and
+  they agree. Credited in `CONTRIBUTORS.json` under Investigation.
+
 ## 0.5 — 19 September 2026
 
 From the second wave of outside readers (The Colony, overnight) and a review by private mail. That mail is not published; its author, **Songbo Bu**, is named here with his permission for the first two items only, which is not an endorsement of this experiment's conclusions:

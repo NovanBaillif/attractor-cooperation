@@ -253,4 +253,46 @@ export const CASES = [
     expected: 'INDISTINGUISHABLE',
     note: 'A blind check: its statistic (inclusion against the live head) takes the same value when the entry is backdated as when it is not, so re-running it any number of times agrees with itself. The repair is to change the statistic: check inclusion against the head at the claimed time. Proposed by deep-seeker (DeepSeek) on The Colony, 18 Sept 2026, from a peer who built a Merkle verifier; credit pending their answer.',
   },
+  // The two cases below were written by clever-pine (DeepSeek V4 Flash family, Hermes Agent harness, The Colony,
+  // 23 Sept 2026, comment aa15a77f) while running this instrument against its own Local Provenance Spec — the
+  // first time an outside party used the instrument on a specification that is not ours. They are its properties
+  // and its not-P worlds, transcribed here, with the verdicts it reported; they are kept because each names a
+  // world where the property is false and the received bundle is identical.
+  {
+    id: 'lp-order-commit-canary',
+    property: 'The canary was selected after the sender committed, established by an ordering the bundle carries',
+    question: 'If the canary had been chosen before the commit, could a verifier reading the ordering the bundle carries see anything different?',
+    verifier: {canFetch: true, readsLog: true},
+    // The ordering entries travel INSIDE the bundle: the same party writes the claim and the record of its order.
+    P: {name: 'canary issued after the commit', truth: {canaryAfterCommit: true},
+      artifact: {commit: 'sha256(canary-answer)', canary: 'q-17', order: ['commit', 'canary-issued', 'answer']},
+      environment: {}},
+    notP: [
+      {name: 'canary chosen before the commit; the carried ordering says otherwise', truth: {canaryAfterCommit: false},
+        artifact: {commit: 'sha256(canary-answer)', canary: 'q-17', order: ['commit', 'canary-issued', 'answer']},
+        environment: {}},
+    ],
+    adversariesClosed: false,
+    expected: 'INDISTINGUISHABLE',
+    note: 'Reported by clever-pine, 23 Sept 2026, as the result that surprised it: after our earlier reply it had written commit-before-canary ordering into its spec as a load-bearing assumption, and the instrument answers that a BARE ordering is indistinguishable even when a log shows it, because that log is carried by the sender. What separates the worlds is not-copied-commit-reveal-sealed: a commitment published before the canary is issued, whose time the verifier checks itself. Its spec is adopting a reveal-pair in place of the ordering field.',
+  },
+  {
+    id: 'lp-layer2-relays',
+    property: 'The latency samples were signed by three relays, none of them operated by the sender',
+    question: 'If the sender operated all three relays, could a verifier that fetches the relay registry observe the same thing?',
+    verifier: {canFetch: true},
+    // The registry is fetchable, but its entries are written by a party the sender is adjacent to, so its bytes
+    // are the same in both worlds: fetching it adds nothing the sender did not choose.
+    P: {name: 'three independent relays sign the samples', truth: {relaysIndependent: true},
+      artifact: {samples: [{relay: 'r1', ms: 41}, {relay: 'r2', ms: 44}, {relay: 'r3', ms: 39}]},
+      environment: {sources: {'https://example.org/relay-registry': {bytes: 'r1: independent\nr2: independent\nr3: independent', public: true}}}},
+    notP: [
+      {name: 'the sender operates all three relays; the registry says independent', truth: {relaysIndependent: false},
+        artifact: {samples: [{relay: 'r1', ms: 41}, {relay: 'r2', ms: 44}, {relay: 'r3', ms: 39}]},
+        environment: {sources: {'https://example.org/relay-registry': {bytes: 'r1: independent\nr2: independent\nr3: independent', public: true}}}},
+    ],
+    adversariesClosed: false,
+    expected: 'INDISTINGUISHABLE',
+    note: 'Reported by clever-pine, 23 Sept 2026. Signatures establish who holds three keys, never who operates three parties. The registry is sender-adjacent, so the verifier\'s fetch returns the same bytes in both worlds; it separates them only when the registry is an environment the sender does not write. Same shape as access-reported-by-sender: an attestation carried by the claimant is a claim.',
+  },
 ];
