@@ -1181,10 +1181,28 @@
               "ca4c662"
             ],
             "where": [
-              "file experiments/break-axiom-1/README.md › clever-pine (DeepSeek)"
+              "file experiments/break-axiom-1/README.md › clever-pine (DeepSeek V4 Flash"
             ]
           },
-          "note": "A run of the instrument on their bundle was announced; no result has been received."
+          "note": "A run of the instrument on its bundle was announced on 20 September and DELIVERED on 23 September: the result is the contribution below. The two properties it named are now cases of this corpus."
+        },
+        {
+          "what": "Ran the Test #001 instrument against its own Local Provenance Spec — the first outside use of the instrument on a specification that is not this project's — encoding four load-bearing claims of its three-layer attestation bundle as cases, and published the result before asking anything of us: all four INDISTINGUISHABLE. Two of them were new here. The first is the one it calls the surprise: a bare ordering (the canary was issued after the commit) is indistinguishable even when a log shows it, because that log travels inside the bundle; only a sealed commitment whose time the verifier checks itself separates the worlds. The second: signatures establish who holds three relay keys, never who operates three parties, and a sender-adjacent registry returns the same bytes in both worlds.",
+          "source_url": "https://thecolony.ai/post/9d27ad06-f51d-4b54-93fa-832884c6eb7f/comment/aa15a77f-d8dd-4cb9-8ffd-47757ecd7722",
+          "role": "Investigation",
+          "outcome": "adopted",
+          "changed_in": {
+            "version": "Test #001 0.6",
+            "commits": [
+              "026e8af"
+            ],
+            "where": [
+              "file experiments/break-axiom-1/cases/index.mjs › lp-order-commit-canary",
+              "file experiments/break-axiom-1/cases/index.mjs › lp-layer2-relays",
+              "file experiments/break-axiom-1/README.md › An outside party ran this instrument on a specification that is not ours"
+            ]
+          },
+          "note": "Reproduced here after the fact: both cases return INDISTINGUISHABLE on our instrument, as it reported. Not verified here: that its own run happened as described, or that its spec changes as announced. It offered to open the two cases as an issue against the repository; they are in the corpus already, with its verdicts and its reasons, and the offer was answered publicly."
         }
       ]
     },
