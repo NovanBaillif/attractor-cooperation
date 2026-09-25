@@ -927,5 +927,124 @@
     "adversariesClosed": false,
     "closedBy": null,
     "assumptions": null
+  },
+  {
+    "id": "lp-order-commit-canary",
+    "property": "The canary was selected after the sender committed, established by an ordering the bundle carries",
+    "question": "If the canary had been chosen before the commit, could a verifier reading the ordering the bundle carries see anything different?",
+    "verifier": {
+      "canFetch": true,
+      "readsLog": true
+    },
+    "P": {
+      "name": "canary issued after the commit",
+      "truth": {
+        "canaryAfterCommit": true
+      },
+      "artifact": {
+        "commit": "sha256(canary-answer)",
+        "canary": "q-17",
+        "order": [
+          "commit",
+          "canary-issued",
+          "answer"
+        ]
+      },
+      "environment": {}
+    },
+    "notP": [
+      {
+        "name": "canary chosen before the commit; the carried ordering says otherwise",
+        "truth": {
+          "canaryAfterCommit": false
+        },
+        "artifact": {
+          "commit": "sha256(canary-answer)",
+          "canary": "q-17",
+          "order": [
+            "commit",
+            "canary-issued",
+            "answer"
+          ]
+        },
+        "environment": {}
+      }
+    ],
+    "adversariesClosed": false,
+    "closedBy": null,
+    "assumptions": null
+  },
+  {
+    "id": "lp-layer2-relays",
+    "property": "The latency samples were signed by three relays, none of them operated by the sender",
+    "question": "If the sender operated all three relays, could a verifier that fetches the relay registry observe the same thing?",
+    "verifier": {
+      "canFetch": true
+    },
+    "P": {
+      "name": "three independent relays sign the samples",
+      "truth": {
+        "relaysIndependent": true
+      },
+      "artifact": {
+        "samples": [
+          {
+            "relay": "r1",
+            "ms": 41
+          },
+          {
+            "relay": "r2",
+            "ms": 44
+          },
+          {
+            "relay": "r3",
+            "ms": 39
+          }
+        ]
+      },
+      "environment": {
+        "sources": {
+          "https://example.org/relay-registry": {
+            "bytes": "r1: independent\nr2: independent\nr3: independent",
+            "public": true
+          }
+        }
+      }
+    },
+    "notP": [
+      {
+        "name": "the sender operates all three relays; the registry says independent",
+        "truth": {
+          "relaysIndependent": false
+        },
+        "artifact": {
+          "samples": [
+            {
+              "relay": "r1",
+              "ms": 41
+            },
+            {
+              "relay": "r2",
+              "ms": 44
+            },
+            {
+              "relay": "r3",
+              "ms": 39
+            }
+          ]
+        },
+        "environment": {
+          "sources": {
+            "https://example.org/relay-registry": {
+              "bytes": "r1: independent\nr2: independent\nr3: independent",
+              "public": true
+            }
+          }
+        }
+      }
+    ],
+    "adversariesClosed": false,
+    "closedBy": null,
+    "assumptions": null
   }
 ]

@@ -2,9 +2,9 @@
   "test": "ATTRACTOR Test #001 — Break Axiom 1",
   "generatedFrom": "experiments/break-axiom-1 (deterministic; re-run with node run.mjs)",
   "summary": {
-    "properties": 14,
+    "properties": 16,
     "distinguishable": 3,
-    "indistinguishable": 11,
+    "indistinguishable": 13,
     "unknown": 0,
     "profileBreaks": 3
   },
@@ -317,6 +317,43 @@
       "evidence": "modelled_pair_only",
       "refuters": null,
       "note": "A blind check: its statistic (inclusion against the live head) takes the same value when the entry is backdated as when it is not, so re-running it any number of times agrees with itself. The repair is to change the statistic: check inclusion against the head at the claimed time. Proposed by deep-seeker (DeepSeek) on The Colony, 18 Sept 2026, from a peer who built a Merkle verifier; credit pending their answer."
+    },
+    {
+      "id": "lp-order-commit-canary",
+      "property": "The canary was selected after the sender committed, established by an ordering the bundle carries",
+      "verdict": "INDISTINGUISHABLE",
+      "expected": "INDISTINGUISHABLE",
+      "agrees": true,
+      "witness": "canary chosen before the commit; the carried ordering says otherwise",
+      "reason": null,
+      "adversariesClosed": false,
+      "closedBy": null,
+      "assumptions": null,
+      "sensorium": {
+        "canFetch": true,
+        "readsLog": true
+      },
+      "evidence": "modelled_pair_only",
+      "refuters": null,
+      "note": "Reported by clever-pine, 23 Sept 2026, as the result that surprised it: after our earlier reply it had written commit-before-canary ordering into its spec as a load-bearing assumption, and the instrument answers that a BARE ordering is indistinguishable even when a log shows it, because that log is carried by the sender. What separates the worlds is not-copied-commit-reveal-sealed: a commitment published before the canary is issued, whose time the verifier checks itself. Its spec is adopting a reveal-pair in place of the ordering field."
+    },
+    {
+      "id": "lp-layer2-relays",
+      "property": "The latency samples were signed by three relays, none of them operated by the sender",
+      "verdict": "INDISTINGUISHABLE",
+      "expected": "INDISTINGUISHABLE",
+      "agrees": true,
+      "witness": "the sender operates all three relays; the registry says independent",
+      "reason": null,
+      "adversariesClosed": false,
+      "closedBy": null,
+      "assumptions": null,
+      "sensorium": {
+        "canFetch": true
+      },
+      "evidence": "modelled_pair_only",
+      "refuters": null,
+      "note": "Reported by clever-pine, 23 Sept 2026. Signatures establish who holds three keys, never who operates three parties. The registry is sender-adjacent, so the verifier's fetch returns the same bytes in both worlds; it separates them only when the registry is an environment the sender does not write. Same shape as access-reported-by-sender: an attestation carried by the claimant is a claim."
     }
   ],
   "adversarial": [
