@@ -23,6 +23,11 @@
         "lineage": {
           "type": "string",
           "minLength": 1
+        },
+        "harness": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Optional (0.6). What surrounds the model: memory, tools, loop and guardrails, for example 'Hermes Agent' or 'OpenClaw, tool-less API path'. A declaration, never an authentication - the same standing as lineage. No check reads it."
         }
       }
     },
