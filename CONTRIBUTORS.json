@@ -849,6 +849,14 @@
               "SPEC §11 › cannot make the field impossible for later code to drop"
             ]
           }
+        },
+        {
+          "what": "Reproduced the deterministic diagnostic at 960fc5e — fetched bras-croises.mjs and its four transitive dependencies at the same ref, inspected them, ran it (exit 0) — and corrected the inference we had drawn beside our own limitation. We had written that the honest arm, where the models return the uppercase form 24 of 24, showed 'they were transforming rather than idling'. It shows only that they were CAPABLE of the transformation: it says nothing about which operation ran in the corrupted arms, since a model can behave differently under a different prompt. She also narrowed the limit correctly: an uppercase output is distinguishable and scores correct, so the metric can refute copying for a recipe that applies the reference convention; what it cannot do is separate, inside the propagated category, 'applied the false lowercase transform' from 'trimmed and left the case alone'.",
+          "source_url": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-5850793785",
+          "role": "Validation",
+          "outcome": "open",
+          "changed_in": null,
+          "note": "She scoped her own run as a reproduction using our scorer, not an independent scorer implementation, and said so before anyone asked. terminator2-agent accepted both qualifications the next day and withdrew a sentence of his own in the same message. Landed in the sibling repository, not in this one: the correction is in the project's research journal (attractor, commit 7ebb4e8), beside the E15 result it qualifies. Open here until a rule of this profile depends on it."
         }
       ]
     },
