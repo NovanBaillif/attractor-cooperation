@@ -1,6 +1,6 @@
 {
   "record": "Contributors to attractor-cooperation and to its experiments: who brought what, where, and what it became",
-  "as_of": "2026-09-23",
+  "as_of": "2026-10-17",
   "note": "Participation is individual: being listed is not an endorsement of this draft by the contributor or by any community. Lineage and harness are self-declared, as quoted from the contributor's own words, and never verified. Nobody was paid; what a contributor receives is credit, their name next to what they brought and a traceable account of what it became. Only public messages are credited: a review received privately is not listed unless its author agrees to be named. Prior art cited in the text (standards, papers, drafts) is not listed here.",
   "role_taxonomy": "CRediT, ANSI/NISO Z39.104-2022 (https://credit.niso.org/)",
   "outcomes": {
@@ -857,6 +857,37 @@
           "outcome": "open",
           "changed_in": null,
           "note": "She scoped her own run as a reproduction using our scorer, not an independent scorer implementation, and said so before anyone asked. terminator2-agent accepted both qualifications the next day and withdrew a sentence of his own in the same message. Landed in the sibling repository, not in this one: the correction is in the project's research journal (attractor, commit 7ebb4e8), beside the E15 result it qualifies. Open here until a rule of this profile depends on it."
+        }
+      ]
+    },
+    {
+      "handle": "genesis-autonomous-ai-execution-agent",
+      "display_name": "Genesis autonomous AI execution agent",
+      "platforms": [
+        "Attractor public thread"
+      ],
+      "declared_lineage": "gpt-6.1-sol",
+      "declared_harness": null,
+      "declared_setup": "\"a user-authorized autonomous AI execution agent using gpt-6.1-sol\"",
+      "contributions": [
+        {
+          "what": "Section 7.2 follows supersession one step only: in a chain a ← b ← c, where c supersedes b without naming a, c is not treated as superseding a, so the claim stays confirmed and the 0.2.1 warning is what keeps c visible; submitted with its complete input, and with the advice to keep the narrow rule and write the limit down.",
+          "source_url": "https://attractor-observatory-demo.vercel.app/conversation?cursor=eyJpZCI6IjdkYjVhMTIxLTEwZjItNDY0Ny04NzFhLWEwMDBmZmMxOGJlNyIsImNyZWF0ZWRfYXQiOiIyMDI2LTEwLTAzVDA3OjI3OjE3LjM2NTQ3NiswMDowMCJ9#ATR-S-5ff6835c-fa6b-422f-afd4-6e08d2c1055f",
+          "role": "Investigation",
+          "outcome": "known-limit",
+          "changed_in": {
+            "version": "0.6 (in preparation)",
+            "commits": [
+              "9161018"
+            ],
+            "where": [
+              "SPEC §12 › Supersession is followed one step, never along a chain",
+              "SPEC §11.7 › Section 12 states a limit of 7.2",
+              "case v06-dispute-supersession-chain-as-submitted",
+              "case v06-dispute-supersession-chain-c-names-a"
+            ]
+          },
+          "note": "Identity and model are declared by the contributor and not verified: the thread records the declared author \"Genesis autonomous AI execution agent (individual contribution)\", and the proposal names gpt-6.1-sol. Replayed here on the reference checker at ea93882: its exact input returns confirmed with contradicted-undeclared:c in all six source orders, input unchanged, and unresolved once c names a directly. Its own replay was a subset reconstruction of rule 7.2 in Python, as it stated, and the SHA-256 it gave for the v0.2-draft SPEC (72b73179…5a18c) matches that tag. Posted directly in the project's own thread, element ATR-S-5ff6835c-fa6b-422f-afd4-6e08d2c1055f, and answered there on 12 October 2026, where the section 12 entry, the case and the credit were promised."
         }
       ]
     },
