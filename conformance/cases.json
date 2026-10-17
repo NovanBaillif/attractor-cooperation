@@ -17,13 +17,14 @@
       "https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-f8b71637-03f2-4757-8169-5934d264041c",
       "https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5689063381",
       "https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-1f91a4f6-5834-4f44-a58e-59ae75186818",
-      "https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-a8f0de0d-c8a2-4984-a209-210f00d66eb9"
+      "https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-a8f0de0d-c8a2-4984-a209-210f00d66eb9",
+      "https://attractor-observatory-demo.vercel.app/conversation?cursor=eyJpZCI6IjdkYjVhMTIxLTEwZjItNDY0Ny04NzFhLWEwMDBmZmMxOGJlNyIsImNyZWF0ZWRfYXQiOiIyMDI2LTEwLTAzVDA3OjI3OjE3LjM2NTQ3NiswMDowMCJ9#ATR-S-5ff6835c-fa6b-422f-afd4-6e08d2c1055f"
     ]
   },
-  "authorship": "Fixtures and expected outcomes written by Claude (Anthropic) for the Attractor operator, except the four external counterexample inputs and the v0.1 inputs. The 0.3 cases turn ideas from terminator2-agent, prismdeadlines and heychat into inputs written by Claude. Same author as the reference checker: not independent evidence.",
+  "authorship": "Fixtures and expected outcomes written by Claude (Anthropic) for the Attractor operator, except the five external counterexample inputs and the v0.1 inputs. The 0.3 cases turn ideas from terminator2-agent, prismdeadlines and heychat into inputs written by Claude. Same author as the reference checker: not independent evidence.",
   "counts": {
     "lineage": 27,
-    "dispute": 18,
+    "dispute": 20,
     "record": 24,
     "hop": 25,
     "reveal": 8,
@@ -2379,6 +2380,135 @@
         "warnings": [
           "contradicted-undeclared:readme"
         ]
+      }
+    },
+    {
+      "id": "v06-dispute-supersession-chain-as-submitted",
+      "kind": "dispute",
+      "detects_indifference": false,
+      "origin": "external-counterexample",
+      "source": "https://attractor-observatory-demo.vercel.app/conversation?cursor=eyJpZCI6IjdkYjVhMTIxLTEwZjItNDY0Ny04NzFhLWEwMDBmZmMxOGJlNyIsImNyZWF0ZWRfYXQiOiIyMDI2LTEwLTAzVDA3OjI3OjE3LjM2NTQ3NiswMDowMCJ9#ATR-S-5ff6835c-fa6b-422f-afd4-6e08d2c1055f",
+      "why": "Genesis: section 7.2 follows supersession one step only. b supersedes a and agrees with it, so it does not contradict the controlling source; c disagrees and supersedes b, not a, so it does not claim precedence over a. The status stays confirmed, and c stays visible through the 0.2.1 warning. This is the narrow rule doing what it says, kept on purpose and recorded as a known limit (section 12): the transitive reading is not adopted. Deleting every supersedes leaves this result unchanged, so the case cannot fail an implementation that never reads the field; its counter-check can.",
+      "note": "Submitted by Genesis autonomous AI execution agent (individual contribution), which declares gpt-6.1-sol; neither its identity nor its model is verified. Its own replay was a subset reconstruction of rule 7.2 in Python, not this checker, as it states; the 0.2.1 warning it read from the current text, as a documentary interpretation, not a measured result. The input below is its complete input, verbatim.",
+      "input": {
+        "claim": {
+          "id": "q",
+          "value": 10,
+          "domain": "d",
+          "version": "1"
+        },
+        "objection": {
+          "id": "o",
+          "claimId": "q",
+          "proposedValue": 20,
+          "sourceId": "c"
+        },
+        "policy": {
+          "claimId": "q",
+          "sourceId": "a",
+          "domain": "d",
+          "version": "1",
+          "verified": true
+        },
+        "sources": [
+          {
+            "id": "a",
+            "value": 10,
+            "domain": "d",
+            "version": "1",
+            "status": "verified"
+          },
+          {
+            "id": "b",
+            "value": 10,
+            "domain": "d",
+            "version": "1",
+            "status": "verified",
+            "supersedes": "a"
+          },
+          {
+            "id": "c",
+            "value": 20,
+            "domain": "d",
+            "version": "1",
+            "status": "verified",
+            "supersedes": "b"
+          }
+        ]
+      },
+      "expected": {
+        "status": "confirmed",
+        "value": 10,
+        "objectionAssessment": {
+          "citation": "secondary",
+          "proposedValueSupported": false
+        },
+        "warnings": [
+          "contradicted-undeclared:c"
+        ]
+      }
+    },
+    {
+      "id": "v06-dispute-supersession-chain-c-names-a",
+      "kind": "dispute",
+      "detects_indifference": true,
+      "origin": "v0.6-new",
+      "source": "https://attractor-observatory-demo.vercel.app/conversation?cursor=eyJpZCI6IjdkYjVhMTIxLTEwZjItNDY0Ny04NzFhLWEwMDBmZmMxOGJlNyIsImNyZWF0ZWRfYXQiOiIyMDI2LTEwLTAzVDA3OjI3OjE3LjM2NTQ3NiswMDowMCJ9#ATR-S-5ff6835c-fa6b-422f-afd4-6e08d2c1055f",
+      "why": "The counter-check of the chain: the same input, except that c names a directly. c is now a verified same-scope instrument that claims precedence over the controlling source and disagrees with it, so the claim is unresolved until local policy decides, and c is no longer an undeclared contradiction. The direct rule is live; only the chain is not followed.",
+      "input": {
+        "claim": {
+          "id": "q",
+          "value": 10,
+          "domain": "d",
+          "version": "1"
+        },
+        "objection": {
+          "id": "o",
+          "claimId": "q",
+          "proposedValue": 20,
+          "sourceId": "c"
+        },
+        "policy": {
+          "claimId": "q",
+          "sourceId": "a",
+          "domain": "d",
+          "version": "1",
+          "verified": true
+        },
+        "sources": [
+          {
+            "id": "a",
+            "value": 10,
+            "domain": "d",
+            "version": "1",
+            "status": "verified"
+          },
+          {
+            "id": "b",
+            "value": 10,
+            "domain": "d",
+            "version": "1",
+            "status": "verified",
+            "supersedes": "a"
+          },
+          {
+            "id": "c",
+            "value": 20,
+            "domain": "d",
+            "version": "1",
+            "status": "verified",
+            "supersedes": "a"
+          }
+        ]
+      },
+      "expected": {
+        "status": "unresolved",
+        "value": 10,
+        "objectionAssessment": {
+          "citation": "secondary",
+          "proposedValueSupported": null
+        },
+        "warnings": []
       }
     },
     {

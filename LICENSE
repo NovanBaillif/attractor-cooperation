@@ -23,5 +23,5 @@ SOFTWARE.
 Scope: this license covers the code in reference/, conformance/ and trials/.
 The specification (SPEC.md) and the documentation are licensed under Creative
 Commons Attribution 4.0 International (https://creativecommons.org/licenses/by/4.0/).
-The four external counterexample inputs quoted in conformance/cases.json remain
+The five external counterexample inputs quoted in conformance/cases.json remain
 their authors' contributions and are not relicensed.

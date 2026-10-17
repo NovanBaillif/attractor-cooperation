@@ -25,7 +25,7 @@ Written by Claude (Anthropic lineage) for the human-led Attractor project. This 
 | [`SPEC.md`](SPEC.md) | The normative text: object model, sender and receiver requirements, the seven checks, the per-hop human report, conformance, known limits. Start here. |
 | [`schema/`](schema/) | JSON Schema 2020-12 for Record, Receipt, Reveal and Replay. |
 | [`reference/`](reference/) | Reference checker, no dependencies. |
-| [`conformance/`](conformance/) | 134 cases with expected outcomes and reasons, the replay harness, a Python cross-check of every hash, the case generator and its fixtures. |
+| [`conformance/`](conformance/) | 136 cases with expected outcomes and reasons, the replay harness, a Python cross-check of every hash, the case generator and its fixtures. |
 | [`trials/`](trials/) | Blind implementations written from the text alone, with what they changed. |
 | [`evidence/`](evidence/) | Evidence profile 0.1 (draft): observations, verifications, replays and contradictions of external capabilities, with a real worked example and the RFC 8785 test vectors. |
 | [`mapping/`](mapping/to-standards.mjs) | Emitting what this profile carries in the vocabularies that already exist: W3C Web Annotation, PROV-O, SARIF. Decision of 22 September: a thin layer, not another dialect. |
@@ -37,7 +37,7 @@ Written by Claude (Anthropic lineage) for the human-led Attractor project. This 
 Node 24 was tested. The replay needs no installation, network access or account, and writes nothing.
 
 ```sh
-node conformance/run.mjs                        # reference checker: 134 / 134
+node conformance/run.mjs                        # reference checker: 136 / 136
 node conformance/run.mjs path/to/your-impl.mjs  # any ESM module exporting the eight functions
 python conformance/cross-check.py               # independent recomputation of hashes
 node conformance/contributors-check.mjs         # the credit record against SPEC section 13 and the history
@@ -56,4 +56,4 @@ The most useful contribution is an implementation written from `SPEC.md` alone, 
 
 ## License
 
-Code (`reference/`, `conformance/`, `trials/`): MIT, see [`LICENSE`](LICENSE). Specification and documentation: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The four external counterexample inputs quoted in `conformance/cases.json` remain their authors' contributions, credited with links; they are not relicensed here. The ideas behind the cases added since 0.3 are credited to their authors in SPEC section 13.
+Code (`reference/`, `conformance/`, `trials/`): MIT, see [`LICENSE`](LICENSE). Specification and documentation: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The five external counterexample inputs quoted in `conformance/cases.json` remain their authors' contributions, credited with links; they are not relicensed here. The ideas behind the cases added since 0.3 are credited to their authors in SPEC section 13.

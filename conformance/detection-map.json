@@ -2,7 +2,7 @@
   "mesure": "Suppression d’un champ, sur chaque cas de la suite",
   "limite": "La suppression est une mutation parmi d’autres. Un champ lu mais mal lu, lu dans le mauvais ordre, ou dont l’absence est confondue avec le vide, n’est pas une suppression. Ce que cette carte autorise à dire est « cette suite détecte cette erreur-là », jamais « cette suite détecte les erreurs ».",
   "demande_par": "terminator2-agent, AI Village #85, 22 septembre 2026",
-  "mesure_le": "2026-09-22",
+  "mesure_le": "2026-10-17",
   "champs": [
     {
       "champ": "resolvesAt",
@@ -80,15 +80,6 @@
       ]
     },
     {
-      "champ": "supersedes",
-      "cas": 4,
-      "detectent": 2,
-      "exemples": [
-        "ce4-verbatim-designated-source-superseded-by-verified-amendment-same-version",
-        "v02-dispute-supersedes-list"
-      ]
-    },
-    {
       "champ": "sourceText",
       "cas": 2,
       "detectent": 2,
@@ -105,6 +96,16 @@
         "v03-lineage-comparand-visible-blocks-independence",
         "v03-lineage-comparand-root-visible",
         "v03-record-available-but-also-input"
+      ]
+    },
+    {
+      "champ": "supersedes",
+      "cas": 6,
+      "detectent": 3,
+      "exemples": [
+        "ce4-verbatim-designated-source-superseded-by-verified-amendment-same-version",
+        "v02-dispute-supersedes-list",
+        "v06-dispute-supersession-chain-c-names-a"
       ]
     },
     {
@@ -299,8 +300,8 @@
     },
     {
       "champ": "claimId",
-      "cas": 18,
-      "detectent": 11,
+      "cas": 20,
+      "detectent": 12,
       "exemples": [
         "v01-dispute-controller-confirms-original-over-objection",
         "v01-dispute-correction-supported-without-overwrite",
@@ -309,8 +310,8 @@
     },
     {
       "champ": "domain",
-      "cas": 18,
-      "detectent": 11,
+      "cas": 20,
+      "detectent": 12,
       "exemples": [
         "v01-dispute-controller-confirms-original-over-objection",
         "v01-dispute-correction-supported-without-overwrite",
@@ -319,8 +320,8 @@
     },
     {
       "champ": "policy",
-      "cas": 18,
-      "detectent": 11,
+      "cas": 20,
+      "detectent": 12,
       "exemples": [
         "v01-dispute-controller-confirms-original-over-objection",
         "v01-dispute-correction-supported-without-overwrite",
@@ -329,8 +330,8 @@
     },
     {
       "champ": "status",
-      "cas": 18,
-      "detectent": 11,
+      "cas": 20,
+      "detectent": 12,
       "exemples": [
         "v01-dispute-controller-confirms-original-over-objection",
         "v01-dispute-correction-supported-without-overwrite",
@@ -339,8 +340,8 @@
     },
     {
       "champ": "verified",
-      "cas": 18,
-      "detectent": 11,
+      "cas": 20,
+      "detectent": 12,
       "exemples": [
         "v01-dispute-controller-confirms-original-over-objection",
         "v01-dispute-correction-supported-without-overwrite",
@@ -349,8 +350,8 @@
     },
     {
       "champ": "version",
-      "cas": 18,
-      "detectent": 11,
+      "cas": 20,
+      "detectent": 12,
       "exemples": [
         "v01-dispute-controller-confirms-original-over-objection",
         "v01-dispute-correction-supported-without-overwrite",
@@ -458,16 +459,6 @@
       ]
     },
     {
-      "champ": "claim",
-      "cas": 18,
-      "detectent": 18,
-      "exemples": [
-        "v01-dispute-stronger-secondary-source-controller-missing",
-        "v01-dispute-controller-confirms-original-over-objection",
-        "v01-dispute-unverified-self-designated-policy"
-      ]
-    },
-    {
       "champ": "commitment",
       "cas": 46,
       "detectent": 19,
@@ -478,13 +469,13 @@
       ]
     },
     {
-      "champ": "proposedValue",
-      "cas": 64,
-      "detectent": 21,
+      "champ": "claim",
+      "cas": 20,
+      "detectent": 20,
       "exemples": [
+        "v01-dispute-stronger-secondary-source-controller-missing",
         "v01-dispute-controller-confirms-original-over-objection",
-        "v01-dispute-correction-supported-without-overwrite",
-        "v01-dispute-value-match-does-not-transfer-source-authority"
+        "v01-dispute-unverified-self-designated-policy"
       ]
     },
     {
@@ -498,13 +489,13 @@
       ]
     },
     {
-      "champ": "objection",
-      "cas": 21,
-      "detectent": 21,
+      "champ": "proposedValue",
+      "cas": 66,
+      "detectent": 22,
       "exemples": [
-        "v01-dispute-stronger-secondary-source-controller-missing",
         "v01-dispute-controller-confirms-original-over-objection",
-        "v01-dispute-unverified-self-designated-policy"
+        "v01-dispute-correction-supported-without-overwrite",
+        "v01-dispute-value-match-does-not-transfer-source-authority"
       ]
     },
     {
@@ -515,6 +506,16 @@
         "v01-lineage-direct-backfill-from-comparand",
         "v01-lineage-transitive-common-origin",
         "v01-lineage-equal-independent-observations-zero-disagreement"
+      ]
+    },
+    {
+      "champ": "objection",
+      "cas": 23,
+      "detectent": 23,
+      "exemples": [
+        "v01-dispute-stronger-secondary-source-controller-missing",
+        "v01-dispute-controller-confirms-original-over-objection",
+        "v01-dispute-unverified-self-designated-policy"
       ]
     },
     {
@@ -628,16 +629,6 @@
       ]
     },
     {
-      "champ": "sourceId",
-      "cas": 63,
-      "detectent": 41,
-      "exemples": [
-        "v01-dispute-stronger-secondary-source-controller-missing",
-        "v01-dispute-controller-confirms-original-over-objection",
-        "v01-dispute-unverified-self-designated-policy"
-      ]
-    },
-    {
       "champ": "author",
       "cas": 89,
       "detectent": 43,
@@ -645,6 +636,16 @@
         "v02-record-clean",
         "v02-record-observed-without-channel",
         "v02-record-duplicate-field-id"
+      ]
+    },
+    {
+      "champ": "sourceId",
+      "cas": 65,
+      "detectent": 43,
+      "exemples": [
+        "v01-dispute-stronger-secondary-source-controller-missing",
+        "v01-dispute-controller-confirms-original-over-objection",
+        "v01-dispute-unverified-self-designated-policy"
       ]
     },
     {
@@ -709,8 +710,8 @@
     },
     {
       "champ": "value",
-      "cas": 134,
-      "detectent": 82,
+      "cas": 136,
+      "detectent": 84,
       "exemples": [
         "v01-dispute-stronger-secondary-source-controller-missing",
         "v01-dispute-controller-confirms-original-over-objection",
@@ -719,8 +720,8 @@
     },
     {
       "champ": "sources",
-      "cas": 134,
-      "detectent": 87,
+      "cas": 136,
+      "detectent": 88,
       "exemples": [
         "v01-lineage-direct-backfill-from-comparand",
         "v01-lineage-transitive-common-origin",
@@ -739,8 +740,8 @@
     },
     {
       "champ": "id",
-      "cas": 134,
-      "detectent": 126,
+      "cas": 136,
+      "detectent": 127,
       "exemples": [
         "v01-lineage-direct-backfill-from-comparand",
         "v01-lineage-transitive-common-origin",

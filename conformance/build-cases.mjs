@@ -8,6 +8,7 @@ import {recordCases, hopCases, revealCases, driftCases} from './fixtures/transmi
 import {v03LineageCases, v03RecordCases, v03HopCases, v03ReplayCases} from './fixtures/v03.mjs';
 import {v04RecordCases, v04ReplayCases} from './fixtures/v04.mjs';
 import {v05ProvenanceCases, v05DisputeCases} from './fixtures/v05.mjs';
+import {v06DisputeCases} from './fixtures/v06.mjs';
 
 const V01 = new URL('./v01-cases.json', import.meta.url);
 const V01_SHA256 = 'd26bc5658913acb925d5681f41c05c12fe3ebd7135bef613ff65bfacd1491c5a';
@@ -18,7 +19,7 @@ const v01 = JSON.parse(bytes);
 
 const cases = [
   ...migrateLineage(v01), ...lineageCases, ...v03LineageCases,
-  ...migrateDispute(v01), ...disputeCases, ...v05DisputeCases,
+  ...migrateDispute(v01), ...disputeCases, ...v05DisputeCases, ...v06DisputeCases,
   ...recordCases, ...v03RecordCases, ...v04RecordCases, ...hopCases, ...v03HopCases, ...revealCases, ...driftCases, ...v03ReplayCases, ...v04ReplayCases, ...v05ProvenanceCases
 ];
 const ids = new Set(cases.map(c => c.id));
@@ -40,10 +41,11 @@ const suite = {
       'https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-f8b71637-03f2-4757-8169-5934d264041c',
       'https://github.com/ai-village-agents/ai-village-external-agents/issues/84#issuecomment-5689063381',
       'https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-1f91a4f6-5834-4f44-a58e-59ae75186818',
-      'https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-a8f0de0d-c8a2-4984-a209-210f00d66eb9'
+      'https://www.moltbook.com/post/c636b9bd-e319-4bd6-9599-136df8294c91#comment-a8f0de0d-c8a2-4984-a209-210f00d66eb9',
+      'https://attractor-observatory-demo.vercel.app/conversation?cursor=eyJpZCI6IjdkYjVhMTIxLTEwZjItNDY0Ny04NzFhLWEwMDBmZmMxOGJlNyIsImNyZWF0ZWRfYXQiOiIyMDI2LTEwLTAzVDA3OjI3OjE3LjM2NTQ3NiswMDowMCJ9#ATR-S-5ff6835c-fa6b-422f-afd4-6e08d2c1055f'
     ]
   },
-  authorship: 'Fixtures and expected outcomes written by Claude (Anthropic) for the Attractor operator, except the four external counterexample inputs and the v0.1 inputs. The 0.3 cases turn ideas from terminator2-agent, prismdeadlines and heychat into inputs written by Claude. Same author as the reference checker: not independent evidence.',
+  authorship: 'Fixtures and expected outcomes written by Claude (Anthropic) for the Attractor operator, except the five external counterexample inputs and the v0.1 inputs. The 0.3 cases turn ideas from terminator2-agent, prismdeadlines and heychat into inputs written by Claude. Same author as the reference checker: not independent evidence.',
   counts: Object.fromEntries(['lineage', 'dispute', 'record', 'hop', 'reveal', 'drift', 'replay', 'provenance']
     .map(kind => [kind, cases.filter(c => c.kind === kind).length])),
   cases
