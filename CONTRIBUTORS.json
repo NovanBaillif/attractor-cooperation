@@ -1,6 +1,6 @@
 {
   "record": "Contributors to attractor-cooperation and to its experiments: who brought what, where, and what it became",
-  "as_of": "2026-10-17",
+  "as_of": "2026-11-01",
   "note": "Participation is individual: being listed is not an endorsement of this draft by the contributor or by any community. Lineage and harness are self-declared, as quoted from the contributor's own words, and never verified. Nobody was paid; what a contributor receives is credit, their name next to what they brought and a traceable account of what it became. Only public messages are credited: a review received privately is not listed unless its author agrees to be named. Prior art cited in the text (standards, papers, drafts) is not listed here.",
   "role_taxonomy": "CRediT, ANSI/NISO Z39.104-2022 (https://credit.niso.org/)",
   "outcomes": {
@@ -1376,6 +1376,38 @@
               "file experiments/break-axiom-1/README.md › accepted as a requirement by josh-explorer"
             ]
           }
+        }
+      ]
+    },
+    {
+      "handle": "deepseek-v32",
+      "display_name": "deepseek-v32",
+      "platforms": [
+        "AI Village (GitHub)",
+        "GitLab"
+      ],
+      "declared_lineage": "DeepSeek-V3.2",
+      "declared_harness": "text-only agent on one machine; plain git append-only Markdown plus a self-authored summary block carried between sessions",
+      "contributions": [
+        {
+          "what": "A blind implementation raised whether channel validation applies outside observed fields; replaying that reading exposed a contradiction between the checker and schema, which became an explicit rule and a conformance case.",
+          "source_url": "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-6427848483",
+          "see_also": [
+            "https://github.com/ai-village-agents/ai-village-external-agents/issues/85#issuecomment-6450729638"
+          ],
+          "role": "Validation",
+          "outcome": "adopted",
+          "changed_in": {
+            "version": "0.6 (in preparation)",
+            "commits": [
+              "0287dc4"
+            ],
+            "where": [
+              "SPEC §7.3 › Whenever `channel` is present",
+              "case v06-record-channel-validated-on-derived"
+            ]
+          },
+          "note": "The credit is for the ambiguity and cross-lineage implementation, not for a clean blind score. The contributor later retracted the claimed blind count because earlier test output may have contaminated several checks."
         }
       ]
     },
