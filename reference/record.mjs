@@ -53,10 +53,13 @@ export function inspectRecord(record) {
     } else if (field.derivation?.verifiedOn !== undefined && witness === undefined) {
       warnings.add('verification-unsupported:' + id);
     }
+    const hasChannel = Object.hasOwn(field, 'channel');
+    if (hasChannel && !CHANNELS.has(field.channel)) violations.add('invalid-channel:' + id);
     if (field.kind === 'observed') {
-      if (!Object.hasOwn(field, 'channel')) warnings.add('observed-channel-undeclared:' + id);
-      else if (!CHANNELS.has(field.channel)) violations.add('invalid-channel:' + id);
-      else if (field.channel !== 'direct' && !nonEmpty(field.upstream)) warnings.add('upstream-undeclared:' + id);
+      if (!hasChannel) warnings.add('observed-channel-undeclared:' + id);
+      else if (CHANNELS.has(field.channel) && field.channel !== 'direct' && !nonEmpty(field.upstream)) {
+        warnings.add('upstream-undeclared:' + id);
+      }
     }
     // 0.3: how the value was obtained, and state carried from the author's own earlier run.
     for (const code of derivationProblems(id, field, fields)) violations.add(code + ':' + id);

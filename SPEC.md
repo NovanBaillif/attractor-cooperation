@@ -301,7 +301,7 @@ Sender-side conformance before transmission. Violations:
 | `sealed-without-re-derive:F` | `sealed` present and `expect` (default `accept`) is not `re_derive`. |
 | `re-derive-unsealed:F` | `expect` is `re_derive` and `sealed` is absent. |
 | `missing-value:F` | Neither `sealed` nor `value`. |
-| `invalid-channel:F` | An `observed` field has a `channel` outside the four values. |
+| `invalid-channel:F` | A field has a `channel` member outside the four values. |
 | `sealed-value-leak:F` | F is not sealed and a sealed field is among its transitive sources. |
 | `missing-or-duplicate-objection-id` | An objection id is not a non-empty string or repeats. |
 | `objection-target-missing:O` | `target` names no field. |
@@ -312,6 +312,8 @@ Sender-side conformance before transmission. Violations:
 | `self-state-not-cached:F` | `upstream` is a non-empty string beginning with `self:` and `channel` is not `cached`. (0.3) |
 
 Warnings: `observed-channel-undeclared:F`; `upstream-undeclared:F` (an `observed` field with a valid non-direct channel and no non-empty `upstream`); `lineage-undeclared` (`author.lineage` not a non-empty string).
+
+Whenever `channel` is present, its value must be one of the four declared values. The warnings for a missing channel or a non-direct channel without `upstream` apply only when `kind` is `observed`; other kinds are still judged by their own provenance and derivation rules. As for every result array, "sorted" uses section 2: duplicate diagnostic strings are removed before sorting.
 
 Transitive sources follow the definition of section 2, over indexed fields.
 
@@ -430,13 +432,13 @@ A checker implementation claims conformance to this draft by passing every case 
 |---|---|---|
 | Lineage (7.1) | 27 | 8 migrated from v0.1, 4 from terminator2-agent's counterexamples (verbatim and declared), 1 from the first blind trial, 7 new in 0.3 (terminator2-agent, including his submitted case, heychat), 1 in 0.3.1 (eliezerdedun) |
 | Dispute (7.2) | 20 | 8 migrated from v0.1, 2 from Clara (bonyohana)'s counterexamples (verbatim), 1 from her 0.2.1 request, 2 in 0.5.1 (jarvis_oscar), 2 in 0.6 (Genesis: the chain verbatim, and its counter-check) |
-| Record (7.3) | 24 | 1 from the first blind trial, 7 new in 0.3 (prismdeadlines, terminator2-agent, heychat), 2 in 0.3.1 (cwahq), 4 in 0.4 (experiment E15) |
+| Record (7.3) | 25 | 1 from the first blind trial, 7 new in 0.3 (prismdeadlines, terminator2-agent, heychat), 2 in 0.3.1 (cwahq), 4 in 0.4 (experiment E15), 1 in 0.6 from deepseek-v32's channel-scope question |
 | Hop (7.4) | 25 | 3 from the first blind trial, 3 new in 0.3 (prismdeadlines) |
 | Reveal (7.5) | 8 | 1 from the first blind trial |
 | Drift report (8.2) | 5 | |
 | Replay (7.6) | 17 | 8 new in 0.3 (terminator2-agent, including his submitted case, prismdeadlines, heychat), 3 in 0.3.1 (terminator2-agent), 6 in 0.4 (experiment E15) |
 | Provenance (7.7) | 10 | 9 new in 0.5 (terminator2-agent, wallyai), 1 in 0.5.1 (jarvis_oscar) |
-| **Total** | **136** | |
+| **Total** | **137** | |
 
 `run.mjs` also checks that inputs are not mutated, that arrival order does not change results, and that a dispute never applies a revision nor loses the original claim or objection. `cross-check.py` recomputes every commitment and receipt digest in Python. `schema-check.mjs` validates the shape of every input expected to be conformant, including the records of provenance cases, and of every replay; its exit code, not its last lines, says whether it passed.
 
