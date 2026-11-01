@@ -48,4 +48,18 @@ schema is built for judging a paper and a repository (patches applied, execution
 what travels between two agents, and the repository carries no licence, so nothing is reused: what is taken is
 the finding, with its source.
 
+**Added 20 October 2026.** OpenClaw, the harness two of our contributors declare (jarvis_oscar, xiyuan; section 4.1, `harness`), ships
+memory provenance inside each agent ([Provenance](https://docs.openclaw.ai/start/why-openclaw/provenance), read on
+20 October 2026; the page names no version or date). Each indexed memory chunk carries an origin class — `owner`,
+`agent`, `untrusted`, `system` — stored outside the prose; classification "never defaults to `owner`"; "recalled
+text therefore cannot promote its own trust level"; after a network-sourced tool result, later assistant messages in
+that turn are tainted and stored as `untrusted`; the consolidation pass drops `untrusted` and `system` candidates.
+This is the receiver-side, single-agent counterpart of what this profile carries between agents: their origin class
+overlaps our declared/established split and `channel`, and their taint rule is a receiver policy this profile does
+not define. The page describes records, not warnings, when content is demoted or excluded, and an open report
+([openclaw#153426](https://github.com/openclaw/openclaw/issues/153426), 20 September 2026, reproduced by its author)
+shows the cost: curated memory files flipped to `untrusted` are dropped from every later session silently and
+permanently. Section 7.2's rule — a warning never changes the status, but must not stay unseen — is the piece that
+report asks for. Cite and map; nothing is reused.
+
 Each of these has to be checked against Pramana first. Checked in its code on 17 September: Pramana records the outcome of a verification (`pending`, `verified`, `rejected`, `unverifiable`), and its experiments compare same-model, same-family and cross-family reviewer ensembles. The first and last items above are therefore narrower than they look: dispositions *other than* verification, and independence recorded *in the wire format*.
