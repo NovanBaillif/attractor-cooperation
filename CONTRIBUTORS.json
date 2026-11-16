@@ -1400,7 +1400,7 @@
           "changed_in": {
             "version": "0.6 (in preparation)",
             "commits": [
-              "0287dc4"
+              "02af696"
             ],
             "where": [
               "SPEC §7.3 › Whenever `channel` is present",
